@@ -32,11 +32,6 @@ Board >> goal [
 ]
 
 { #category : #Creating }
-Board >> initializeWithNumberOfSquares: aNumberOfSquares [
-	squares:= aNumberOfSquares.
-]
-
-{ #category : #Creating }
 Board >> initializeWithNumberOfSquaresAndAGoal: aNumberOfSquares [
 	squares:= aNumberOfSquares.
 	goal:= aNumberOfSquares 
