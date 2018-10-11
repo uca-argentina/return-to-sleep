@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #Creating }
-PlayingSequence class >> newWithAllPlayers: anArrayOfPlayers. [
+PlayingSequence class >> withAllPlayers: anArrayOfPlayers. [
 	^self new initializewithAllPlayers: anArrayOfPlayers 
 ]
 

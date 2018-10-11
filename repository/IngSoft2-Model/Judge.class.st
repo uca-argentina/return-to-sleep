@@ -43,13 +43,8 @@ Judge >> playerHasWon: aPlayer [
 ]
 
 { #category : #Accesing }
-Judge >> playerTriesToPlay: aPlayerName [
-	self validateTurn: playingSequence currentPlayer name and: aPlayerName
-]
-
-{ #category : #Accesing }
-Judge >> tellWinner [
-	^ winner. 
+Judge >> playerTriesToPlay: aPlayer [
+	self validateTurn: playingSequence currentPlayer and: aPlayer.
 ]
 
 { #category : #Accesing }
@@ -64,8 +59,13 @@ Judge >> thereIsAWinner: aWinner [
 ]
 
 { #category : #Accesing }
-Judge >> validateTurn: currentNamePlayer and: whoWantsToPlay [ 
-	(currentNamePlayer = whoWantsToPlay )
-	ifTrue: [ playingSequence changeToNextPlayer. ]
-	ifFalse: [ JudgeValidationFailed signal: 'You cannot play when is not your turn' ].
+Judge >> validateTurn: currentPlayer and: whoWantsToPlay [
+	currentPlayer = whoWantsToPlay
+		ifTrue: [ playingSequence changeToNextPlayer ]
+		ifFalse: [ JudgeValidationFailed signal: 'You cannot play when is not your turn' ]
+]
+
+{ #category : #Accesing }
+Judge >> winner [
+	^ winner. 
 ]
