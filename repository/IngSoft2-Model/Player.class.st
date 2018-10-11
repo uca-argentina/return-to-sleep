@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #Creating }
-Player class >> newWithName: APlayerName [
+Player class >> withName: APlayerName [
 	^self new initializeWithName: APlayerName.
 ]
 

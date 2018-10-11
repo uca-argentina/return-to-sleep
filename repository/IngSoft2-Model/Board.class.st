@@ -19,11 +19,9 @@ Board class >> assertValidNumberOfSquares: aNumberOfSquares [
 ]
 
 { #category : #Creating }
-Board class >> newWithNSquares: aNumberOfSquares [
-self assertValidNumberOfSquares: aNumberOfSquares.
-^ self new initializeWithNumberOfSquaresAndAGoal: aNumberOfSquares.
-
-	
+Board class >> withNSquares: aNumberOfSquares [
+	self assertValidNumberOfSquares: aNumberOfSquares.
+	^ self new initializeWithAGoal: aNumberOfSquares
 ]
 
 { #category : #Creating }
@@ -32,12 +30,6 @@ Board >> goal [
 ]
 
 { #category : #Creating }
-Board >> initializeWithNumberOfSquaresAndAGoal: aNumberOfSquares [
-	squares:= aNumberOfSquares.
-	goal:= aNumberOfSquares 
-]
-
-{ #category : #'as yet unclassified' }
-Board >> squares [
-	^ squares
+Board >> initializeWithAGoal: aNumberOfSquares [
+	goal := aNumberOfSquares
 ]

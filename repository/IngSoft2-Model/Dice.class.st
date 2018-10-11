@@ -17,12 +17,12 @@ Dice class >> assertValidNumberOfFaces: aNumberOfFaces [
 ]
 
 { #category : #Creations }
-Dice class >> newwithNFaces: aNumberOfFaces [
+Dice class >> withFaces: aNumberOfFaces [
 	self assertValidNumberOfFaces: aNumberOfFaces.
 	^self new initializeWithFaces: aNumberOfFaces
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #Accesing }
 Dice >> faces [
 	^ faces
 ]
@@ -30,4 +30,9 @@ Dice >> faces [
 { #category : #Creations }
 Dice >> initializeWithFaces: aNumberOfFaces [
 	faces:= aNumberOfFaces
+]
+
+{ #category : #Accesing }
+Dice >> roll [ 
+	^ self subclassResponsibility. 
 ]
