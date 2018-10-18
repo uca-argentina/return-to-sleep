@@ -23,7 +23,7 @@ GameTest >> testCreateAGameAndPlay [
 		add: dice1;
 		add: dice2;
 		add: dice3.
-	board := Board withNSquares: 100.
+	board := DeterministicBoard withNSquares: 100.
 	playingSequence := PlayingSequence withAllPlayers: players.
 	judge := Judge named: 'Pitana' assuring: playingSequence on: board.
 	[ judge thereIsAWinner ]
