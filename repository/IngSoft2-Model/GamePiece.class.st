@@ -23,6 +23,11 @@ GamePiece >> changePositionTo: aNewPosition [
 	positionOnBoard := aNewPosition.
 ]
 
+{ #category : #accesing }
+GamePiece >> changeRoundTo: newRound [
+	rounds := newRound. 
+]
+
 { #category : #Accesing }
 GamePiece >> color [
 	^ color
@@ -39,4 +44,9 @@ GamePiece >> initializeWithAColor: aColor [
 { #category : #accesing }
 GamePiece >> position [
 	^ positionOnBoard. 
+]
+
+{ #category : #Accesing }
+GamePiece >> rounds [
+	^ rounds
 ]

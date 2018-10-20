@@ -59,6 +59,14 @@ Judge >> thereIsAWinner: aWinner [
 ]
 
 { #category : #Accesing }
+Judge >> validateRoundsOfPlayers [
+	| gamepieces gamepieces4 |
+	gamepieces := board gamepieces.
+	gamepieces4 := gamepieces values collect: [ :each | each ] as: Set.
+	gamepieces4 do: [ :y | y changeRoundTo: (y position / board endOfBoard) floor. ]
+]
+
+{ #category : #Accesing }
 Judge >> validateTurn: currentPlayer and: whoWantsToPlay [
 	currentPlayer = whoWantsToPlay
 		ifTrue: [ playingSequence changeToNextPlayer ]
