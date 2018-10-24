@@ -1,11 +1,18 @@
 Class {
-	#name : #GameTest,
+	#name : #GamepieceTest,
 	#superclass : #TestCase,
 	#category : #'IngSoft2-Tests'
 }
 
-{ #category : #'game-tests' }
-GameTest >> testCreateAGameAndPlayWithDifferentEffects [
+{ #category : #'Gamepiece - tests' }
+GamepieceTest >> testCreateABlueGamePiece [
+		| aGamePiece |
+	aGamePiece := Gamepiece withColor: 'blue'.
+	self assert: aGamePiece color equals: 'blue'.
+]
+
+{ #category : #'Gamepiece - tests' }
+GamepieceTest >> testGamepiecesFinalRankingWhenThereIsAWinner [
 	| player1 player2 dices1 judge board players winner playingSequence gamepiece1 gamepiece2 gamepieces squares effect0 effect1 effect2 effect3 effect4 square0 square1 square2 square3 square4 dices2 |
 	gamepiece1 := Gamepiece withColor: 'pink'.
 	gamepiece2 := Gamepiece withColor: 'blue'.
@@ -57,8 +64,11 @@ GameTest >> testCreateAGameAndPlayWithDifferentEffects [
 			board applyEffectToAGamepieceUsingKey: gamepiece2 color.
 			judge playerHasWon: player2 ].
 	self assert: judge thereIsAWinner.
+	judge determinateFinalRankings. 
 	winner := judge winner.
 	self assert: gamepiece1 position equals: 7.
 	self assert: gamepiece2 position equals: 10.
-	self assert: winner name equals: 'Dubi'
+	self assert: winner name equals: 'Dubi'.
+	self assert: gamepiece1 finalRanking equals: 2.
+	self assert: gamepiece2 finalRanking equals: 1.
 ]

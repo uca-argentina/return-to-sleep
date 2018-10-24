@@ -6,20 +6,20 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'position',
-		'name'
+		'name',
+		'playerGamePiece'
 	],
 	#category : #'IngSoft2-Model'
 }
 
 { #category : #Creating }
-Player class >> withName: APlayerName [
-	^self new initializeWithName: APlayerName.
+Player class >> withName: APlayerName andAGamePiece: aGamePiece [
+	^ self new withName: APlayerName andAGamepiece: aGamePiece.
 ]
 
-{ #category : #Creating }
-Player >> initializeWithName: aPlayerName [
-	name:= aPlayerName.
-	position:=1.
+{ #category : #Accesing }
+Player >> gamepiece [
+	^playerGamePiece.
 ]
 
 { #category : #Creating }
@@ -28,19 +28,14 @@ Player >> name [
 ]
 
 { #category : #accesing }
-Player >> playsWith: aSetOfDices [ 
-
+Player >> playsWith: aSetOfDices [
 	| totalValueOfDices |
-	
 	totalValueOfDices := aSetOfDices sumNumbers: [ :x | x roll ].
-	
-		
-	position := position + totalValueOfDices. 
-	
-
+	playerGamePiece changePositionTo: (playerGamePiece position) + totalValueOfDices. 
 ]
 
 { #category : #Creating }
-Player >> position [
-	^ position
+Player >> withName: aPlayerName andAGamepiece: aGamePiece. [ 
+	name := aPlayerName.
+	playerGamePiece := aGamePiece. 
 ]

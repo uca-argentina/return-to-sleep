@@ -13,7 +13,7 @@ Class {
 
 { #category : #Creating }
 PlayingSequence class >> withAllPlayers: anArrayOfPlayers. [
-	^self new initializewithAllPlayers: anArrayOfPlayers 
+	^self new withAllPlayers: anArrayOfPlayers 
 ]
 
 { #category : #Accessing }
@@ -30,7 +30,7 @@ PlayingSequence >> currentPlayer [
 ]
 
 { #category : #Creating }
-PlayingSequence >> initializewithAllPlayers: anArrayOfPlayers [
+PlayingSequence >> withAllPlayers: anArrayOfPlayers [
 	players:= anArrayOfPlayers.
 	turnIndex:=1.
 ]

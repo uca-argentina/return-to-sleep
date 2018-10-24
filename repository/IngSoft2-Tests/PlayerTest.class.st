@@ -6,30 +6,28 @@ Class {
 
 { #category : #'player-tests' }
 PlayerTest >> testAPlayerPositionChangesWhenPlays [
-	
-	| dice1 dice2 dice3 setOfDices player |
-	
-	dice1 := PowerfulDice  withFaces: 5.
-	dice2 := PowerfulDice  withFaces: 10.
+	| dice1 dice2 dice3 setOfDices player gamepiece |
+	dice1 := PowerfulDice withFaces: 5.
+	dice2 := PowerfulDice withFaces: 10.
 	dice3 := PowerfulDice withFaces: 5.
 	setOfDices := Set new.
-	setOfDices add: dice1;
-		add:dice2;
-		add:dice3.
-	player:= Player withName: 'Sol'.
-	self assert: player position equals: 1. 
+	setOfDices
+		add: dice1;
+		add: dice2;
+		add: dice3.
+	gamepiece := Gamepiece withColor: 'pink'.
+	player := Player withName: 'Sol' andAGamePiece: gamepiece.
+	self assert: player gamepiece position equals: 0.
 	player playsWith: setOfDices.
-	self assert: player position equals: 21. 
+	self assert: player gamepiece position equals: 20.
 	player playsWith: setOfDices.
-	self assert: player position equals: 41.
+	self assert: player gamepiece position equals: 40. 
 ]
 
 { #category : #'player-tests' }
-PlayerTest >> testCreateAPlayer [
-	
-
-	| player|
-	
-	player:= Player withName: 'Sol'.
-	self assert: player name equals: 'Sol'.
+PlayerTest >> testCreateAPlayerWithAGamePiece [
+	| player aGamePiece |
+	aGamePiece := Gamepiece withColor: 'red'.
+	player := Player withName: 'Sol' andAGamePiece: aGamePiece.
+	self assert: player name equals: 'Sol'
 ]
