@@ -13,6 +13,6 @@ Effect class >> withAPowerValue: aPowerValue [
 ]
 
 { #category : #Accesing }
-Effect >> applyEffectTo: aGamePiece ofGamePieceCollection: aCollection [
+Effect >> applyEffectTo: aGamePiece ofGamepieceCollection: aCollection [
 	^ self subclassResponsibility. 
 ]

@@ -8,5 +8,5 @@ Class {
 }
 
 { #category : #Accesing }
-NonEffect >> applyEffectTo: aGamePiece ofGamePieceCollection: aCollectionOfPieces [
+NonEffect >> applyEffectTo: aGamePiece ofGamepieceCollection: aCollectionOfPieces [
 ]

@@ -17,7 +17,7 @@ SpeedUp class >> withAPowerValue: aPowerValue [
 ]
 
 { #category : #actions }
-SpeedUp >> applyEffectTo: aGamePiece ofGamePieceCollection: aGamePieceCollection [
+SpeedUp >> applyEffectTo: aGamePiece ofGamepieceCollection: aGamePieceCollection [
 	aGamePiece changePositionTo: aGamePiece position + increment.
 ]
 

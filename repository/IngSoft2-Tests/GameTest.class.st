@@ -40,7 +40,7 @@ GameTest >> testCreateAGameAndPlayWithDifferentEffects [
 	dices1 add: (PowerfulDice withFaces: 1).
 	dices2 := Set new.
 	dices2 add: (PowerfulDice withFaces: 2).
-	board := Board withSquares: squares gamePieces: gamepieces andRounds: 2.
+	board := Board withSquares: squares gamepieces: gamepieces andRounds: 2.
 	playingSequence := PlayingSequence withAllPlayers: players.
 	judge := Judge named: 'Pitana' assuring: playingSequence on: board.
 	[ judge thereIsAWinner ]
@@ -48,13 +48,13 @@ GameTest >> testCreateAGameAndPlayWithDifferentEffects [
 			player1 playsWith: dices1.
 			judge validateRoundsOfPlayers.
 			gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
-			board applyEffectToAGamePieceUsingKey: gamepiece1 color.
+			board applyEffectToAGamepieceUsingKey: gamepiece1 color.
 			judge playerHasWon: player1.
 			judge playerTriesToPlay: player2.
 			player2 playsWith: dices2.
 			judge validateRoundsOfPlayers.
 			gamepiece2 positionOnBoardBasedOnNSquares: board squares size.
-			board applyEffectToAGamePieceUsingKey: gamepiece2 color.
+			board applyEffectToAGamepieceUsingKey: gamepiece2 color.
 			judge playerHasWon: player2 ].
 	self assert: judge thereIsAWinner.
 	winner := judge winner.

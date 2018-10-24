@@ -1,3 +1,6 @@
+"
+This object creates a collection of Squares with differents effects (by setted proportions). It needs to know the total number of squares.
+"
 Class {
 	#name : #SquareCreator,
 	#superclass : #Object,

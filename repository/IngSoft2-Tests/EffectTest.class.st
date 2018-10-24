@@ -34,19 +34,19 @@ EffectTest >> testApplyAtomicBombToAGamePiece [
 	dices1 add: (PowerfulDice withFaces: 2).
 	dices2 := Set new.
 	dices2 add: (PowerfulDice withFaces: 4).
-	board := Board withSquares: squares gamePieces: gamepieces andRounds: 2.
+	board := Board withSquares: squares gamepieces: gamepieces andRounds: 2.
 	playingSequence := PlayingSequence withAllPlayers: players.
 	judge := Judge named: 'Pitana' assuring: playingSequence on: board.
 	judge playerTriesToPlay: player1.
 	player1 playsWith: dices1.
 	judge validateRoundsOfPlayers.
 	gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
-	board applyEffectToAGamePieceUsingKey: gamepiece1 color.
+	board applyEffectToAGamepieceUsingKey: gamepiece1 color.
 	judge playerTriesToPlay: player2.
 	player2 playsWith: dices2.
 	judge validateRoundsOfPlayers.
 	gamepiece2 positionOnBoardBasedOnNSquares: board squares size.
-	board applyEffectToAGamePieceUsingKey: gamepiece2 color.
+	board applyEffectToAGamepieceUsingKey: gamepiece2 color.
 	gamepiece2 positionOnBoardBasedOnNSquares: board squares size.
 	gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
 	self assert: gamepiece1 position equals: 0.
@@ -60,22 +60,22 @@ EffectTest >> testApplyMoonWalkToAGamePiece [
 	| effect1 effect2 gamepiece1 gamepiece2 gamepiece3 pieces |
 	effect1 := SpeedUp withAPowerValue: 4.
 	gamepiece1 := Gamepiece withColor: 'pink'.
-	effect1 applyEffectTo: gamepiece1 ofGamePieceCollection: #().
+	effect1 applyEffectTo: gamepiece1 ofGamepieceCollection: #().
 	self assert: gamepiece1 position equals: 4.
 	gamepiece2 := Gamepiece withColor: 'blue'.
-	effect1 applyEffectTo: gamepiece2 ofGamePieceCollection: #().
-	effect1 applyEffectTo: gamepiece2 ofGamePieceCollection: #().
+	effect1 applyEffectTo: gamepiece2 ofGamepieceCollection: #().
+	effect1 applyEffectTo: gamepiece2 ofGamepieceCollection: #().
 	gamepiece3 := Gamepiece withColor: 'deep-purple'.
-	effect1 applyEffectTo: gamepiece3 ofGamePieceCollection: #().
-	effect1 applyEffectTo: gamepiece3 ofGamePieceCollection: #().
-	effect1 applyEffectTo: gamepiece3 ofGamePieceCollection: #().
+	effect1 applyEffectTo: gamepiece3 ofGamepieceCollection: #().
+	effect1 applyEffectTo: gamepiece3 ofGamepieceCollection: #().
+	effect1 applyEffectTo: gamepiece3 ofGamepieceCollection: #().
 	self assert: gamepiece3 position equals: 12.
 	effect2 := MoonWalk withAPowerValue: 3.
 	pieces:= OrderedCollection new. 
 	pieces add: gamepiece1;
 	add:gamepiece2;
 	add:gamepiece3. 
-	effect2 applyEffectTo: gamepiece1 ofGamePieceCollection: pieces.   
+	effect2 applyEffectTo: gamepiece1 ofGamepieceCollection: pieces.   
 	self
 		assert: gamepiece1 position
 		equals: 4.
@@ -88,10 +88,10 @@ EffectTest >> testApplyNonEffectToGamePiece [
 	| effect1 gamepiece effect2 |
 	effect1 := SpeedUp withAPowerValue: 4.
 	gamepiece := Gamepiece withColor: 'pink'.
-	effect1 applyEffectTo: gamepiece ofGamePieceCollection: #().
+	effect1 applyEffectTo: gamepiece ofGamepieceCollection: #().
 	self assert: gamepiece position equals: 4.
 	effect2 := NonEffect new.
-	effect2 applyEffectTo: gamepiece ofGamePieceCollection: #().
+	effect2 applyEffectTo: gamepiece ofGamepieceCollection: #().
 	self assert: gamepiece position equals: 4.
 ]
 
@@ -100,7 +100,7 @@ EffectTest >> testApplySpeedUpToAGamePiece [
 	| effect gamepiece |
 	effect := SpeedUp withAPowerValue: 4.
 	gamepiece := Gamepiece withColor: 'pink'.
-	effect applyEffectTo: gamepiece ofGamePieceCollection: #().
+	effect applyEffectTo: gamepiece ofGamepieceCollection: #().
 	self assert: gamepiece position equals: 4
 ]
 
@@ -109,9 +109,9 @@ EffectTest >> testApplyWormHoleToAGamePiece [
 	| effect1 effect2 gamepiece |
 	effect1 := SpeedUp withAPowerValue: 4.
 	gamepiece := Gamepiece withColor: 'pink'.
-	effect1 applyEffectTo: gamepiece ofGamePieceCollection: #().
+	effect1 applyEffectTo: gamepiece ofGamepieceCollection: #().
 	self assert: gamepiece position equals: 4.
 	effect2 := WormHole withAPowerValue: 4.
-	effect2 applyEffectTo: gamepiece ofGamePieceCollection: #().
+	effect2 applyEffectTo: gamepiece ofGamepieceCollection: #().
 	self assert: gamepiece position equals: 0
 ]

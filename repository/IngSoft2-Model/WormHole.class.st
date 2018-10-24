@@ -16,7 +16,7 @@ WormHole class >> withAPowerValue: aPowerValue [
 ]
 
 { #category : #Accesing }
-WormHole >> applyEffectTo: aGamePiece ofGamePieceCollection: aCollection [
+WormHole >> applyEffectTo: aGamePiece ofGamepieceCollection: aCollection [
 	aGamePiece changePositionTo: aGamePiece position - decrement.
 ]
 

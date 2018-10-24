@@ -11,6 +11,6 @@ Class {
 }
 
 { #category : #Accesing }
-AtomicBomb >> applyEffectTo: aGamePiece ofGamePieceCollection: aCollectionOfPieces [
+AtomicBomb >> applyEffectTo: aGamePiece ofGamepieceCollection: aCollectionOfPieces [
 	aCollectionOfPieces do: [ :each | each changePositionTo: each position - each positionOnBoard ].
 ]

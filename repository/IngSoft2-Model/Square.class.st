@@ -13,7 +13,7 @@ Class {
 
 { #category : #Creating }
 Square class >> withAnEffect: anEffect [
-	^ self new initializeWithAnEffect: anEffect. 
+	^ self new withAnEffect: anEffect. 
 ]
 
 { #category : #Creating }
@@ -22,6 +22,6 @@ Square >> effect [
 ]
 
 { #category : #Creating }
-Square >> initializeWithAnEffect: anEffect [
+Square >> withAnEffect: anEffect [
 	effect := anEffect.
 ]

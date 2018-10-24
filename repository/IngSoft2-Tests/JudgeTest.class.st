@@ -29,7 +29,7 @@ JudgeTest >> testJudgeValidateTurn [
 	turn := PlayingSequence withAllPlayers: collectionOfPlayers.
 	squares := Set new.
 	squares add: (Square withAnEffect: (NonEffect new)).
-	board := Board withSquares: squares gamePieces: gamepieces andRounds: 2.
+	board := Board withSquares: squares gamepieces: gamepieces andRounds: 2.
 	judge := Judge named: 'Pitana' assuring: turn on: board.
 	self should: [ judge validateTurn: turn currentPlayer and: player2 ] raise: JudgeValidationFailed
 ]
@@ -57,7 +57,7 @@ JudgeTest >> testJudgeValidateWhenPlayerCompletesARound [
 			(3 -> square3).
 			(4 -> square4)}.
 	gamepieces := Dictionary newFrom: {(gamepiece1 color -> gamepiece1)}.
-	board := Board withSquares: squares gamePieces: gamepieces andRounds: 5.
+	board := Board withSquares: squares gamepieces: gamepieces andRounds: 5.
 	dices := Set new.
 	dices add: (PowerfulDice withFaces: 3).
 	playingsequence := PlayingSequence withAllPlayers: player.
@@ -65,12 +65,12 @@ JudgeTest >> testJudgeValidateWhenPlayerCompletesARound [
 	player playsWith: dices.
 	self assert: gamepiece1 position equals: 3.
 	gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
-	board applyEffectToAGamePieceUsingKey: gamepiece1 color.
+	board applyEffectToAGamepieceUsingKey: gamepiece1 color.
 	self assert: gamepiece1 position equals: 1.
 	player playsWith: dices.
 	
 	gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
-	board applyEffectToAGamePieceUsingKey: gamepiece1 color.
+	board applyEffectToAGamepieceUsingKey: gamepiece1 color.
 	self assert: gamepiece1 position equals: 4.
 	player playsWith: dices.
 	
@@ -97,7 +97,7 @@ JudgeTest >> testJudgeValidateWhenPlayerHasToUndoARoundBecauseOfWormHoleEffect [
 			(1 -> square1).
 			(2 -> square2)}.
 	gamepieces := Dictionary newFrom: {(gamepiece1 color -> gamepiece1)}.
-	board := Board withSquares: squares gamePieces: gamepieces andRounds: 5.
+	board := Board withSquares: squares gamepieces: gamepieces andRounds: 5.
 	dices := Set new.
 	dices add: (PowerfulDice withFaces: 1).
 	playingsequence := PlayingSequence withAllPlayers: player.
@@ -106,7 +106,7 @@ JudgeTest >> testJudgeValidateWhenPlayerHasToUndoARoundBecauseOfWormHoleEffect [
 	
 	gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
 	self assert: gamepiece1 position equals: 1.
-	board applyEffectToAGamePieceUsingKey: gamepiece1 color.
+	board applyEffectToAGamepieceUsingKey: gamepiece1 color.
 	self assert: gamepiece1 position equals: -2.
 	judge validateRoundsOfPlayers.
 	self assert: gamepiece1 rounds equals: -1
@@ -150,7 +150,7 @@ JudgeTest >> testJugdeDeterminateWinner [
 	dices1 add: (PowerfulDice withFaces: 4).
 	dices2 := Set new.
 	dices2 add: (PowerfulDice withFaces: 3).
-	board := Board withSquares: squares gamePieces: gamepieces andRounds: 1.
+	board := Board withSquares: squares gamepieces: gamepieces andRounds: 1.
 	playingSequence := PlayingSequence withAllPlayers: players.
 	judge := Judge named: 'Pitana' assuring: playingSequence on: board.
 	judge playerTriesToPlay: player1.
@@ -210,7 +210,7 @@ JudgeTest >> testJugdeTellsRankingOfAPlayer [
 	dices1 add: (PowerfulDice withFaces: 4).
 	dices2 := Set new.
 	dices2 add: (PowerfulDice withFaces: 3).
-	board := Board withSquares: squares gamePieces: gamepieces andRounds: 2.
+	board := Board withSquares: squares gamepieces: gamepieces andRounds: 2.
 	playingSequence := PlayingSequence withAllPlayers: players.
 	judge := Judge named: 'Pitana' assuring: playingSequence on: board.
 	judge playerTriesToPlay: player1.

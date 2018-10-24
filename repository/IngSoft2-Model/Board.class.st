@@ -32,20 +32,20 @@ Board class >> assertValidNumberOfSquares: aNumberOfSquares [
 ]
 
 { #category : #Creating }
-Board class >> withSquares: aSquareCollection gamePieces: aGamePieceCollection andRounds: aNumberOfRounds [
+Board class >> withSquares: aSquareCollection gamepieces: aGamePieceCollection andRounds: aNumberOfRounds [
 	self assertValidNumberOfSquares: aSquareCollection size.
 	self assertValidNumberOfGamePieces: aGamePieceCollection size.
 	self assertValidNumberOfRounds: aNumberOfRounds.
-	^ self new initializeWithSquares: aSquareCollection gamePieces: aGamePieceCollection andRounds: aNumberOfRounds. 
+	^ self new withSquares: aSquareCollection gamepieces: aGamePieceCollection andRounds: aNumberOfRounds. 
 ]
 
 { #category : #Accesing }
-Board >> applyEffectToAGamePieceUsingKey: aGamePieceKey [
+Board >> applyEffectToAGamepieceUsingKey: aGamePieceKey [
 	| gamepiece 	positionOfPlayerOnBoard square |
 	gamepiece := gamepieces at: aGamePieceKey.
 	positionOfPlayerOnBoard := gamepiece positionOnBoard.
 	square := squares at: 	positionOfPlayerOnBoard.
-	square effect applyEffectTo: gamepiece ofGamePieceCollection: gamepieces
+	square effect applyEffectTo: gamepiece ofGamepieceCollection: gamepieces
 ]
 
 { #category : #Accesing }
@@ -58,14 +58,6 @@ Board >> gamepieces [
 	^ gamepieces
 ]
 
-{ #category : #Creating }
-Board >> initializeWithSquares: aSquaresCollection gamePieces: aGamePiecesCollection andRounds: numberOfRounds [
-	squares := aSquaresCollection.
-	gamepieces := aGamePiecesCollection.
-	rounds := numberOfRounds.
-	endOfBoard := squares size.
-]
-
 { #category : #Accesing }
 Board >> rounds [
 	^ rounds
@@ -74,4 +66,12 @@ Board >> rounds [
 { #category : #Accesing }
 Board >> squares [
 	^ squares
+]
+
+{ #category : #Creating }
+Board >> withSquares: aSquaresCollection gamepieces: aGamepieceCollection andRounds: numberOfRounds [
+	squares := aSquaresCollection.
+	gamepieces := aGamepieceCollection.
+	rounds := numberOfRounds.
+	endOfBoard := squares size.
 ]

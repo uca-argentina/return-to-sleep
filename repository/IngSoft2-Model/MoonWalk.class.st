@@ -16,7 +16,7 @@ MoonWalk class >> withAPowerValue: aPowerValue [
 ]
 
 { #category : #Accesing }
-MoonWalk >> applyEffectTo: aGamePiece ofGamePieceCollection: aCollectionOfPieces [
+MoonWalk >> applyEffectTo: aGamePiece ofGamepieceCollection: aCollectionOfPieces [
 	| affectedPieces |
 	affectedPieces := aCollectionOfPieces select: [ :each | each ~= aGamePiece ].
 	affectedPieces do: [ :each | each changePositionTo: (each position) - decrement ]
