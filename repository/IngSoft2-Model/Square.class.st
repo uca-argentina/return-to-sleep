@@ -1,3 +1,6 @@
+"
+This is a Square of the Board. It is initialized with an effect. 
+"
 Class {
 	#name : #Square,
 	#superclass : #Object,

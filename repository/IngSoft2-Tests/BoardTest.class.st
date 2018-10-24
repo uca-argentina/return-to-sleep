@@ -8,7 +8,7 @@ Class {
 BoardTest >> testBoardApplyEffectToAGamePieceWhenPlayerPlays [
 	| board squares square1 square2 square3 square4 gamepiece1 gamepieces player dices effect1 effect2 effect3 effect4 effect0 square0 |
 	effect0 := NonEffect new.
-	effect1 := AtomicBomb withAPowerValue: 0.
+	effect1 := AtomicBomb new.
 	effect2 := SpeedUp withAPowerValue: 1.
 	effect3 := WormHole withAPowerValue: 2.
 	effect4 := MoonWalk withAPowerValue: 1.
@@ -17,7 +17,7 @@ BoardTest >> testBoardApplyEffectToAGamePieceWhenPlayerPlays [
 	square2 := Square withAnEffect: effect2.
 	square3 := Square withAnEffect: effect3.
 	square4 := Square withAnEffect: effect4.
-	gamepiece1 := GamePiece withColor: 'blue'.
+	gamepiece1 := Gamepiece withColor: 'blue'.
 	player := Player withName: 'Sol' andAGamePiece: gamepiece1.
 	squares := Dictionary
 		newFrom:
@@ -27,12 +27,13 @@ BoardTest >> testBoardApplyEffectToAGamePieceWhenPlayerPlays [
 			(3 -> square3).
 			(4 -> square4)}.
 	gamepieces := Dictionary newFrom: {(gamepiece1 color -> gamepiece1)}.
-	board := GameBoard withSquares: squares gamePieces: gamepieces andRounds: 5.
+	board := Board withSquares: squares gamePieces: gamepieces andRounds: 5.
 	dices := Set new.
 	dices add: (PowerfulDice withFaces: 3).
 	player playsWith: dices.
+	gamepiece1 positionOnBoardBasedOnNSquares: board squares size. 
 	self assert: gamepiece1 position equals: 3.
-	board applyEffectTo: gamepiece1 color.
+	board applyEffectToAGamePieceUsingKey: gamepiece1 color.
 	self assert: gamepiece1 position equals: 1
 ]
 
@@ -45,9 +46,9 @@ BoardTest >> testCreateBoardWWith3Squares3GamePiecesAnd5Rounds [
 	square1 := Square withAnEffect: effect1.
 	square2 := Square withAnEffect: effect2.
 	square3 := Square withAnEffect: effect3.
-	gamepiece1 := GamePiece withColor: 'blue'.
-	gamepiece2 := GamePiece withColor: 'red'.
-	gamepiece3 := GamePiece withColor: 'orange'.
+	gamepiece1 := Gamepiece withColor: 'blue'.
+	gamepiece2 := Gamepiece withColor: 'red'.
+	gamepiece3 := Gamepiece withColor: 'orange'.
 	squares := Dictionary
 		newFrom:
 			{(1 -> square1).
@@ -58,7 +59,7 @@ BoardTest >> testCreateBoardWWith3Squares3GamePiecesAnd5Rounds [
 			{(gamepiece1 color -> gamepiece1).
 			(gamepiece2 color -> gamepiece2).
 			(gamepiece3 color -> gamepiece3)}.
-	board := GameBoard withSquares: squares gamePieces: gamepieces andRounds: 5.
+	board := Board withSquares: squares gamePieces: gamepieces andRounds: 5.
 	self assert: board squares size equals: 3.
 	self assert: board gamepieces size equals: 3.
 	self assert: board rounds equals: 5. 
@@ -70,7 +71,7 @@ BoardTest >> testCreateWrongBoardWith0GamePieces [
 	squares := Set new.
 	squares add: (Square withAnEffect: NonEffect new).
 	self
-		should: [ GameBoard withSquares: squares gamePieces: #() andRounds: 5]
+		should: [ Board withSquares: squares gamePieces: #() andRounds: 5]
 		raise: InstanceCreationFailed
 		withExceptionDo: [ :exception | self assert: exception messageText equals: 'You cannot create a board with less than 1 game piece.' ]
 ]
@@ -81,9 +82,9 @@ BoardTest >> testCreateWrongBoardWith0Rounds [
 	squares := Set new.
 	squares add: (Square withAnEffect: NonEffect new).
 	gamepieces := Set new.
-	gamepieces add: (GamePiece withColor: 'pink').
+	gamepieces add: (Gamepiece withColor: 'pink').
 	self
-		should: [ GameBoard withSquares: squares gamePieces: gamepieces andRounds: 0 ]
+		should: [ Board withSquares: squares gamePieces: gamepieces andRounds: 0 ]
 		raise: InstanceCreationFailed
 		withExceptionDo: [ :exception | self assert: exception messageText equals: 'You cannot create a board with less than 1 round.' ]
 ]
@@ -92,9 +93,9 @@ BoardTest >> testCreateWrongBoardWith0Rounds [
 BoardTest >> testCreateWrongBoardWith0Squares [
 	| gamepieces |
 	gamepieces := Set new.
-	gamepieces add: (GamePiece withColor: 'pink').
+	gamepieces add: (Gamepiece withColor: 'pink').
 	self
-		should: [ GameBoard withSquares: #() gamePieces: gamepieces andRounds: 5]
+		should: [ Board withSquares: #() gamePieces: gamepieces andRounds: 5]
 		raise: InstanceCreationFailed
 		withExceptionDo: [ :exception | self assert: exception messageText equals: 'You cannot create a board with less than 1 squares.' ]
 ]

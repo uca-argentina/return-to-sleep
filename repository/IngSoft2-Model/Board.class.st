@@ -1,5 +1,8 @@
+"
+This is the board of the game. Is initialized with different squares, gamepieces of players and the number of rounds. 
+"
 Class {
-	#name : #GameBoard,
+	#name : #Board,
 	#superclass : #Object,
 	#instVars : [
 		'squares',
@@ -11,25 +14,25 @@ Class {
 }
 
 { #category : #Creating }
-GameBoard class >> assertValidNumberOfGamePieces: aNumberOfGamePieces [
+Board class >> assertValidNumberOfGamePieces: aNumberOfGamePieces [
 	aNumberOfGamePieces< 1
 		ifTrue: [ InstanceCreationFailed signal: 'You cannot create a board with less than 1 game piece.' ]
 ]
 
 { #category : #Creating }
-GameBoard class >> assertValidNumberOfRounds: aNumberOfRounds [
+Board class >> assertValidNumberOfRounds: aNumberOfRounds [
 	aNumberOfRounds < 1
 		ifTrue: [ InstanceCreationFailed signal: 'You cannot create a board with less than 1 round.' ].
 ]
 
 { #category : #Creating }
-GameBoard class >> assertValidNumberOfSquares: aNumberOfSquares [
+Board class >> assertValidNumberOfSquares: aNumberOfSquares [
 	aNumberOfSquares < 1
 		ifTrue: [ InstanceCreationFailed signal: 'You cannot create a board with less than 1 squares.' ]
 ]
 
 { #category : #Creating }
-GameBoard class >> withSquares: aSquareCollection gamePieces: aGamePieceCollection andRounds: aNumberOfRounds [
+Board class >> withSquares: aSquareCollection gamePieces: aGamePieceCollection andRounds: aNumberOfRounds [
 	self assertValidNumberOfSquares: aSquareCollection size.
 	self assertValidNumberOfGamePieces: aGamePieceCollection size.
 	self assertValidNumberOfRounds: aNumberOfRounds.
@@ -37,39 +40,38 @@ GameBoard class >> withSquares: aSquareCollection gamePieces: aGamePieceCollecti
 ]
 
 { #category : #Accesing }
-GameBoard >> applyEffectTo: aGamePieceKey [
-	| gamepiece positionOfPlayer square |
+Board >> applyEffectToAGamePieceUsingKey: aGamePieceKey [
+	| gamepiece 	positionOfPlayerOnBoard square |
 	gamepiece := gamepieces at: aGamePieceKey.
-	positionOfPlayer := gamepiece position.
-	square := squares at: positionOfPlayer.
-	(square effect) applyEffectTo: gamepiece ofGamePieceCollection: gamepieces. 
-	
+	positionOfPlayerOnBoard := gamepiece positionOnBoard.
+	square := squares at: 	positionOfPlayerOnBoard.
+	square effect applyEffectTo: gamepiece ofGamePieceCollection: gamepieces
 ]
 
 { #category : #Accesing }
-GameBoard >> endOfBoard [
+Board >> endOfBoard [
 	^ endOfBoard.
 ]
 
 { #category : #Accesing }
-GameBoard >> gamepieces [
+Board >> gamepieces [
 	^ gamepieces
 ]
 
 { #category : #Creating }
-GameBoard >> initializeWithSquares: aSquaresCollection gamePieces: aGamePiecesCollection andRounds: numberOfRounds [
+Board >> initializeWithSquares: aSquaresCollection gamePieces: aGamePiecesCollection andRounds: numberOfRounds [
 	squares := aSquaresCollection.
 	gamepieces := aGamePiecesCollection.
 	rounds := numberOfRounds.
-	endOfBoard := (squares size - 1).
+	endOfBoard := squares size.
 ]
 
 { #category : #Accesing }
-GameBoard >> rounds [
+Board >> rounds [
 	^ rounds
 ]
 
 { #category : #Accesing }
-GameBoard >> squares [
+Board >> squares [
 	^ squares
 ]

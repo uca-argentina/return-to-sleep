@@ -7,9 +7,9 @@ Class {
 { #category : #'playing-sequence-tests' }
 PlayingSequenceTest >> testChangeTurn [
 	| player1 player2 player3 collectionOfPlayers aPlayingSequence gamepiece1 gamepiece2 gamepiece3 |
-		gamepiece1 := GamePiece withColor: 'red'.
-	gamepiece2 := GamePiece withColor: 'blue'.
-	gamepiece3 := GamePiece withColor: 'purple'.
+		gamepiece1 := Gamepiece withColor: 'red'.
+	gamepiece2 := Gamepiece withColor: 'blue'.
+	gamepiece3 := Gamepiece withColor: 'purple'.
 	player1 := Player withName: 'Sol' andAGamePiece: gamepiece1.
 	player2 := Player withName: 'Dubi' andAGamePiece: gamepiece2.
 	player3 := Player withName: 'Tuvi' andAGamePiece: gamepiece3.	
@@ -27,9 +27,9 @@ PlayingSequenceTest >> testChangeTurn [
 { #category : #'playing-sequence-tests' }
 PlayingSequenceTest >> testCreateAPlayingSequence [
 	| player1 player2 player3 collectionOfPlayers aPlayingSequence gamepiece1 gamepiece2 gamepiece3 |
-	gamepiece1 := GamePiece withColor: 'red'.
-	gamepiece2 := GamePiece withColor: 'blue'.
-	gamepiece3 := GamePiece withColor: 'purple'.
+	gamepiece1 := Gamepiece withColor: 'red'.
+	gamepiece2 := Gamepiece withColor: 'blue'.
+	gamepiece3 := Gamepiece withColor: 'purple'.
 	player1 := Player withName: 'Sol' andAGamePiece: gamepiece1.
 	player2 := Player withName: 'Dubi' andAGamePiece: gamepiece2.
 	player3 := Player withName: 'Tuvi' andAGamePiece: gamepiece3.

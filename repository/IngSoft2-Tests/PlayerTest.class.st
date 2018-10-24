@@ -15,19 +15,19 @@ PlayerTest >> testAPlayerPositionChangesWhenPlays [
 		add: dice1;
 		add: dice2;
 		add: dice3.
-	gamepiece := GamePiece withColor: 'pink'.
+	gamepiece := Gamepiece withColor: 'pink'.
 	player := Player withName: 'Sol' andAGamePiece: gamepiece.
-	self assert: player piece position equals: 0.
+	self assert: player gamepiece position equals: 0.
 	player playsWith: setOfDices.
-	self assert: player piece position equals: 20.
+	self assert: player gamepiece position equals: 20.
 	player playsWith: setOfDices.
-	self assert: player piece position equals: 40. 
+	self assert: player gamepiece position equals: 40. 
 ]
 
 { #category : #'player-tests' }
 PlayerTest >> testCreateAPlayerWithAGamePiece [
 	| player aGamePiece |
-	aGamePiece := GamePiece withColor: 'red'.
+	aGamePiece := Gamepiece withColor: 'red'.
 	player := Player withName: 'Sol' andAGamePiece: aGamePiece.
 	self assert: player name equals: 'Sol'
 ]

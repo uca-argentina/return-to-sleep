@@ -17,6 +17,11 @@ Player class >> withName: APlayerName andAGamePiece: aGamePiece [
 	^ self new initializeWithName: APlayerName andAGamePiece: aGamePiece.
 ]
 
+{ #category : #Accesing }
+Player >> gamepiece [
+	^playerGamePiece.
+]
+
 { #category : #Creating }
 Player >> initializeWithName: aPlayerName andAGamePiece: aGamePiece. [ 
 	name := aPlayerName.
@@ -26,11 +31,6 @@ Player >> initializeWithName: aPlayerName andAGamePiece: aGamePiece. [
 { #category : #Creating }
 Player >> name [
 	^ name
-]
-
-{ #category : #Accesing }
-Player >> piece [
-	^ playerGamePiece.
 ]
 
 { #category : #accesing }

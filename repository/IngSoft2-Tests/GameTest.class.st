@@ -5,39 +5,60 @@ Class {
 }
 
 { #category : #'game-tests' }
-GameTest >> testCreateAGameAndPlay [
-	| player1 player2 player3 dices dice1 dice2 dice3 judge board players winner playingSequence |
-	player1 := Player withName: 'Sol'.
-	player2 := Player withName: 'Dubi'.
-	player3 := Player withName: 'Nico'.
+GameTest >> testCreateAGameAndPlayWithDifferentEffects [
+	| player1 player2 dices1 judge board players winner playingSequence gamepiece1 gamepiece2 gamepieces squares effect0 effect1 effect2 effect3 effect4 square0 square1 square2 square3 square4 dices2 |
+	gamepiece1 := Gamepiece withColor: 'pink'.
+	gamepiece2 := Gamepiece withColor: 'blue'.
+	gamepieces := Dictionary
+		newFrom:
+			{(gamepiece1 color -> gamepiece1).
+			(gamepiece2 color -> gamepiece2)}.
+	effect0 := NonEffect new.
+	effect1 := MoonWalk withAPowerValue: 2.
+	effect2 := NonEffect new.
+	effect3 := NonEffect new.
+	effect4 := SpeedUp withAPowerValue: 2.
+	square0 := Square withAnEffect: effect0.
+	square1 := Square withAnEffect: effect1.
+	square2 := Square withAnEffect: effect2.
+	square3 := Square withAnEffect: effect3.
+	square4 := Square withAnEffect: effect4.
+	squares := Dictionary
+		newFrom:
+			{(0 -> square0).
+			(1 -> square1).
+			(2 -> square2).
+			(3 -> square3).
+			(4 -> square4)}.
+	player1 := Player withName: 'Sol' andAGamePiece: gamepiece1.
+	player2 := Player withName: 'Dubi' andAGamePiece: gamepiece2.
 	players := OrderedCollection new.
 	players
 		add: player1;
-		add: player2;
-		add: player3.
-	dice1 := PowerfulDice withFaces: 5.
-	dice2 := PowerfulDice withFaces: 10.
-	dice3 := PowerfulDice withFaces: 5.
-	dices := Set new.
-	dices
-		add: dice1;
-		add: dice2;
-		add: dice3.
-	board := DeterministicBoard withNSquares: 100.
+		add: player2.
+	dices1 := Set new.
+	dices1 add: (PowerfulDice withFaces: 1).
+	dices2 := Set new.
+	dices2 add: (PowerfulDice withFaces: 2).
+	board := Board withSquares: squares gamePieces: gamepieces andRounds: 2.
 	playingSequence := PlayingSequence withAllPlayers: players.
 	judge := Judge named: 'Pitana' assuring: playingSequence on: board.
 	[ judge thereIsAWinner ]
 		whileFalse: [ judge playerTriesToPlay: player1.
-			player1 playsWith: dices.
+			player1 playsWith: dices1.
+			judge validateRoundsOfPlayers.
+			gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
+			board applyEffectToAGamePieceUsingKey: gamepiece1 color.
+			judge playerHasWon: player1.
 			judge playerTriesToPlay: player2.
-			player2 playsWith: dices.
-			judge playerHasWon: player2.
-			judge playerTriesToPlay: player3.
-			player3 playsWith: dices ].
-	self assert: player1 position equals: 101.
-	self assert: player2 position equals: 101.
-	self assert: player3 position equals: 101.
+			player2 playsWith: dices2.
+			judge validateRoundsOfPlayers.
+			gamepiece2 positionOnBoardBasedOnNSquares: board squares size.
+			board applyEffectToAGamePieceUsingKey: gamepiece2 color.
+			judge playerHasWon: player2 ].
 	self assert: judge thereIsAWinner.
 	winner := judge winner.
-	self assert: winner equals: 'Dubi'.
+	self assert: gamepiece1 position equals: 7.
+	self assert: gamepiece2 position equals: 10.
+	self assert: winner name equals: 'Dubi'
 ]

@@ -10,17 +10,7 @@ Class {
 	#category : #'IngSoft2-Model'
 }
 
-{ #category : #Creating }
-AtomicBomb class >> withAPowerValue: aPowerValue [
-	^ self new initializeWithACursePosition: aPowerValue.
-]
-
 { #category : #Accesing }
 AtomicBomb >> applyEffectTo: aGamePiece ofGamePieceCollection: aCollectionOfPieces [
-	aCollectionOfPieces do: [ :each | each changePositionTo: cursePosition. ]
-]
-
-{ #category : #Accesing }
-AtomicBomb >> initializeWithACursePosition: aPowerValue [
-	cursePosition := aPowerValue
+	aCollectionOfPieces do: [ :each | each changePositionTo: each position - each positionOnBoard ].
 ]
