@@ -29,12 +29,11 @@ SquareCreator >> calculateProportionsOfSquares [
 	speedUpSquares := 0.
 	moonWalkSquares := 0.
 	nonEffectSquares := 0.
-	wormHoleSquares := (totalNumberOfSquares  * 0.2) ceiling.
-	atomicBombSquares := (totalNumberOfSquares * 0.02) ceiling.
-	moonWalkSquares := (totalNumberOfSquares * 0.1) ceiling.
-	speedUpSquares := (totalNumberOfSquares * 0.2) ceiling.
-	nonEffectSquares := totalNumberOfSquares - wormHoleSquares - atomicBombSquares
-		- speedUpSquares.
+	wormHoleSquares := (totalNumberOfSquares * 0.2) floor.
+	atomicBombSquares := (totalNumberOfSquares * 0.02) floor.
+	moonWalkSquares := (totalNumberOfSquares * 0.1) floor.
+	speedUpSquares := (totalNumberOfSquares * 0.2) floor.
+	nonEffectSquares := totalNumberOfSquares - wormHoleSquares - atomicBombSquares - speedUpSquares.
 	quantityOfSquaresByEffect := Dictionary
 		newFrom:
 			{('WormHole' -> wormHoleSquares).
@@ -46,10 +45,41 @@ SquareCreator >> calculateProportionsOfSquares [
 
 { #category : #Accesing }
 SquareCreator >> createSquares [
+	| firstHalfNonEffectQuantity atomicBombQuantity moonWalkQuantity speedUpQuantity wormHoleQuantity numberOfSquare secondHalfNonEffectQuantity |
 	self calculateProportionsOfSquares.
-	squares := Dictionary new. 
-	
-	
+	squares := Dictionary new.
+	firstHalfNonEffectQuantity := ((quantityOfSquaresByEffect at: 'NonEffect') / 2) floor. 
+	secondHalfNonEffectQuantity := (quantityOfSquaresByEffect at: 'NonEffect') - firstHalfNonEffectQuantity.
+	atomicBombQuantity := quantityOfSquaresByEffect at: 'AtomicBomb'.
+	moonWalkQuantity := quantityOfSquaresByEffect at: 'MoonWalk'.
+	speedUpQuantity := quantityOfSquaresByEffect at: 'SpeedUp'.
+	wormHoleQuantity := quantityOfSquaresByEffect at: 'WormHole'.
+	numberOfSquare := 0.
+	[ firstHalfNonEffectQuantity > 0 ]
+		whileTrue: [ squares at: numberOfSquare put: (Square withAnEffect: NonEffect new).
+			numberOfSquare := numberOfSquare + 1.
+			firstHalfNonEffectQuantity := firstHalfNonEffectQuantity - 1 ].
+	[ atomicBombQuantity > 0 ]
+		whileTrue: [ squares at: numberOfSquare put: (Square withAnEffect: AtomicBomb new).
+			numberOfSquare := numberOfSquare + 1.
+			atomicBombQuantity := atomicBombQuantity - 1 ].
+	[ moonWalkQuantity > 0 ]
+		whileTrue: [ squares at: numberOfSquare put: (Square withAnEffect: (MoonWalk withAPowerValue: 1)).
+			numberOfSquare := numberOfSquare + 1.
+			moonWalkQuantity := moonWalkQuantity - 1 ].
+	[ speedUpQuantity > 0 ]
+		whileTrue: [ squares at: numberOfSquare put: (Square withAnEffect: (SpeedUp withAPowerValue: 1)).
+			numberOfSquare := numberOfSquare + 1.
+			speedUpQuantity := speedUpQuantity - 1 ].
+	[ wormHoleQuantity > 0 ]
+		whileTrue: [ squares at: numberOfSquare put: (Square withAnEffect: (WormHole withAPowerValue: 1)).
+			numberOfSquare := numberOfSquare + 1.
+			wormHoleQuantity := wormHoleQuantity - 1 ].
+	[ secondHalfNonEffectQuantity > 0 ]
+		whileTrue: [ squares at: numberOfSquare put: (Square withAnEffect: NonEffect new).
+			numberOfSquare := numberOfSquare + 1.
+			secondHalfNonEffectQuantity := secondHalfNonEffectQuantity - 1 ].
+	^ squares
 ]
 
 { #category : #Creating }
