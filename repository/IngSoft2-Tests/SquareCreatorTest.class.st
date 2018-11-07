@@ -9,7 +9,7 @@ Class {
 
 { #category : #tests }
 SquareCreatorTest >> testCreateACollectionOf5Squares [
-	| squareCreator  |
+	| squareCreator |
 	squareCreator := SquareCreator withNSquares: 5.
 	squareCreator createSquares.
 	self assert: squareCreator squares size equals: 5

@@ -13,10 +13,10 @@ Class {
 
 { #category : #Creating }
 PlayingSequence class >> withAllPlayers: anArrayOfPlayers. [
-	^self new withAllPlayers: anArrayOfPlayers 
+	^self new initializeWithAllPlayers: anArrayOfPlayers 
 ]
 
-{ #category : #Accessing }
+{ #category : #Accesing }
 PlayingSequence >> changeToNextPlayer [
 	(turnIndex < players size)
 	ifTrue: [turnIndex := turnIndex + 1.]
@@ -29,8 +29,8 @@ PlayingSequence >> currentPlayer [
 	^players at: turnIndex.
 ]
 
-{ #category : #Creating }
-PlayingSequence >> withAllPlayers: anArrayOfPlayers [
-	players:= anArrayOfPlayers.
-	turnIndex:=1.
+{ #category : #Initializing }
+PlayingSequence >> initializeWithAllPlayers: anOrderedCollectionOfPlayers [
+	players := anOrderedCollectionOfPlayers.
+	turnIndex := 1
 ]

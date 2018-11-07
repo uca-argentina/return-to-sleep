@@ -6,7 +6,7 @@ Class {
 
 { #category : #'game-tests' }
 GameTest >> testCreateAGameAndPlayWithDifferentEffects [
-	| player1 player2 dices1 judge board players winner playingSequence gamepiece1 gamepiece2 gamepieces squares effect0 effect1 effect2 effect3 effect4 square0 square1 square2 square3 square4 dices2 |
+	| player1 player2 dices1 judge board players winner gamepiece1 gamepiece2 gamepieces squares effect0 effect1 effect2 effect3 effect4 square0 square1 square2 square3 square4 dices2 |
 	gamepiece1 := Gamepiece withColor: 'pink'.
 	gamepiece2 := Gamepiece withColor: 'blue'.
 	gamepieces := Dictionary
@@ -37,25 +37,27 @@ GameTest >> testCreateAGameAndPlayWithDifferentEffects [
 		add: player1;
 		add: player2.
 	dices1 := Set new.
-	dices1 add: (PowerfulDice withFaces: 1).
+	dices1 add: (LoadedDice withFaces: 1).
 	dices2 := Set new.
-	dices2 add: (PowerfulDice withFaces: 2).
-	board := Board withSquares: squares gamepieces: gamepieces andRounds: 2.
-	playingSequence := PlayingSequence withAllPlayers: players.
-	judge := Judge named: 'Pitana' assuring: playingSequence on: board.
+	dices2 add: (LoadedDice withFaces: 2).
+	board := Board
+		withSquares: squares
+		gamepieces: gamepieces
+		andRounds: 2.
+	judge := Judge named: 'Pitana' assuring: players on: board.
 	[ judge thereIsAWinner ]
-		whileFalse: [ judge playerTriesToPlay: player1.
-			player1 playsWith: dices1.
+		whileFalse: [ judge validateTurnOf: player1.
+			player1 playsATurnWith: dices1.
 			judge validateRoundsOfPlayers.
 			gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
 			board applyEffectToAGamepieceUsingKey: gamepiece1 color.
-			judge playerHasWon: player1.
-			judge playerTriesToPlay: player2.
-			player2 playsWith: dices2.
+			judge playerHasWon.
+			judge validateTurnOf: player2.
+			player2 playsATurnWith: dices2.
 			judge validateRoundsOfPlayers.
 			gamepiece2 positionOnBoardBasedOnNSquares: board squares size.
 			board applyEffectToAGamepieceUsingKey: gamepiece2 color.
-			judge playerHasWon: player2 ].
+			judge playerHasWon ].
 	self assert: judge thereIsAWinner.
 	winner := judge winner.
 	self assert: gamepiece1 position equals: 7.

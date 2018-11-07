@@ -31,19 +31,18 @@ EffectTest >> testApplyAtomicBombToAGamePiece [
 		add: player1;
 		add: player2.
 	dices1 := Set new.
-	dices1 add: (PowerfulDice withFaces: 2).
+	dices1 add: (LoadedDice withFaces: 2).
 	dices2 := Set new.
-	dices2 add: (PowerfulDice withFaces: 4).
+	dices2 add: (LoadedDice withFaces: 4).
 	board := Board withSquares: squares gamepieces: gamepieces andRounds: 2.
-	playingSequence := PlayingSequence withAllPlayers: players.
-	judge := Judge named: 'Pitana' assuring: playingSequence on: board.
-	judge playerTriesToPlay: player1.
-	player1 playsWith: dices1.
+	judge := Judge named: 'Pitana' assuring: players on: board.
+	judge validateTurnOf:  player1.
+	player1 playsATurnWith: dices1.
 	judge validateRoundsOfPlayers.
 	gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
 	board applyEffectToAGamepieceUsingKey: gamepiece1 color.
-	judge playerTriesToPlay: player2.
-	player2 playsWith: dices2.
+	judge validateTurnOf: player2.
+	player2 playsATurnWith: dices2.
 	judge validateRoundsOfPlayers.
 	gamepiece2 positionOnBoardBasedOnNSquares: board squares size.
 	board applyEffectToAGamepieceUsingKey: gamepiece2 color.

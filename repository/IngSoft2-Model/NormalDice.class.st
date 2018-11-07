@@ -7,7 +7,7 @@ Class {
 	#category : #'IngSoft2-Model'
 }
 
-{ #category : #Actions }
+{ #category : #Accesing }
 NormalDice >> roll [
 	^ (1 to: faces) atRandom.
 ]
