@@ -6,7 +6,7 @@ Class {
 
 { #category : #'effect-tests' }
 EffectTest >> testApplyAtomicBombToAGamePiece [
-	| player1 player2 dices1 judge board players playingSequence gamepiece1 gamepiece2 gamepieces squares effect0 effect1 effect2 square0 square1 square2 dices2 |
+	| player1 player2 dices1 judge board players gamepiece1 gamepiece2 gamepieces squares effect0 effect1 effect2 square0 square1 square2 dices2 |
 	gamepiece1 := Gamepiece withColor: 'pink'.
 	gamepiece2 := Gamepiece withColor: 'blue'.
 	gamepieces := Dictionary
@@ -36,7 +36,7 @@ EffectTest >> testApplyAtomicBombToAGamePiece [
 	dices2 add: (LoadedDice withFaces: 4).
 	board := Board withSquares: squares gamepieces: gamepieces andRounds: 2.
 	judge := Judge named: 'Pitana' assuring: players on: board.
-	judge validateTurnOf:  player1.
+	judge validateTurnOf: player1.
 	player1 playsATurnWith: dices1.
 	judge validateRoundsOfPlayers.
 	gamepiece1 positionOnBoardBasedOnNSquares: board squares size.

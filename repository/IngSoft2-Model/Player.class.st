@@ -37,5 +37,5 @@ Player >> name [
 Player >> playsATurnWith: aSetOfDices [
 	| totalValueOfDices |
 	totalValueOfDices := aSetOfDices sumNumbers: [ :x | x roll ].
-	playerGamePiece changePositionTo: (playerGamePiece position) + totalValueOfDices. 
+	playerGamePiece changePositionTo: playerGamePiece position + totalValueOfDices. 
 ]

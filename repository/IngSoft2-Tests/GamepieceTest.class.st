@@ -55,16 +55,15 @@ GamepieceTest >> testGamepiecesFinalRankingWhenThereIsAWinner [
 			judge validateRoundsOfPlayers.
 			gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
 			board applyEffectToAGamepieceUsingKey: gamepiece1 color.
-			judge playerHasWon.
 			judge validateTurnOf: player2.
 			player2 playsATurnWith: dices2.
 			judge validateRoundsOfPlayers.
 			gamepiece2 positionOnBoardBasedOnNSquares: board squares size.
 			board applyEffectToAGamepieceUsingKey: gamepiece2 color.
-			judge playerHasWon ].
+			judge validateRoundsOfPlayers.
+			winner := judge playerHasWon ].
 	self assert: judge thereIsAWinner.
 	judge determinateFinalRankings.
-	winner := judge winner.
 	self assert: gamepiece1 position equals: 7.
 	self assert: gamepiece2 position equals: 10.
 	self assert: winner name equals: 'Dubi'.
