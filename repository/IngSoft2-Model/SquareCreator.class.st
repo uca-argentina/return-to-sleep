@@ -85,7 +85,7 @@ SquareCreator >> createSquares [
 	^ squares
 ]
 
-{ #category : #Creating }
+{ #category : #Initializing }
 SquareCreator >> initializeWithNSquares: aNumberOfSquares [
 	totalNumberOfSquares := aNumberOfSquares
 ]
@@ -95,7 +95,7 @@ SquareCreator >> squares [
 	^ squares
 ]
 
-{ #category : #accessing }
+{ #category : #Accesing }
 SquareCreator >> totalNumberOfSquares [
 	^ totalNumberOfSquares
 ]

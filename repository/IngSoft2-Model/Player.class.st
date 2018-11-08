@@ -14,7 +14,7 @@ Class {
 
 { #category : #Creating }
 Player class >> withName: APlayerName andAGamePiece: aGamePiece [
-	^ self new withName: APlayerName andAGamepiece: aGamePiece.
+	^ self new initializeWithName: APlayerName andAGamepiece: aGamePiece.
 ]
 
 { #category : #Accesing }
@@ -22,20 +22,20 @@ Player >> gamepiece [
 	^playerGamePiece.
 ]
 
-{ #category : #Creating }
+{ #category : #Initializing }
+Player >> initializeWithName: aPlayerName andAGamepiece: aGamePiece. [ 
+	name := aPlayerName.
+	playerGamePiece := aGamePiece. 
+]
+
+{ #category : #Accesing }
 Player >> name [
 	^ name
 ]
 
-{ #category : #accesing }
-Player >> playsWith: aSetOfDices [
+{ #category : #Accesing }
+Player >> playsATurnWith: aSetOfDices [
 	| totalValueOfDices |
 	totalValueOfDices := aSetOfDices sumNumbers: [ :x | x roll ].
-	playerGamePiece changePositionTo: (playerGamePiece position) + totalValueOfDices. 
-]
-
-{ #category : #Creating }
-Player >> withName: aPlayerName andAGamepiece: aGamePiece. [ 
-	name := aPlayerName.
-	playerGamePiece := aGamePiece. 
+	playerGamePiece changePositionTo: playerGamePiece position + totalValueOfDices. 
 ]

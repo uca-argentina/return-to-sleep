@@ -20,7 +20,7 @@ WormHole >> applyEffectTo: aGamePiece ofGamepieceCollection: aCollection [
 	aGamePiece changePositionTo: aGamePiece position - decrement.
 ]
 
-{ #category : #Creating }
+{ #category : #Initializing }
 WormHole >> initializeWithADecrement: aPowerValue [
 	decrement := aPowerValue
 ]

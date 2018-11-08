@@ -22,7 +22,7 @@ MoonWalk >> applyEffectTo: aGamePiece ofGamepieceCollection: aCollectionOfPieces
 	affectedPieces do: [ :each | each changePositionTo: (each position) - decrement ]
 ]
 
-{ #category : #Creating }
+{ #category : #Initializing }
 MoonWalk >> initializeWithADecrement: aPowerValue [
 	decrement := aPowerValue
 ]

@@ -29,9 +29,9 @@ BoardTest >> testBoardApplyEffectToAGamePieceWhenPlayerPlays [
 	gamepieces := Dictionary newFrom: {(gamepiece1 color -> gamepiece1)}.
 	board := Board withSquares: squares gamepieces: gamepieces andRounds: 5.
 	dices := Set new.
-	dices add: (PowerfulDice withFaces: 3).
-	player playsWith: dices.
-	gamepiece1 positionOnBoardBasedOnNSquares: board squares size. 
+	dices add: (LoadedDice withFaces: 3).
+	player playsATurnWith: dices.
+	gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
 	self assert: gamepiece1 position equals: 3.
 	board applyEffectToAGamepieceUsingKey: gamepiece1 color.
 	self assert: gamepiece1 position equals: 1
@@ -62,7 +62,7 @@ BoardTest >> testCreateBoardWWith3Squares3GamePiecesAnd5Rounds [
 	board := Board withSquares: squares gamepieces: gamepieces andRounds: 5.
 	self assert: board squares size equals: 3.
 	self assert: board gamepieces size equals: 3.
-	self assert: board rounds equals: 5. 
+	self assert: board rounds equals: 5
 ]
 
 { #category : #'board-tests' }
@@ -71,7 +71,7 @@ BoardTest >> testCreateWrongBoardWith0GamePieces [
 	squares := Set new.
 	squares add: (Square withAnEffect: NonEffect new).
 	self
-		should: [ Board withSquares: squares gamepieces: #() andRounds: 5]
+		should: [ Board withSquares: squares gamepieces: #() andRounds: 5 ]
 		raise: InstanceCreationFailed
 		withExceptionDo: [ :exception | self assert: exception messageText equals: 'You cannot create a board with less than 1 game piece.' ]
 ]
@@ -95,7 +95,7 @@ BoardTest >> testCreateWrongBoardWith0Squares [
 	gamepieces := Set new.
 	gamepieces add: (Gamepiece withColor: 'pink').
 	self
-		should: [ Board withSquares: #() gamepieces: gamepieces andRounds: 5]
+		should: [ Board withSquares: #() gamepieces: gamepieces andRounds: 5 ]
 		raise: InstanceCreationFailed
 		withExceptionDo: [ :exception | self assert: exception messageText equals: 'You cannot create a board with less than 1 squares.' ]
 ]

@@ -7,16 +7,16 @@ Class {
 	#instVars : [
 		'name',
 		'board',
-		'winner',
-		'thereIsAWinner',
-		'playingSequence'
+		'playingSequence',
+		'players',
+		'thereIsAWinner'
 	],
 	#category : #'IngSoft2-Model'
 }
 
 { #category : #Creating }
-Judge class >> named: aName assuring: aPlayingSequence on: aBoard [
-	^ self new named: aName assuring: aPlayingSequence on: aBoard.
+Judge class >> named: aName assuring: players on: aBoard [
+	^ self new initializeNamed: aName assuring: players on: aBoard
 ]
 
 { #category : #Accesing }
@@ -26,28 +26,25 @@ Judge >> determinateFinalRankings [
 	gamepieces do: [ :each | each finalRanking: (self ranking: each) ]
 ]
 
-{ #category : #Creating }
+{ #category : #Initializing }
+Judge >> initializeNamed: aName assuring: anOrderedCollectionOfPlayers on: aBoard [
+	name := aName.
+	players := anOrderedCollectionOfPlayers.
+	playingSequence := PlayingSequence withAllPlayers: anOrderedCollectionOfPlayers.
+	board := aBoard.
+	thereIsAWinner := false. 
+]
+
+{ #category : #Accesing }
 Judge >> name [
 ^ name.
 ]
 
-{ #category : #Creating }
-Judge >> named: aName assuring: aPlayingSequence on: aBoard. [
-	name := aName.
-	playingSequence := aPlayingSequence .
-	board := aBoard.
-	thereIsAWinner:= false.
-]
-
 { #category : #Accesing }
-Judge >> playerHasWon: aPlayer [
-	aPlayer gamepiece rounds >= board rounds
-		ifTrue: [ self thereIsAWinner: aPlayer ]
-]
-
-{ #category : #Accesing }
-Judge >> playerTriesToPlay: aPlayer [
-	self validateTurn: playingSequence currentPlayer and: aPlayer.
+Judge >> playerHasWon [
+|winner| 
+	winner:= self winnerIfNone: [ ^ false ].
+	^ winner. 
 ]
 
 { #category : #Accesing }
@@ -65,16 +62,7 @@ Judge >> ranking: aPlayerGamepiece [
 
 { #category : #Accesing }
 Judge >> thereIsAWinner [
-	^ thereIsAWinner.
-]
-
-{ #category : #Accesing }
-Judge >> thereIsAWinner: aWinner [
-	thereIsAWinner
-		ifFalse: [ winner := aWinner.
-			thereIsAWinner := true.
-			self determinateFinalRankings.
-			 ]
+	^ thereIsAWinner
 ]
 
 { #category : #Accesing }
@@ -85,13 +73,17 @@ Judge >> validateRoundsOfPlayers [
 ]
 
 { #category : #Accesing }
-Judge >> validateTurn: currentPlayer and: whoWantsToPlay [
-	currentPlayer = whoWantsToPlay
+Judge >> validateTurnOf: whoWantsToPlay [
+	playingSequence currentPlayer  = whoWantsToPlay
 		ifTrue: [ playingSequence changeToNextPlayer ]
 		ifFalse: [ JudgeValidationFailed signal: 'You cannot play when is not your turn' ]
 ]
 
 { #category : #Accesing }
-Judge >> winner [
-	^ winner. 
+Judge >> winnerIfNone: aBlock [
+	| winner |
+	winner := players detect: [ :each | each gamepiece rounds >= board rounds ] ifNone: aBlock.
+	self determinateFinalRankings.
+	thereIsAWinner := true.
+	^ winner
 ]

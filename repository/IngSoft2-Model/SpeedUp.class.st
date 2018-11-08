@@ -16,12 +16,12 @@ SpeedUp class >> withAPowerValue: aPowerValue [
 	^ self new initializeWithAnIncrement: aPowerValue
 ]
 
-{ #category : #actions }
+{ #category : #Accesing }
 SpeedUp >> applyEffectTo: aGamePiece ofGamepieceCollection: aGamePieceCollection [
 	aGamePiece changePositionTo: aGamePiece position + increment.
 ]
 
-{ #category : #actions }
+{ #category : #Initializing }
 SpeedUp >> initializeWithAnIncrement: aPowerValue [
 	increment := aPowerValue
 ]

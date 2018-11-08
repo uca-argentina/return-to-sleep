@@ -10,13 +10,13 @@ Class {
 	#category : #'IngSoft2-Model'
 }
 
-{ #category : #Creations }
+{ #category : #Creating }
 Dice class >> assertValidNumberOfFaces: aNumberOfFaces [ 
 	(aNumberOfFaces <1)
 	ifTrue: [ InstanceCreationFailed signal: 'You cannot create a dice with zero or negative faces' ].
 ]
 
-{ #category : #Creations }
+{ #category : #Creating }
 Dice class >> withFaces: aNumberOfFaces [
 	self assertValidNumberOfFaces: aNumberOfFaces.
 	^self new initializeWithFaces: aNumberOfFaces
@@ -27,7 +27,7 @@ Dice >> faces [
 	^ faces
 ]
 
-{ #category : #Creations }
+{ #category : #Initializing }
 Dice >> initializeWithFaces: aNumberOfFaces [
 	faces:= aNumberOfFaces
 ]

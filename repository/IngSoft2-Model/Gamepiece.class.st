@@ -20,12 +20,12 @@ Gamepiece class >> withColor: aColor [
 	^ self new initializeWithAColor: aColor. 
 ]
 
-{ #category : #accesing }
+{ #category : #Accesing }
 Gamepiece >> changePositionTo: aNewPosition [ 
 	position := aNewPosition.
 ]
 
-{ #category : #accesing }
+{ #category : #Accesing }
 Gamepiece >> changeRoundTo: newRound [
 	rounds := newRound. 
 ]
@@ -35,17 +35,17 @@ Gamepiece >> color [
 	^ color
 ]
 
-{ #category : #accesing }
+{ #category : #Accesing }
 Gamepiece >> finalRanking [
 ^finalRanking.
 ]
 
-{ #category : #accesing }
+{ #category : #Accesing }
 Gamepiece >> finalRanking: aRanking [
 	finalRanking := aRanking. 
 ]
 
-{ #category : #Creating }
+{ #category : #Initializing }
 Gamepiece >> initializeWithAColor: aColor [
 	color := aColor.
 	position := 0.
@@ -53,7 +53,7 @@ Gamepiece >> initializeWithAColor: aColor [
 	positionOnBoard:=0.
 ]
 
-{ #category : #accesing }
+{ #category : #Accesing }
 Gamepiece >> position [
 	^ position. 
 ]
@@ -63,7 +63,7 @@ Gamepiece >> positionOnBoard [
 	^ positionOnBoard
 ]
 
-{ #category : #accesing }
+{ #category : #Accesing }
 Gamepiece >> positionOnBoardBasedOnNSquares: aNumberOfSquares [
 positionOnBoard := position - (rounds*aNumberOfSquares ).
 ]

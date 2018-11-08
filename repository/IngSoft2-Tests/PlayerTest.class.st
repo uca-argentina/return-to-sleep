@@ -7,9 +7,9 @@ Class {
 { #category : #'player-tests' }
 PlayerTest >> testAPlayerPositionChangesWhenPlays [
 	| dice1 dice2 dice3 setOfDices player gamepiece |
-	dice1 := PowerfulDice withFaces: 5.
-	dice2 := PowerfulDice withFaces: 10.
-	dice3 := PowerfulDice withFaces: 5.
+	dice1 := LoadedDice withFaces:  5.
+	dice2 := LoadedDice withFaces: 10.
+	dice3 := LoadedDice withFaces: 5.
 	setOfDices := Set new.
 	setOfDices
 		add: dice1;
@@ -18,10 +18,10 @@ PlayerTest >> testAPlayerPositionChangesWhenPlays [
 	gamepiece := Gamepiece withColor: 'pink'.
 	player := Player withName: 'Sol' andAGamePiece: gamepiece.
 	self assert: player gamepiece position equals: 0.
-	player playsWith: setOfDices.
+	player playsATurnWith: setOfDices.
 	self assert: player gamepiece position equals: 20.
-	player playsWith: setOfDices.
-	self assert: player gamepiece position equals: 40. 
+	player playsATurnWith: setOfDices.
+	self assert: player gamepiece position equals: 40
 ]
 
 { #category : #'player-tests' }

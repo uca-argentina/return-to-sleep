@@ -36,7 +36,7 @@ Board class >> withSquares: aSquareCollection gamepieces: aGamePieceCollection a
 	self assertValidNumberOfSquares: aSquareCollection size.
 	self assertValidNumberOfGamePieces: aGamePieceCollection size.
 	self assertValidNumberOfRounds: aNumberOfRounds.
-	^ self new withSquares: aSquareCollection gamepieces: aGamePieceCollection andRounds: aNumberOfRounds. 
+	^ self new initializeWithSquares: aSquareCollection gamepieces: aGamePieceCollection andRounds: aNumberOfRounds. 
 ]
 
 { #category : #Accesing }
@@ -58,6 +58,14 @@ Board >> gamepieces [
 	^ gamepieces
 ]
 
+{ #category : #Initializing }
+Board >> initializeWithSquares: aSquaresCollection gamepieces: aGamepieceCollection andRounds: numberOfRounds [
+	squares := aSquaresCollection.
+	gamepieces := aGamepieceCollection.
+	rounds := numberOfRounds.
+	endOfBoard := squares size.
+]
+
 { #category : #Accesing }
 Board >> rounds [
 	^ rounds
@@ -66,12 +74,4 @@ Board >> rounds [
 { #category : #Accesing }
 Board >> squares [
 	^ squares
-]
-
-{ #category : #Creating }
-Board >> withSquares: aSquaresCollection gamepieces: aGamepieceCollection andRounds: numberOfRounds [
-	squares := aSquaresCollection.
-	gamepieces := aGamepieceCollection.
-	rounds := numberOfRounds.
-	endOfBoard := squares size.
 ]
