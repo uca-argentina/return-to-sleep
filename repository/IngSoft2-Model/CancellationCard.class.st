@@ -20,8 +20,14 @@ CancellationCard class >> withTypeValueAndId: aCardID [
 { #category : #Accesing }
 CancellationCard >> applyEffectTo: allPlayers removingCardEffectCausedByCardWithId: cardID [
 	| cardEffectToErase |
-	cardEffectToErase := allPlayers gamepiece cardEffectsApplied detect: [ :each | each causalCard id = cardID ].
-	allPlayers gamepiece cardEffectsApplied remove: cardEffectToErase
+	allPlayers
+		do: [ :each | 
+			each gamepiece cardEffectsApplied
+				detect: [ :effect | effect causalCard id = cardID ]
+				ifFound: [ :effect | 
+					cardEffectToErase := effect.
+					each gamepiece cardEffectsApplied remove: cardEffectToErase ]
+				ifNone: [  ] ]
 ]
 
 { #category : #Accesing }

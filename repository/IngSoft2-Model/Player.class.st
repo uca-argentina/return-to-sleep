@@ -56,8 +56,11 @@ Player >> playCardById: aCardId andApplyTo: aPlayer [
 ]
 
 { #category : #Accesing }
-Player >> playCardById: aCardID applyTo: allPlayers removingCardEffectCausedByCardWithId: CardID [
-	hand playCardById: aCardID applyTo: allPlayers removingCardEffectCausedByCardWithId: CardID
+Player >> playCardById: aCardID applyTo: allPlayers removingCardEffectCausedByCardWithId: causalCardID [
+	hand
+		playCardById: aCardID
+		applyTo: allPlayers
+		removingCardEffectCausedByCardWithId: causalCardID
 ]
 
 { #category : #Accesing }

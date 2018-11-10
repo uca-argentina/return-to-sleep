@@ -23,13 +23,29 @@ CardTest >> testCancellationCard [
 		add: player2.
 	dices := Set new.
 	dices add: (LoadedDice withFaces: 1).
-	player1 playsATurnWith: dices.
-	player1 playCardById: 1 andApplyTo: player1.
-	player1 playsATurnWith: dices.
-	self assert: player1 gamepiece position equals: 0.
-	player2 playCardById: 3 applyTo: player1 removingCardEffectCausedByCardWithId: 1.
-	player1 playsATurnWith: dices.
-	self assert: player1 gamepiece position equals: 1.
+	player2 playsATurnWith: dices.
+	player1 playCardById: 1 andApplyTo: player2.
+	player2 playsATurnWith: dices.
+	self assert: player2 gamepiece position equals: 0.
+	player1 playCardById: 2 andApplyTo: player2.
+	player2 playsATurnWith: dices.
+	self assert: player2 gamepiece position equals: -3.
+	player2 playCardById: 3 applyTo: players removingCardEffectCausedByCardWithId: 1.
+	player2 playsATurnWith: dices.
+	self assert: player2 gamepiece position equals: -4.
+	self
+		should: [ player2 playCardById: 3 applyTo: players removingCardEffectCausedByCardWithId: 1 ]
+		raise: CardBelongFailed
+		withExceptionDo:
+			[ :exception | self assert: exception messageText equals: 'This player does not have this card' ].
+	player2 playCardById: 4 applyTo: players removingCardEffectCausedByCardWithId: 2.
+	player2 playsATurnWith: dices.
+	self assert: player2 gamepiece position equals: -3.
+	self
+		should: [ player2 playCardById: 4 applyTo: players removingCardEffectCausedByCardWithId: 2 ]
+		raise: CardBelongFailed
+		withExceptionDo:
+			[ :exception | self assert: exception messageText equals: 'This player does not have this card' ].
 ]
 
 { #category : #'card-tests' }
