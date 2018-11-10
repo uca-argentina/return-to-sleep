@@ -29,14 +29,6 @@ PlayerTest >> testAPlayerPositionChangesWhenPlays [
 ]
 
 { #category : #'player-tests' }
-PlayerTest >> testCreateAPlayerWithAGamePiece [
-	| player aGamePiece |
-	aGamePiece := Gamepiece withColor: 'red'.
-	player := Player withName: 'Sol' andAGamePiece: aGamePiece.
-	self assert: player name equals: 'Sol'
-]
-
-{ #category : #'player-tests' }
 PlayerTest >> testCreateAPlayerWithAGamePieceAndTwoCards [
 	| player aGamePiece |
 	aGamePiece := Gamepiece withColor: 'red'.

@@ -28,13 +28,6 @@ CancellationCard >> id [
 ]
 
 { #category : #Initializing }
-CancellationCard >> initializeWithNameTypeAndValue [
-	name := 'Cancellation'.
-	type := 'instant'.
-	value := 0.
-]
-
-{ #category : #Initializing }
 CancellationCard >> initializeWithNameTypeValueAndId: aCardID. [
 	name := 'Cancellation'.
 	type := 'instant'.

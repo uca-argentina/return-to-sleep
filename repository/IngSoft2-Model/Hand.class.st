@@ -1,3 +1,6 @@
+"
+This is a Hand of a Player. It has a collection of Cards.
+"
 Class {
 	#name : #Hand,
 	#superclass : #Object,
@@ -22,7 +25,7 @@ Hand >> initializeWithACard: aFirstCard andOtherCard: aSecondCard [
 { #category : #Accesing }
 Hand >> playCardById: aCardID andApplyTo: aPlayer [
 	| card |
-	card := cards detect: [ :each | each id = aCardID ] ifNone: [ CardExistanceFailed signal: 'This player does not have this card' ].
+	card := cards detect: [ :each | each id = aCardID ] ifNone: [ CardBelongFailed signal: 'This player does not have this card' ].
 	card applyEffectTo: aPlayer.
 	cards remove: card
 ]
@@ -30,7 +33,7 @@ Hand >> playCardById: aCardID andApplyTo: aPlayer [
 { #category : #Accesing }
 Hand >> playCardById: aCardID applyTo: allPlayers removingCardEffectCausedByCardWithId: causalCardID [
 	| myCard |
-	myCard := cards detect: [ :each | each id = aCardID ] ifNone: [ CardExistanceFailed signal: 'This player does not have this card' ].
+	myCard := cards detect: [ :each | each id = aCardID ] ifNone: [ CardBelongFailed signal: 'This player does not have this card' ].
 	myCard applyEffectTo: allPlayers removingCardEffectCausedByCardWithId: causalCardID.
 	cards remove: myCard
 ]

@@ -37,7 +37,9 @@ CardTest >> testCreateACancellationCard [
 	| card |
 	card := CancellationCard withNameTypeValueAndId: 1.
 	self assert: card type equals: 'instant'.
-	self assert: card name equals: 'Cancellation'
+	self assert: card name equals: 'Cancellation'.
+	self assert: card id equals: 1.
+	
 ]
 
 { #category : #'card-tests' }
@@ -46,7 +48,8 @@ CardTest >> testCreateAnOverloadCard [
 	card := OverloadCard withNameTypeValueAndId: 1.
 	self assert: card type equals: 'permanent'.
 	self assert: card name equals: 'Overload'.
-	self assert: card value equals: -2
+	self assert: card value equals: -2.
+	self assert: card id equals: 1.
 ]
 
 { #category : #'card-tests' }
@@ -76,11 +79,11 @@ CardTest >> testOverloadCard [
 	self assert: player1 gamepiece position equals: -4.
 	self
 		should: [ player2 playCardById: 3 andApplyTo: player1 ]
-		raise: CardExistanceFailed
+		raise: CardBelongFailed
 		withExceptionDo: [ :exception | self assert: exception messageText equals: 'This player does not have this card' ].
 		
 	self
 		should: [ player2 playCardById: 4 andApplyTo: player1 ]
-		raise: CardExistanceFailed
+		raise: CardBelongFailed
 		withExceptionDo: [ :exception | self assert: exception messageText equals: 'This player does not have this card' ]
 ]
