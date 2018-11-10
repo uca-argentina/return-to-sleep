@@ -18,7 +18,11 @@ BoardTest >> testBoardApplyEffectToAGamePieceWhenPlayerPlays [
 	square3 := Square withAnEffect: effect3.
 	square4 := Square withAnEffect: effect4.
 	gamepiece1 := Gamepiece withColor: 'blue'.
-	player := Player withName: 'Sol' andAGamePiece: gamepiece1.
+	player := Player
+		withName: 'Sol'
+		aGamePiece: gamepiece1
+		aCard: aFirstCard
+		andOtherCard: aSecondCard.
 	squares := Dictionary
 		newFrom:
 			{(0 -> square0).
@@ -27,7 +31,10 @@ BoardTest >> testBoardApplyEffectToAGamePieceWhenPlayerPlays [
 			(3 -> square3).
 			(4 -> square4)}.
 	gamepieces := Dictionary newFrom: {(gamepiece1 color -> gamepiece1)}.
-	board := Board withSquares: squares gamepieces: gamepieces andRounds: 5.
+	board := Board
+		withSquares: squares
+		gamepieces: gamepieces
+		andRounds: 5.
 	dices := Set new.
 	dices add: (LoadedDice withFaces: 3).
 	player playsATurnWith: dices.

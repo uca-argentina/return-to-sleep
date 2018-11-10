@@ -37,8 +37,16 @@ GamepieceTest >> testGamepiecesFinalRankingWhenThereIsAWinner [
 			(2 -> square2).
 			(3 -> square3).
 			(4 -> square4)}.
-	player1 := Player withName: 'Sol' andAGamePiece: gamepiece1.
-	player2 := Player withName: 'Dubi' andAGamePiece: gamepiece2.
+	player1 := Player
+		withName: 'Sol'
+		aGamePiece: gamepiece1
+		aCard: aFirstCard
+		andOtherCard: aSecondCard.
+	player2 := Player
+		withName: 'Dubi'
+		aGamePiece: gamepiece2
+		aCard: aFirstCard
+		andOtherCard: aSecondCard.
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -47,7 +55,10 @@ GamepieceTest >> testGamepiecesFinalRankingWhenThereIsAWinner [
 	dices1 add: (LoadedDice withFaces: 1).
 	dices2 := Set new.
 	dices2 add: (LoadedDice withFaces: 2).
-	board := Board withSquares: squares gamepieces: gamepieces andRounds: 2.
+	board := Board
+		withSquares: squares
+		gamepieces: gamepieces
+		andRounds: 2.
 	judge := Judge named: 'Pitana' assuring: players on: board.
 	[ judge thereIsAWinner ]
 		whileFalse: [ judge validateTurnOf: player1.
