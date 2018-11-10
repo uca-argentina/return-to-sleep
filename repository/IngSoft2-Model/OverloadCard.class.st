@@ -1,3 +1,6 @@
+"
+This card is an Overload card. Its type is Permanent and its value is -2. 
+"
 Class {
 	#name : #OverloadCard,
 	#superclass : #Card,

@@ -1,3 +1,6 @@
+"
+This card is a Cancellation card. It can cancel a permanent effect. Its type is instant.
+"
 Class {
 	#name : #CancellationCard,
 	#superclass : #Card,

@@ -1,3 +1,6 @@
+"
+This is a card effect. It is created by a Causal Card. 
+"
 Class {
 	#name : #CardEffect,
 	#superclass : #Object,
