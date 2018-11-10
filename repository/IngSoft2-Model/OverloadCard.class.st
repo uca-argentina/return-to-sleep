@@ -6,7 +6,6 @@ Class {
 	#superclass : #Card,
 	#instVars : [
 		'type',
-		'name',
 		'value',
 		'id'
 	],
@@ -14,8 +13,8 @@ Class {
 }
 
 { #category : #Creating }
-OverloadCard class >> withNameTypeValueAndId: aCardID [
-	^ self new initializeWithNameTypeValueAndId: aCardID.
+OverloadCard class >> withTypeValueAndId: aCardID [
+	^ self new initializeWithTypeValueAndId: aCardID.
 ]
 
 { #category : #Accesing }
@@ -28,17 +27,11 @@ OverloadCard >> id [
 	^ id.
 ]
 
-{ #category : #initialization }
-OverloadCard >> initializeWithNameTypeValueAndId: aCardID [
+{ #category : #Initializing }
+OverloadCard >> initializeWithTypeValueAndId: aCardID [
 	type := 'permanent'.
-	name := 'Overload'.
 	value := -2.
-	id := aCardID.
-]
-
-{ #category : #Accesing }
-OverloadCard >> name [
-	^ name.
+	id := aCardID
 ]
 
 { #category : #Accesing }

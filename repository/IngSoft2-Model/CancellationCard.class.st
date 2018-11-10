@@ -5,7 +5,6 @@ Class {
 	#name : #CancellationCard,
 	#superclass : #Card,
 	#instVars : [
-		'name',
 		'type',
 		'value',
 		'id'
@@ -14,8 +13,8 @@ Class {
 }
 
 { #category : #Creating }
-CancellationCard class >> withNameTypeValueAndId: aCardID [
-	^ self new initializeWithNameTypeValueAndId: aCardID.
+CancellationCard class >> withTypeValueAndId: aCardID [
+	^ self new initializeWithTypeValueAndId: aCardID.
 ]
 
 { #category : #Accesing }
@@ -31,16 +30,10 @@ CancellationCard >> id [
 ]
 
 { #category : #Initializing }
-CancellationCard >> initializeWithNameTypeValueAndId: aCardID. [
-	name := 'Cancellation'.
+CancellationCard >> initializeWithTypeValueAndId: aCardID [
 	type := 'instant'.
 	value := 0.
-	id := aCardID.
-]
-
-{ #category : #Initializing }
-CancellationCard >> name [
-	^ name
+	id := aCardID
 ]
 
 { #category : #Initializing }
