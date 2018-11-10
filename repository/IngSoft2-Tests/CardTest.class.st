@@ -5,6 +5,48 @@ Class {
 }
 
 { #category : #'card-tests' }
+CardTest >> testAccelerationCard [
+	| player1 player2 dices players |
+	player1 := Player
+		withName: 'Sol'
+		aGamePiece: (Gamepiece withColor: 'pink')
+		aCard: (OverloadCard withTypeValueAndId: 1)
+		andOtherCard: (AccelerationCard withTypeValueAndId: 2).
+	player2 := Player
+		withName: 'Dubi'
+		aGamePiece: (Gamepiece withColor: 'blue')
+		aCard: (OverloadCard withTypeValueAndId: 3)
+		andOtherCard: ( AccelerationCard withTypeValueAndId: 4).
+	players := OrderedCollection new. 
+	players add: player1;
+	add: player2. 
+	dices := Set new.
+	dices add: (LoadedDice withFaces: 1).
+	player1 playsATurnWith: dices.
+	self assert: player1 gamepiece position equals: 1.
+	player1 playCardById: 2 andApplyTo: players.
+	player1 playsATurnWith: dices.
+	player2 playsATurnWith: dices.
+	self assert: player1 gamepiece position equals: 3.
+	self assert: player2 gamepiece position equals: 2.
+	player2 playCardById: 4 andApplyTo: players.
+	player1 playsATurnWith: dices.
+	player2 playsATurnWith: dices.
+	self assert: player1 gamepiece position equals: 6.
+	self assert: player2 gamepiece position equals: 5.
+	self
+		should: [ player1 playCardById: 2 andApplyTo: players]
+		raise: CardBelongFailed
+		withExceptionDo:
+			[ :exception | self assert: exception messageText equals: 'This player does not have this card' ].
+	self
+		should: [ player2 playCardById: 4 andApplyTo: players]
+		raise: CardBelongFailed
+		withExceptionDo:
+			[ :exception | self assert: exception messageText equals: 'This player does not have this card' ].
+]
+
+{ #category : #'card-tests' }
 CardTest >> testCancellationCard [
 	| player1 player2 dices players |
 	player1 := Player
@@ -63,6 +105,15 @@ CardTest >> testCreateASpeedCard [
 	self assert: card type equals: 'permanent'.
 	self assert: card value equals: 1.
 	self assert: card id equals: 1
+]
+
+{ #category : #'card-tests' }
+CardTest >> testCreateAnAccelerationCard [
+	| card |
+	card := AccelerationCard withTypeValueAndId: 1.
+	self assert: card type equals: 'permanent'.
+	self assert: card value equals: 1.
+	self assert: card id equals: 1.
 ]
 
 { #category : #'card-tests' }

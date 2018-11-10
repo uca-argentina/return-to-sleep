@@ -1,3 +1,6 @@
+"
+This card is an Overload card. Its type is Permanent and its value is +1.  It affects only a player. 
+"
 Class {
 	#name : #SpeedCard,
 	#superclass : #Card,
