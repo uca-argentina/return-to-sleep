@@ -10,7 +10,8 @@ Class {
 		'rounds',
 		'position',
 		'positionOnBoard',
-		'finalRanking'
+		'finalRanking',
+		'cardEffectsApplied'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -18,6 +19,16 @@ Class {
 { #category : #Creating }
 Gamepiece class >> withColor: aColor [
 	^ self new initializeWithAColor: aColor. 
+]
+
+{ #category : #Accesing }
+Gamepiece >> addAppliedEffectOfCardByCard: aCard [
+	cardEffectsApplied add: (CardEffect createdByCard: aCard). 
+]
+
+{ #category : #Accesing }
+Gamepiece >> cardEffectsApplied [
+^	cardEffectsApplied 
 ]
 
 { #category : #Accesing }
@@ -50,7 +61,8 @@ Gamepiece >> initializeWithAColor: aColor [
 	color := aColor.
 	position := 0.
 	rounds := 0.
-	positionOnBoard:=0.
+	positionOnBoard := 0.
+	cardEffectsApplied := Set new. 
 ]
 
 { #category : #Accesing }

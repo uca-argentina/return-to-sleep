@@ -5,7 +5,6 @@ Class {
 	#name : #Square,
 	#superclass : #Object,
 	#instVars : [
-		'numberOnBoard',
 		'effect'
 	],
 	#category : #'IngSoft2-Model'
