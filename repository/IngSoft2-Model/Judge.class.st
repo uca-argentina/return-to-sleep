@@ -7,10 +7,9 @@ Class {
 	#instVars : [
 		'name',
 		'board',
-		'winner',
-		'thereIsAWinner',
 		'playingSequence',
-		'players'
+		'players',
+		'thereIsAWinner'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -33,7 +32,7 @@ Judge >> initializeNamed: aName assuring: anOrderedCollectionOfPlayers on: aBoar
 	players := anOrderedCollectionOfPlayers.
 	playingSequence := PlayingSequence withAllPlayers: anOrderedCollectionOfPlayers.
 	board := aBoard.
-	thereIsAWinner := false
+	thereIsAWinner := false. 
 ]
 
 { #category : #Accesing }
@@ -43,16 +42,9 @@ Judge >> name [
 
 { #category : #Accesing }
 Judge >> playerHasWon [
-	| gamepieces winnerGamepiece winnerGamepieceCollection whoHasWon |
-	gamepieces := (board gamepieces values collect: [ :each | each ]) as: OrderedCollection.
-	winnerGamepieceCollection := gamepieces select: [ :each | each rounds >= board rounds ].
-	winnerGamepieceCollection isNotEmpty
-		ifTrue: [ winnerGamepiece := winnerGamepieceCollection at: 1.
-			whoHasWon := players detect: [ :each | each gamepiece = winnerGamepiece ].
-			thereIsAWinner
-		ifFalse: [ winner := whoHasWon .
-			thereIsAWinner := true.
-			self determinateFinalRankings ] ]
+|winner| 
+	winner:= self winnerIfNone: [ ^ false ].
+	^ winner. 
 ]
 
 { #category : #Accesing }
@@ -70,7 +62,7 @@ Judge >> ranking: aPlayerGamepiece [
 
 { #category : #Accesing }
 Judge >> thereIsAWinner [
-	^ thereIsAWinner.
+	^ thereIsAWinner
 ]
 
 { #category : #Accesing }
@@ -88,6 +80,10 @@ Judge >> validateTurnOf: whoWantsToPlay [
 ]
 
 { #category : #Accesing }
-Judge >> winner [
-	^ winner. 
+Judge >> winnerIfNone: aBlock [
+	| winner |
+	winner := players detect: [ :each | each gamepiece rounds >= board rounds ] ifNone: aBlock.
+	self determinateFinalRankings.
+	thereIsAWinner := true.
+	^ winner
 ]

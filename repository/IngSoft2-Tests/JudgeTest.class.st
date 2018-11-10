@@ -7,11 +7,20 @@ Class {
 { #category : #'judge-tests' }
 JudgeTest >> testCreateAJudge [
 	| judge player1 player2 players |
-	player1 := Player withName: 'Sol' andAGamePiece: (Gamepiece withColor: 'black').
-	player2 := Player withName: 'Dubi' andAGamePiece: (Gamepiece withColor: 'yellow').
+	player1 := Player
+		withName: 'Sol'
+		aGamePiece: (Gamepiece withColor: 'black')
+		aCard: aFirstCard
+		andOtherCard: aSecondCard.
+	player2 := Player
+		withName: 'Dubi'
+		aGamePiece: (Gamepiece withColor: 'yellow')
+		aCard: aFirstCard
+		andOtherCard: aSecondCard.
 	players := OrderedCollection new.
-	players add: player1;
-	add:player2.
+	players
+		add: player1;
+		add: player2.
 	judge := Judge named: 'Pitana' assuring: players on: Board new.
 	self assert: judge name equals: 'Pitana'
 ]
@@ -21,8 +30,16 @@ JudgeTest >> testJudgeValidateTurn [
 	| judge turn player1 player2 collectionOfPlayers board gamepiece1 gamepiece2 gamepieces squares |
 	gamepiece1 := Gamepiece withColor: 'red'.
 	gamepiece2 := Gamepiece withColor: 'blue'.
-	player1 := Player withName: 'Sol' andAGamePiece: gamepiece1.
-	player2 := Player withName: 'Dubi' andAGamePiece: gamepiece2.
+	player1 := Player
+		withName: 'Sol'
+		aGamePiece: gamepiece1
+		aCard: aFirstCard
+		andOtherCard: aSecondCard.
+	player2 := Player
+		withName: 'Dubi'
+		aGamePiece: gamepiece2
+		aCard: aFirstCard
+		andOtherCard: aSecondCard.
 	gamepieces := Set new.
 	gamepieces
 		add: gamepiece1;
@@ -34,14 +51,22 @@ JudgeTest >> testJudgeValidateTurn [
 	turn := PlayingSequence withAllPlayers: collectionOfPlayers.
 	squares := Set new.
 	squares add: (Square withAnEffect: NonEffect new).
-	board := Board withSquares: squares gamepieces: gamepieces andRounds: 2.
-	judge := Judge named: 'Pitana' assuring: collectionOfPlayers on: board.
-	self should: [ judge validateTurnOf: player2 ] raise: JudgeValidationFailed
+	board := Board
+		withSquares: squares
+		gamepieces: gamepieces
+		andRounds: 2.
+	judge := Judge
+		named: 'Pitana'
+		assuring: collectionOfPlayers
+		on: board.
+	self
+		should: [ judge validateTurnOf: player2 ]
+		raise: JudgeValidationFailed
 ]
 
 { #category : #'judge-tests' }
 JudgeTest >> testJudgeValidateWhenPlayerCompletesARound [
-	| board squares square1 square2 square3 square4 gamepiece1 gamepieces player dices effect1 effect2 effect3 effect4 effect0 square0 judge|
+	| board squares square1 square2 square3 square4 gamepiece1 gamepieces player dices effect1 effect2 effect3 effect4 effect0 square0 judge |
 	effect0 := NonEffect new.
 	effect1 := AtomicBomb new.
 	effect2 := SpeedUp withAPowerValue: 1.
@@ -53,7 +78,11 @@ JudgeTest >> testJudgeValidateWhenPlayerCompletesARound [
 	square3 := Square withAnEffect: effect3.
 	square4 := Square withAnEffect: effect4.
 	gamepiece1 := Gamepiece withColor: 'blue'.
-	player := Player withName: 'Sol' andAGamePiece: gamepiece1.
+	player := Player
+		withName: 'Sol'
+		aGamePiece: gamepiece1
+		aCard: aFirstCard
+		andOtherCard: aSecondCard.
 	squares := Dictionary
 		newFrom:
 			{(0 -> square0).
@@ -62,7 +91,10 @@ JudgeTest >> testJudgeValidateWhenPlayerCompletesARound [
 			(3 -> square3).
 			(4 -> square4)}.
 	gamepieces := Dictionary newFrom: {(gamepiece1 color -> gamepiece1)}.
-	board := Board withSquares: squares gamepieces: gamepieces andRounds: 5.
+	board := Board
+		withSquares: squares
+		gamepieces: gamepieces
+		andRounds: 5.
 	dices := Set new.
 	dices add: (LoadedDice withFaces: 3).
 	judge := Judge named: 'Pitana' assuring: player on: board.
@@ -84,7 +116,7 @@ JudgeTest >> testJudgeValidateWhenPlayerCompletesARound [
 
 { #category : #'judge-tests' }
 JudgeTest >> testJudgeValidateWhenPlayerHasToUndoARoundBecauseOfWormHoleEffect [
-	| board squares square1 square2 gamepiece1 gamepieces player dices effect1 effect2 effect0 square0 judge  |
+	| board squares square1 square2 gamepiece1 gamepieces player dices effect1 effect2 effect0 square0 judge players |
 	effect0 := NonEffect new.
 	effect1 := WormHole withAPowerValue: 3.
 	effect2 := NonEffect new.
@@ -92,17 +124,26 @@ JudgeTest >> testJudgeValidateWhenPlayerHasToUndoARoundBecauseOfWormHoleEffect [
 	square1 := Square withAnEffect: effect1.
 	square2 := Square withAnEffect: effect2.
 	gamepiece1 := Gamepiece withColor: 'blue'.
-	player := Player withName: 'Sol' andAGamePiece: gamepiece1.
+	player := Player
+		withName: 'Sol'
+		aGamePiece: gamepiece1
+		aCard: aFirstCard
+		andOtherCard: aSecondCard.
+	players := OrderedCollection new.
+	players add: player.
 	squares := Dictionary
 		newFrom:
 			{(0 -> square0).
 			(1 -> square1).
 			(2 -> square2)}.
 	gamepieces := Dictionary newFrom: {(gamepiece1 color -> gamepiece1)}.
-	board := Board withSquares: squares gamepieces: gamepieces andRounds: 5.
+	board := Board
+		withSquares: squares
+		gamepieces: gamepieces
+		andRounds: 5.
 	dices := Set new.
 	dices add: (LoadedDice withFaces: 1).
-	judge := Judge named: 'Pitana' assuring: player on: board.
+	judge := Judge named: 'Pitana' assuring: players on: board.
 	player playsATurnWith: dices.
 	gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
 	self assert: gamepiece1 position equals: 1.
@@ -114,7 +155,7 @@ JudgeTest >> testJudgeValidateWhenPlayerHasToUndoARoundBecauseOfWormHoleEffect [
 
 { #category : #'judge-tests' }
 JudgeTest >> testJugdeDeterminateWinner [
-	| player1 player2 dices1 judge board players gamepiece1 gamepiece2 gamepieces squares effect0 effect1 effect2 effect3 effect4 square0 square1 square2 square3 square4 effect5 square5 dices2 |
+	| player1 player2 dices1 judge board players winner gamepiece1 gamepiece2 gamepieces squares effect0 effect1 effect2 effect3 effect4 square0 square1 square2 square3 square4 dices2 |
 	gamepiece1 := Gamepiece withColor: 'pink'.
 	gamepiece2 := Gamepiece withColor: 'blue'.
 	gamepieces := Dictionary
@@ -122,16 +163,15 @@ JudgeTest >> testJugdeDeterminateWinner [
 			{(gamepiece1 color -> gamepiece1).
 			(gamepiece2 color -> gamepiece2)}.
 	effect0 := NonEffect new.
-	effect1 := SpeedUp withAPowerValue: 1.
-	effect2 := MoonWalk withAPowerValue: 2.
-	effect3 := WormHole withAPowerValue: 2.
-	effect4 := AtomicBomb new.
+	effect1 := MoonWalk withAPowerValue: 2.
+	effect2 := NonEffect new.
+	effect3 := NonEffect new.
+	effect4 := SpeedUp withAPowerValue: 2.
 	square0 := Square withAnEffect: effect0.
 	square1 := Square withAnEffect: effect1.
 	square2 := Square withAnEffect: effect2.
 	square3 := Square withAnEffect: effect3.
 	square4 := Square withAnEffect: effect4.
-	square5 := Square withAnEffect: effect5.
 	squares := Dictionary
 		newFrom:
 			{(0 -> square0).
@@ -139,38 +179,116 @@ JudgeTest >> testJugdeDeterminateWinner [
 			(2 -> square2).
 			(3 -> square3).
 			(4 -> square4)}.
-	player1 := Player withName: 'Sol' andAGamePiece: gamepiece1.
-	player2 := Player withName: 'Dubi' andAGamePiece: gamepiece2.
+	player1 := Player
+		withName: 'Sol'
+		aGamePiece: gamepiece1
+		aCard: aFirstCard
+		andOtherCard: aSecondCard.
+	player2 := Player
+		withName: 'Dubi'
+		aGamePiece: gamepiece2
+		aCard: aFirstCard
+		andOtherCard: aSecondCard.
 	players := OrderedCollection new.
 	players
 		add: player1;
 		add: player2.
 	dices1 := Set new.
-	dices1 add: (LoadedDice withFaces: 4).
+	dices1 add: (LoadedDice withFaces: 1).
 	dices2 := Set new.
-	dices2 add: (LoadedDice withFaces: 3).
+	dices2 add: (LoadedDice withFaces: 2).
 	board := Board
 		withSquares: squares
 		gamepieces: gamepieces
-		andRounds: 1.
+		andRounds: 2.
 	judge := Judge named: 'Pitana' assuring: players on: board.
-	judge validateTurnOf: player1.
-	player1 playsATurnWith: dices1.
-	judge validateRoundsOfPlayers.
-	judge playerHasWon.
-	judge validateTurnOf: player2.
-	player2 playsATurnWith: dices2.
-	judge validateRoundsOfPlayers.
-	judge playerHasWon.
-	judge validateTurnOf: player1.
-	player1 playsATurnWith: dices1.
-	judge validateRoundsOfPlayers.
-	judge playerHasWon.
-	judge validateTurnOf: player2.
-	player2 playsATurnWith: dices2.
-	judge validateRoundsOfPlayers.
-	judge playerHasWon.
-	self assert: judge winner name equals: 'Sol'
+	[ judge thereIsAWinner ]
+		whileFalse: [ judge validateTurnOf: player1.
+			player1 playsATurnWith: dices1.
+			judge validateRoundsOfPlayers.
+			gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
+			gamepiece2 positionOnBoardBasedOnNSquares: board squares size.
+			board applyEffectToAGamepieceUsingKey: gamepiece1 color.
+			judge validateTurnOf: player2.
+			player2 playsATurnWith: dices2.
+			judge validateRoundsOfPlayers.
+			gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
+			gamepiece2 positionOnBoardBasedOnNSquares: board squares size.
+			board applyEffectToAGamepieceUsingKey: gamepiece2 color.
+			judge validateRoundsOfPlayers.
+			winner := judge playerHasWon ].
+	self assert: judge thereIsAWinner equals: true.
+	self assert: winner name equals: 'Dubi'
+]
+
+{ #category : #'judge-tests' }
+JudgeTest >> testJugdeDeterminateWinnerWhenThereIsAnAtomicBombSquare [
+	| player1 player2 dices1 judge board players winner gamepiece1 gamepiece2 gamepieces squares effect0 effect1 effect2 effect3 effect4 square0 square1 square2 square3 square4 dices2 |
+	gamepiece1 := Gamepiece withColor: 'pink'.
+	gamepiece2 := Gamepiece withColor: 'blue'.
+	gamepieces := Dictionary
+		newFrom:
+			{(gamepiece1 color -> gamepiece1).
+			(gamepiece2 color -> gamepiece2)}.
+	effect0 := NonEffect new.
+	effect1 := NonEffect new.
+	effect2 := NonEffect new.
+	effect3 := NonEffect new.
+	effect4 := AtomicBomb new.
+	square0 := Square withAnEffect: effect0.
+	square1 := Square withAnEffect: effect1.
+	square2 := Square withAnEffect: effect2.
+	square3 := Square withAnEffect: effect3.
+	square4 := Square withAnEffect: effect4.
+	squares := Dictionary
+		newFrom:
+			{(0 -> square0).
+			(1 -> square1).
+			(2 -> square2).
+			(3 -> square3).
+			(4 -> square4)}.
+	player1 := Player
+		withName: 'Sol'
+		aGamePiece: gamepiece1
+		aCard: aFirstCard
+		andOtherCard: aSecondCard.
+	player2 := Player
+		withName: 'Dubi'
+		aGamePiece: gamepiece2
+		aCard: aFirstCard
+		andOtherCard: aSecondCard.
+	players := OrderedCollection new.
+	players
+		add: player1;
+		add: player2.
+	dices1 := Set new.
+	dices1 add: (LoadedDice withFaces: 2).
+	dices2 := Set new.
+	dices2 add: (LoadedDice withFaces: 6).
+	board := Board
+		withSquares: squares
+		gamepieces: gamepieces
+		andRounds: 2.
+	judge := Judge named: 'Pitana' assuring: players on: board.
+	[ judge thereIsAWinner ]
+		whileFalse: [ judge validateTurnOf: player1.
+			player1 playsATurnWith: dices1.
+			judge validateRoundsOfPlayers.
+			gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
+			gamepiece2 positionOnBoardBasedOnNSquares: board squares size.
+			board applyEffectToAGamepieceUsingKey: gamepiece1 color.
+			judge validateTurnOf: player2.
+			player2 playsATurnWith: dices2.
+			judge validateRoundsOfPlayers.
+			gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
+			gamepiece2 positionOnBoardBasedOnNSquares: board squares size.
+			board applyEffectToAGamepieceUsingKey: gamepiece2 color.
+			judge validateRoundsOfPlayers.
+			winner := judge playerHasWon ].
+	self assert: judge thereIsAWinner equals: true.
+	self assert: player1 gamepiece position equals: 0.
+	self assert: player2 gamepiece position equals: 11.
+	self assert: winner name equals: 'Dubi'
 ]
 
 { #category : #'judge-tests' }
@@ -201,8 +319,16 @@ JudgeTest >> testJugdeTellsRankingOfAPlayer [
 			(2 -> square2).
 			(3 -> square3).
 			(4 -> square4)}.
-	player1 := Player withName: 'Sol' andAGamePiece: gamepiece1.
-	player2 := Player withName: 'Dubi' andAGamePiece: gamepiece2.
+	player1 := Player
+		withName: 'Sol'
+		aGamePiece: gamepiece1
+		aCard: aFirstCard
+		andOtherCard: aSecondCard.
+	player2 := Player
+		withName: 'Dubi'
+		aGamePiece: gamepiece2
+		aCard: aFirstCard
+		andOtherCard: aSecondCard.
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -211,7 +337,10 @@ JudgeTest >> testJugdeTellsRankingOfAPlayer [
 	dices1 add: (LoadedDice withFaces: 4).
 	dices2 := Set new.
 	dices2 add: (LoadedDice withFaces: 3).
-	board := Board withSquares: squares gamepieces: gamepieces andRounds: 2.
+	board := Board
+		withSquares: squares
+		gamepieces: gamepieces
+		andRounds: 2.
 	judge := Judge named: 'Pitana' assuring: players on: board.
 	judge validateTurnOf: player1.
 	player1 playsATurnWith: dices1.

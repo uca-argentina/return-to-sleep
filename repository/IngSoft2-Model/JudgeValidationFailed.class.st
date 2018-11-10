@@ -1,5 +1,5 @@
 "
-This is a class that throws Exception when a player tries to play and is not his turn. 
+This is a class that throws  an Exception when a player tries to play and is not his turn. 
 
 "
 Class {

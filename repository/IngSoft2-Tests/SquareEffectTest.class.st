@@ -1,12 +1,12 @@
 Class {
-	#name : #EffectTest,
+	#name : #SquareEffectTest,
 	#superclass : #TestCase,
 	#category : #'IngSoft2-Tests'
 }
 
 { #category : #'effect-tests' }
-EffectTest >> testApplyAtomicBombToAGamePiece [
-	| player1 player2 dices1 judge board players playingSequence gamepiece1 gamepiece2 gamepieces squares effect0 effect1 effect2 square0 square1 square2 dices2 |
+SquareEffectTest >> testApplyAtomicBombToAGamePiece [
+	| player1 player2 dices1 judge board players gamepiece1 gamepiece2 gamepieces squares effect0 effect1 effect2 square0 square1 square2 dices2 |
 	gamepiece1 := Gamepiece withColor: 'pink'.
 	gamepiece2 := Gamepiece withColor: 'blue'.
 	gamepieces := Dictionary
@@ -24,8 +24,16 @@ EffectTest >> testApplyAtomicBombToAGamePiece [
 			{(0 -> square0).
 			(1 -> square1).
 			(2 -> square2)}.
-	player1 := Player withName: 'Sol' andAGamePiece: gamepiece1.
-	player2 := Player withName: 'Dubi' andAGamePiece: gamepiece2.
+	player1 := Player
+		withName: 'Sol'
+		aGamePiece: gamepiece1
+		aCard: aFirstCard
+		andOtherCard: aSecondCard.
+	player2 := Player
+		withName: 'Dubi'
+		aGamePiece: gamepiece2
+		aCard: aFirstCard
+		andOtherCard: aSecondCard.
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -34,9 +42,12 @@ EffectTest >> testApplyAtomicBombToAGamePiece [
 	dices1 add: (LoadedDice withFaces: 2).
 	dices2 := Set new.
 	dices2 add: (LoadedDice withFaces: 4).
-	board := Board withSquares: squares gamepieces: gamepieces andRounds: 2.
+	board := Board
+		withSquares: squares
+		gamepieces: gamepieces
+		andRounds: 2.
 	judge := Judge named: 'Pitana' assuring: players on: board.
-	judge validateTurnOf:  player1.
+	judge validateTurnOf: player1.
 	player1 playsATurnWith: dices1.
 	judge validateRoundsOfPlayers.
 	gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
@@ -55,7 +66,7 @@ EffectTest >> testApplyAtomicBombToAGamePiece [
 ]
 
 { #category : #'effect-tests' }
-EffectTest >> testApplyMoonWalkToAGamePiece [
+SquareEffectTest >> testApplyMoonWalkToAGamePiece [
 	| effect1 effect2 gamepiece1 gamepiece2 gamepiece3 pieces |
 	effect1 := SpeedUp withAPowerValue: 4.
 	gamepiece1 := Gamepiece withColor: 'pink'.
@@ -83,7 +94,7 @@ EffectTest >> testApplyMoonWalkToAGamePiece [
 ]
 
 { #category : #'effect-tests' }
-EffectTest >> testApplyNonEffectToGamePiece [
+SquareEffectTest >> testApplyNonEffectToGamePiece [
 	| effect1 gamepiece effect2 |
 	effect1 := SpeedUp withAPowerValue: 4.
 	gamepiece := Gamepiece withColor: 'pink'.
@@ -95,7 +106,7 @@ EffectTest >> testApplyNonEffectToGamePiece [
 ]
 
 { #category : #'effect-tests' }
-EffectTest >> testApplySpeedUpToAGamePiece [
+SquareEffectTest >> testApplySpeedUpToAGamePiece [
 	| effect gamepiece |
 	effect := SpeedUp withAPowerValue: 4.
 	gamepiece := Gamepiece withColor: 'pink'.
@@ -104,7 +115,7 @@ EffectTest >> testApplySpeedUpToAGamePiece [
 ]
 
 { #category : #'effect-tests' }
-EffectTest >> testApplyWormHoleToAGamePiece [
+SquareEffectTest >> testApplyWormHoleToAGamePiece [
 	| effect1 effect2 gamepiece |
 	effect1 := SpeedUp withAPowerValue: 4.
 	gamepiece := Gamepiece withColor: 'pink'.

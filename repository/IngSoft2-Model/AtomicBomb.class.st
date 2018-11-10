@@ -4,9 +4,6 @@ When a Game Piece of a Player falls into a Square that has the AtomicBomb Effect
 Class {
 	#name : #AtomicBomb,
 	#superclass : #Effect,
-	#instVars : [
-		'cursePosition'
-	],
 	#category : #'IngSoft2-Model'
 }
 

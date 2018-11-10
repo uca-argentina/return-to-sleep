@@ -37,8 +37,16 @@ GamepieceTest >> testGamepiecesFinalRankingWhenThereIsAWinner [
 			(2 -> square2).
 			(3 -> square3).
 			(4 -> square4)}.
-	player1 := Player withName: 'Sol' andAGamePiece: gamepiece1.
-	player2 := Player withName: 'Dubi' andAGamePiece: gamepiece2.
+	player1 := Player
+		withName: 'Sol'
+		aGamePiece: gamepiece1
+		aCard: aFirstCard
+		andOtherCard: aSecondCard.
+	player2 := Player
+		withName: 'Dubi'
+		aGamePiece: gamepiece2
+		aCard: aFirstCard
+		andOtherCard: aSecondCard.
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -47,7 +55,10 @@ GamepieceTest >> testGamepiecesFinalRankingWhenThereIsAWinner [
 	dices1 add: (LoadedDice withFaces: 1).
 	dices2 := Set new.
 	dices2 add: (LoadedDice withFaces: 2).
-	board := Board withSquares: squares gamepieces: gamepieces andRounds: 2.
+	board := Board
+		withSquares: squares
+		gamepieces: gamepieces
+		andRounds: 2.
 	judge := Judge named: 'Pitana' assuring: players on: board.
 	[ judge thereIsAWinner ]
 		whileFalse: [ judge validateTurnOf: player1.
@@ -55,16 +66,15 @@ GamepieceTest >> testGamepiecesFinalRankingWhenThereIsAWinner [
 			judge validateRoundsOfPlayers.
 			gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
 			board applyEffectToAGamepieceUsingKey: gamepiece1 color.
-			judge playerHasWon.
 			judge validateTurnOf: player2.
 			player2 playsATurnWith: dices2.
 			judge validateRoundsOfPlayers.
 			gamepiece2 positionOnBoardBasedOnNSquares: board squares size.
 			board applyEffectToAGamepieceUsingKey: gamepiece2 color.
-			judge playerHasWon ].
+			judge validateRoundsOfPlayers.
+			winner := judge playerHasWon ].
 	self assert: judge thereIsAWinner.
 	judge determinateFinalRankings.
-	winner := judge winner.
 	self assert: gamepiece1 position equals: 7.
 	self assert: gamepiece2 position equals: 10.
 	self assert: winner name equals: 'Dubi'.
