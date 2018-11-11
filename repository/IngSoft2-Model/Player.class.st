@@ -51,16 +51,32 @@ Player >> name [
 ]
 
 { #category : #Accesing }
-Player >> playCardByID: aCardId applyTo: aPlayer [
-	hand playCardByID: aCardId  applyTo: aPlayer
+Player >> playCardByID: aCardId applyTo: aPlayer andTellJudge: aJudge [
+	hand playCardByID: aCardId applyTo: aPlayer andTellJudge: aJudge. 
 ]
 
 { #category : #Accesing }
-Player >> playCardByID: aCardID applyTo: allPlayers removingCardEffectCausedByCardWithId: causalCardID [
+Player >> playCardByID: aCardID applyTo: aPlayer redoingCardEffectMadeByCard: lastCard andTellJudge: aJudge [
+		hand
+		playCardByID: aCardID
+		applyTo: aPlayer
+		redoingCardEffectMadeByCard: lastCard
+		andTellJudge: aJudge
+]
+
+{ #category : #Accesing }
+Player >> playCardByID: aCardID applyTo: allPlayers redoingCardEffectMadeByCard: lastCard removingCardEffectCausedByCardWithId: causalCardID andTellJudge: aJudge [
 	hand
 		playCardByID: aCardID
 		applyTo: allPlayers
+		redoingCardEffectMadeByCard: lastCard
 		removingCardEffectCausedByCardWithId: causalCardID
+		andTellJudge: aJudge
+]
+
+{ #category : #Accesing }
+Player >> playCardByID: aCardID applyTo: allPlayers removingCardEffectCausedByCardWithId: causalCardID andTellJudge: aJudge [
+	hand playCardByID: aCardID applyTo: allPlayers removingCardEffectCausedByCardWithId: causalCardID andTellJudge: aJudge. 
 ]
 
 { #category : #Accesing }

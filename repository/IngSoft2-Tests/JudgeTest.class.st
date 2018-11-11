@@ -361,3 +361,25 @@ JudgeTest >> testJugdeTellsRankingOfAPlayer [
 	self assert: (judge ranking: player2 gamepiece) equals: 2.
 	self assert: (judge ranking: player1 gamepiece) equals: 1
 ]
+
+{ #category : #'judge-tests' }
+JudgeTest >> testTellLastCardPlayedToJudge [
+	| judge player1 player2 players |
+	player1 := Player
+		withName: 'Sol'
+		aGamePiece: (Gamepiece withColor: 'pink')
+		aCard: (OverloadCard withTypeValueAndID: 1)
+		andOtherCard: (OverloadCard withTypeValueAndID: 2).
+	player2 := Player
+		withName: 'Dubi'
+		aGamePiece: (Gamepiece withColor: 'yellow')
+		aCard: (OverloadCard withTypeValueAndID: 3)
+		andOtherCard: (OverloadCard withTypeValueAndID: 4).
+	players := OrderedCollection new.
+	players
+		add: player1;
+		add: player2.
+	judge := Judge named: 'Pitana' assuring: players on: Board new.
+	player1 playCardByID: 1 applyTo: player2 andTellJudge: judge.
+	self assert: judge lastCardPlayed id equals: 1
+]

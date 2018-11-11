@@ -9,7 +9,8 @@ Class {
 		'board',
 		'playingSequence',
 		'players',
-		'thereIsAWinner'
+		'thereIsAWinner',
+		'lastCardPlayed'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -32,7 +33,13 @@ Judge >> initializeNamed: aName assuring: anOrderedCollectionOfPlayers on: aBoar
 	players := anOrderedCollectionOfPlayers.
 	playingSequence := PlayingSequence withAllPlayers: anOrderedCollectionOfPlayers.
 	board := aBoard.
-	thereIsAWinner := false. 
+	thereIsAWinner := false.
+	lastCardPlayed := false. 
+]
+
+{ #category : #Accesing }
+Judge >> lastCardPlayed [
+	^ lastCardPlayed
 ]
 
 { #category : #Accesing }
@@ -58,6 +65,11 @@ Judge >> ranking: aPlayerGamepiece [
 			each position > aPlayerGamepiece  position
 				ifTrue: [ ranking := ranking + 1 ] ].
 	^ ranking
+]
+
+{ #category : #Accesing }
+Judge >> tellLastCardPlayed: aCard [ 
+	lastCardPlayed := aCard. 
 ]
 
 { #category : #Accesing }
