@@ -53,7 +53,7 @@ CardTest >> testCancellationCard [
 		withName: 'Sol'
 		aGamePiece: (Gamepiece withColor: 'pink')
 		aCard: (OverloadCard withTypeValueAndID: 1)
-		andOtherCard: (OverloadCard withTypeValueAndID: 2).
+		andOtherCard: (AccelerationCard  withTypeValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: (Gamepiece withColor: 'blue')
@@ -65,16 +65,21 @@ CardTest >> testCancellationCard [
 		add: player2.
 	dices := Set new.
 	dices add: (LoadedDice withFaces: 1).
+	player1 playsATurnWith: dices.
 	player2 playsATurnWith: dices.
 	player1 playCardByID: 1 applyTo: player2.
 	player2 playsATurnWith: dices.
+		self assert: player1 gamepiece position equals: 1.
 	self assert: player2 gamepiece position equals: 0.
-	player1 playCardByID: 2 applyTo: player2.
+
+	player1 playCardByID: 2 applyTo: players.
 	player2 playsATurnWith: dices.
-	self assert: player2 gamepiece position equals: -3.
+	player1 playsATurnWith: dices.
+	self assert: player1 gamepiece position equals: 3.
+	self assert: player2 gamepiece position equals: 0.
 	player2 playCardByID: 3 applyTo: players removingCardEffectCausedByCardWithId: 1.
 	player2 playsATurnWith: dices.
-	self assert: player2 gamepiece position equals: -4.
+	self assert: player2 gamepiece position equals: 2.
 	self
 		should: [ player2 playCardByID: 3 applyTo: players removingCardEffectCausedByCardWithId: 1 ]
 		raise: CardBelongFailed
@@ -82,7 +87,11 @@ CardTest >> testCancellationCard [
 			[ :exception | self assert: exception messageText equals: 'This player does not have this card' ].
 	player2 playCardByID: 4 applyTo: players removingCardEffectCausedByCardWithId: 2.
 	player2 playsATurnWith: dices.
-	self assert: player2 gamepiece position equals: -3.
+	player1 playsATurnWith: dices.
+		self assert: player1 gamepiece position equals: 4.
+	self assert: player2 gamepiece position equals: 3.
+
+	
 	self
 		should: [ player2 playCardByID: 4 applyTo: players removingCardEffectCausedByCardWithId: 2 ]
 		raise: CardBelongFailed
