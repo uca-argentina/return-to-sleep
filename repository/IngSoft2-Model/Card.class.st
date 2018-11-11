@@ -6,3 +6,8 @@ Class {
 	#superclass : #Object,
 	#category : #'IngSoft2-Model'
 }
+
+{ #category : #Creating }
+Card class >> withTypeValueAndID: aCardID [ 
+	^ self subclassResponsibility.
+]

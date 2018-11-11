@@ -35,8 +35,8 @@ PlayerTest >> testCreateAPlayerWithAGamePieceAndTwoCards [
 	player := Player
 		withName: 'Sol'
 		aGamePiece: aGamePiece
-		aCard: (OverloadCard withTypeValueAndId: 1)
-		andOtherCard: (OverloadCard withTypeValueAndId: 2).
+		aCard: (OverloadCard withTypeValueAndID: 1)
+		andOtherCard: (OverloadCard withTypeValueAndID: 2).
 	self assert: player name equals: 'Sol'.
 	self assert: player gamepiece color equals: 'red'
 ]

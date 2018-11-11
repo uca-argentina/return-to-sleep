@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : #Creating }
-SpeedCard class >> withTypeValueAndId: aCardID [
+SpeedCard class >> withTypeValueAndID: aCardID [
 	^ self new initializeWithTypeValueAndId: aCardID
 ]
 

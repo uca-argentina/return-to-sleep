@@ -23,7 +23,7 @@ Hand >> initializeWithACard: aFirstCard andOtherCard: aSecondCard [
 ]
 
 { #category : #Accesing }
-Hand >> playCardById: aCardID andApplyTo: aPlayer [
+Hand >> playCardByID: aCardID applyTo: aPlayer [
 	| card |
 	card := cards detect: [ :each | each id = aCardID ] ifNone: [ CardBelongFailed signal: 'This player does not have this card' ].
 	card applyEffectTo: aPlayer.
@@ -31,7 +31,7 @@ Hand >> playCardById: aCardID andApplyTo: aPlayer [
 ]
 
 { #category : #Accesing }
-Hand >> playCardById: aCardID applyTo: allPlayers removingCardEffectCausedByCardWithId: causalCardID [
+Hand >> playCardByID: aCardID applyTo: allPlayers removingCardEffectCausedByCardWithId: causalCardID [
 	| myCard |
 	myCard := cards detect: [ :each | each id = aCardID ] ifNone: [ CardBelongFailed signal: 'This player does not have this card' ].
 	myCard applyEffectTo: allPlayers removingCardEffectCausedByCardWithId: causalCardID.

@@ -51,14 +51,14 @@ Player >> name [
 ]
 
 { #category : #Accesing }
-Player >> playCardById: aCardId andApplyTo: aPlayer [
-	hand playCardById: aCardId  andApplyTo: aPlayer
+Player >> playCardByID: aCardId applyTo: aPlayer [
+	hand playCardByID: aCardId  applyTo: aPlayer
 ]
 
 { #category : #Accesing }
-Player >> playCardById: aCardID applyTo: allPlayers removingCardEffectCausedByCardWithId: causalCardID [
+Player >> playCardByID: aCardID applyTo: allPlayers removingCardEffectCausedByCardWithId: causalCardID [
 	hand
-		playCardById: aCardID
+		playCardByID: aCardID
 		applyTo: allPlayers
 		removingCardEffectCausedByCardWithId: causalCardID
 ]

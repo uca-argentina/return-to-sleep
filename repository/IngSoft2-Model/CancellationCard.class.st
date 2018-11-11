@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : #Creating }
-CancellationCard class >> withTypeValueAndId: aCardID [
+CancellationCard class >> withTypeValueAndID: aCardID [
 	^ self new initializeWithTypeValueAndId: aCardID.
 ]
 

@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : #Creating }
-OverloadCard class >> withTypeValueAndId: aCardID [
+OverloadCard class >> withTypeValueAndID: aCardID [
 	^ self new initializeWithTypeValueAndId: aCardID.
 ]
 
