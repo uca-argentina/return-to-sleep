@@ -14,6 +14,11 @@ RepeatCard class >> withTypeValueAndID: aCardID [
 ]
 
 { #category : #Accesing }
+RepeatCard >> applyingEffect: lastSquareEffectApplied [
+	lastSquareEffectApplied effect applyEffectTo: lastSquareEffectApplied affectedGamepiece ofGamepieceCollection: lastSquareEffectApplied gamepieces.
+]
+
+{ #category : #Accesing }
 RepeatCard >> id [
 	^ id
 ]

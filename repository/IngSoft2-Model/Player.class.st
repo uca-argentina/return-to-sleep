@@ -80,6 +80,11 @@ Player >> playCardByID: aCardID applyTo: allPlayers removingCardEffectCausedByCa
 ]
 
 { #category : #Accesing }
+Player >> playCardByID: aCardID applyingEffect: aSquareEffectApplied andTellJudge: aJudge [
+	hand playCardByID: aCardID applyingEffect: aSquareEffectApplied andTellJudge: aJudge. 
+]
+
+{ #category : #Accesing }
 Player >> playsATurnWith: aSetOfDices [
 	| totalValueOfDices valuesOfCardEffects |
 	totalValueOfDices := aSetOfDices sumNumbers: [ :x | x roll ].

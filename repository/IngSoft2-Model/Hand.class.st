@@ -35,14 +35,12 @@ Hand >> playCardByID: aCardID applyTo: aPlayer andTellJudge: aJudge [
 
 { #category : #'as yet unclassified ' }
 Hand >> playCardByID: aCardID applyTo: aPlayer redoingCardEffectMadeByCard: lastCard andTellJudge: aJudge [
-	
 	| myCard |
 	myCard := cards
 		detect: [ :each | each id = aCardID ]
 		ifNone: [ CardBelongFailed signal: 'This player does not have this card' ].
 	myCard applyEffectTo: aPlayer redoingCardEffectMadeByCard: lastCard.
 	cards remove: myCard.
-	aJudge tellLastCardPlayed: myCard.
 ]
 
 { #category : #Accesing }
@@ -53,7 +51,6 @@ Hand >> playCardByID: aCardID applyTo: allPlayers redoingCardEffectMadeByCard: l
 		ifNone: [ CardBelongFailed signal: 'This player does not have this card' ].
 	cards remove: myCard.
 	lastCard applyEffectTo: allPlayers removingCardEffectCausedByCardWithId: causalCardID.
-	aJudge tellLastCardPlayed: myCard.
 ]
 
 { #category : #Accesing }
@@ -65,4 +62,12 @@ Hand >> playCardByID: aCardID applyTo: allPlayers removingCardEffectCausedByCard
 	myCard applyEffectTo: allPlayers removingCardEffectCausedByCardWithId: causalCardID.
 	cards remove: myCard.
 	aJudge tellLastCardPlayed: myCard. 
+]
+
+{ #category : #Accesing }
+Hand >> playCardByID: aCardID applyingEffect: aSquareEffectApplied andTellJudge: aJudge [
+	| card |
+	card := cards detect: [ :each | each id = aCardID ] ifNone: [ CardBelongFailed signal: 'This player does not have this card' ].
+	card applyingEffect: aSquareEffectApplied. 
+	cards remove: card.
 ]

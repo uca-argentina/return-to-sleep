@@ -8,7 +8,8 @@ Class {
 		'squares',
 		'gamepieces',
 		'rounds',
-		'endOfBoard'
+		'endOfBoard',
+		'lastSquareEffectApplied'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -41,11 +42,13 @@ Board class >> withSquares: aSquareCollection gamepieces: aGamePieceCollection a
 
 { #category : #Accesing }
 Board >> applyEffectToAGamepieceUsingKey: aGamePieceKey [
-	| gamepiece 	positionOfPlayerOnBoard square |
+	| gamepiece positionOfPlayerOnBoard square |
 	gamepiece := gamepieces at: aGamePieceKey.
 	positionOfPlayerOnBoard := gamepiece positionOnBoard.
-	square := squares at: 	positionOfPlayerOnBoard.
-	square effect applyEffectTo: gamepiece ofGamepieceCollection: gamepieces
+	square := squares at: positionOfPlayerOnBoard.
+	square effect applyEffectTo: gamepiece ofGamepieceCollection: gamepieces.
+	square effect class ~= NonEffect
+		ifTrue: [ lastSquareEffectApplied := SquareEffectApplied withEffect: square effect affecting: gamepiece ofGamepieceCollection: gamepieces ]
 ]
 
 { #category : #Accesing }
@@ -64,6 +67,12 @@ Board >> initializeWithSquares: aSquaresCollection gamepieces: aGamepieceCollect
 	gamepieces := aGamepieceCollection.
 	rounds := numberOfRounds.
 	endOfBoard := squares size.
+	lastSquareEffectApplied := SquareEffectApplied withEffect: (NonEffect new) affecting: (Gamepiece withColor: 'withoutColor') ofGamepieceCollection: gamepieces. 
+]
+
+{ #category : #Accesing }
+Board >> lastSquareEffectApplied [
+	^ lastSquareEffectApplied
 ]
 
 { #category : #Accesing }
@@ -74,4 +83,9 @@ Board >> rounds [
 { #category : #Accesing }
 Board >> squares [
 	^ squares
+]
+
+{ #category : #Accesing }
+Board >> updateGamepiecesPositionOnBoard [
+	gamepieces do: [ :each | each positionOnBoardBasedOnNSquares: endOfBoard. ]
 ]
