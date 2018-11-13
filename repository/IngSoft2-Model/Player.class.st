@@ -90,4 +90,10 @@ Player >> playsATurnWith: aSetOfDices [
 	totalValueOfDices := aSetOfDices sumNumbers: [ :x | x roll ].
 	valuesOfCardEffects := playerGamePiece cardEffectsApplied inject: 0 into: [ :sum :each | sum + each causalCard value ].
 	playerGamePiece changePositionTo: playerGamePiece position + totalValueOfDices + valuesOfCardEffects
+	
+]
+
+{ #category : #Accesing }
+Player >> receivesCard: aCard. [
+hand receivesCard: aCard.
 ]

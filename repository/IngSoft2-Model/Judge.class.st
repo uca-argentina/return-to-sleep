@@ -27,6 +27,16 @@ Judge >> determinateFinalRankings [
 	gamepieces do: [ :each | each finalRanking: (self ranking: each) ]
 ]
 
+{ #category : #Accesing }
+Judge >> giveCardTo: aPlayer [
+	| gamepiece positionOfPlayerOnBoard square |
+	gamepiece := aPlayer gamepiece.
+	positionOfPlayerOnBoard := gamepiece positionOnBoard.
+	square := board squares at: positionOfPlayerOnBoard.
+	square givesCard
+		ifTrue: [ aPlayer receivesCard: (OverloadCard withTypeValueAndID: 100) ]
+]
+
 { #category : #Initializing }
 Judge >> initializeNamed: aName assuring: anOrderedCollectionOfPlayers on: aBoard [
 	name := aName.

@@ -5,14 +5,15 @@ Class {
 	#name : #Square,
 	#superclass : #Object,
 	#instVars : [
-		'effect'
+		'effect',
+		'givesCard'
 	],
 	#category : #'IngSoft2-Model'
 }
 
 { #category : #Creating }
-Square class >> withAnEffect: anEffect [
-	^ self new initializeWithAnEffect: anEffect. 
+Square class >> withAnEffect: anEffect thatGivesCard: aBooleanValue [
+	^ self new initializeWithAnEffect: anEffect thatGivesCard: aBooleanValue.
 ]
 
 { #category : #Initializing }
@@ -21,6 +22,12 @@ Square >> effect [
 ]
 
 { #category : #Initializing }
-Square >> initializeWithAnEffect: anEffect [
+Square >> givesCard [
+	^ givesCard 
+]
+
+{ #category : #Initializing }
+Square >> initializeWithAnEffect: anEffect thatGivesCard: aBooleanValue [
 	effect := anEffect.
+	givesCard:= aBooleanValue.
 ]

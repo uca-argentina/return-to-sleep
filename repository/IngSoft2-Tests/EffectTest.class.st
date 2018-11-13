@@ -16,9 +16,9 @@ EffectTest >> testApplyAtomicBombToAGamePiece [
 	effect0 := NonEffect new.
 	effect1 := AtomicBomb new.
 	effect2 := NonEffect new.
-	square0 := Square withAnEffect: effect0.
-	square1 := Square withAnEffect: effect1.
-	square2 := Square withAnEffect: effect2.
+	square0 := Square withAnEffect: effect0 thatGivesCard: false.
+	square1 := Square withAnEffect: effect1 thatGivesCard: false.
+	square2 := Square withAnEffect: effect2 thatGivesCard: false.
 	squares := Dictionary
 		newFrom:
 			{(0 -> square0).
@@ -27,13 +27,13 @@ EffectTest >> testApplyAtomicBombToAGamePiece [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece1
-		aCard: aFirstCard
-		andOtherCard: aSecondCard.
+		aCard: (OverloadCard withTypeValueAndID: 1)
+		andOtherCard:  (OverloadCard withTypeValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: gamepiece2
-		aCard: aFirstCard
-		andOtherCard: aSecondCard.
+		aCard:  (OverloadCard withTypeValueAndID: 3)
+		andOtherCard:  (OverloadCard withTypeValueAndID: 4).
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -42,10 +42,7 @@ EffectTest >> testApplyAtomicBombToAGamePiece [
 	dices1 add: (LoadedDice withFaces: 2).
 	dices2 := Set new.
 	dices2 add: (LoadedDice withFaces: 4).
-	board := Board
-		withSquares: squares
-		gamepieces: gamepieces
-		andRounds: 2.
+	board := Board withSquares: squares gamepieces: gamepieces andRounds: 2.
 	judge := Judge named: 'Pitana' assuring: players on: board.
 	judge validateTurnOf: player1.
 	player1 playsATurnWith: dices1.

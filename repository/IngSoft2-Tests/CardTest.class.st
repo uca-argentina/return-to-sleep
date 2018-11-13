@@ -281,11 +281,11 @@ CardTest >> testRepeatCard [
 	effect2 := NonEffect new.
 	effect3 := NonEffect new.
 	effect4 := SpeedUp withAPowerValue: 2.
-	square0 := Square withAnEffect: effect0.
-	square1 := Square withAnEffect: effect1.
-	square2 := Square withAnEffect: effect2.
-	square3 := Square withAnEffect: effect3.
-	square4 := Square withAnEffect: effect4.
+	square0 := Square withAnEffect: effect0 thatGivesCard: false.
+	square1 := Square withAnEffect: effect1 thatGivesCard: false.
+	square2 := Square withAnEffect: effect2 thatGivesCard: false.
+	square3 := Square withAnEffect: effect3 thatGivesCard: false.
+	square4 := Square withAnEffect: effect4 thatGivesCard: false.
 	squares := Dictionary
 		newFrom:
 			{(0 -> square0).
@@ -337,11 +337,11 @@ CardTest >> testRepeatCardWithAnAtomicBombEffect [
 	effect2 := NonEffect new.
 	effect3 := NonEffect new.
 	effect4 := AtomicBomb new.
-	square0 := Square withAnEffect: effect0.
-	square1 := Square withAnEffect: effect1.
-	square2 := Square withAnEffect: effect2.
-	square3 := Square withAnEffect: effect3.
-	square4 := Square withAnEffect: effect4.
+	square0 := Square withAnEffect: effect0 thatGivesCard: false.
+	square1 := Square withAnEffect: effect1 thatGivesCard: false.
+	square2 := Square withAnEffect: effect2 thatGivesCard: false.
+	square3 := Square withAnEffect: effect3 thatGivesCard: false.
+	square4 := Square withAnEffect: effect4 thatGivesCard: false.
 	squares := Dictionary
 		newFrom:
 			{(0 -> square0).

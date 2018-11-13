@@ -71,3 +71,8 @@ Hand >> playCardByID: aCardID applyingEffect: aSquareEffectApplied andTellJudge:
 	card applyingEffect: aSquareEffectApplied. 
 	cards remove: card.
 ]
+
+{ #category : #Initializing }
+Hand >> receivesCard: aCard [
+	cards add: aCard
+]
