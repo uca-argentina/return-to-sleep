@@ -27,13 +27,13 @@ EffectTest >> testApplyAtomicBombToAGamePiece [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece1
-		aCard: (OverloadCard withTypeValueAndID: 1)
-		andOtherCard:  (OverloadCard withTypeValueAndID: 2).
+		aCard: (OverloadCard withValueAndID: 1)
+		andOtherCard: (OverloadCard withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: gamepiece2
-		aCard:  (OverloadCard withTypeValueAndID: 3)
-		andOtherCard:  (OverloadCard withTypeValueAndID: 4).
+		aCard: (OverloadCard withValueAndID: 3)
+		andOtherCard: (OverloadCard withValueAndID: 4).
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -47,15 +47,16 @@ EffectTest >> testApplyAtomicBombToAGamePiece [
 	judge validateTurnOf: player1.
 	player1 playsATurnWith: dices1.
 	judge validateRoundsOfPlayers.
-	gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
+	board updateGamepiecesPositionOnBoard.
 	board applyEffectToAGamepieceUsingKey: gamepiece1 color.
+	judge changeTurnOfPlayers.
 	judge validateTurnOf: player2.
 	player2 playsATurnWith: dices2.
 	judge validateRoundsOfPlayers.
-	gamepiece2 positionOnBoardBasedOnNSquares: board squares size.
+	board updateGamepiecesPositionOnBoard.
 	board applyEffectToAGamepieceUsingKey: gamepiece2 color.
-	gamepiece2 positionOnBoardBasedOnNSquares: board squares size.
-	gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
+	judge changeTurnOfPlayers.
+	board updateGamepiecesPositionOnBoard.
 	self assert: gamepiece1 position equals: 0.
 	self assert: gamepiece1 positionOnBoard equals: 0.
 	self assert: gamepiece2 position equals: 3.

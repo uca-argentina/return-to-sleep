@@ -10,7 +10,8 @@ Class {
 		'playingSequence',
 		'players',
 		'thereIsAWinner',
-		'lastCardPlayed'
+		'lastCardPlayed',
+		'cardCreator'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -21,7 +22,7 @@ Judge class >> named: aName assuring: players on: aBoard [
 ]
 
 { #category : #Accesing }
-Judge >> changeTurn [
+Judge >> changeTurnOfPlayers [
 	playingSequence changeToNextPlayer. 
 ]
 
@@ -39,7 +40,7 @@ Judge >> giveCardTo: aPlayer [
 	positionOfPlayerOnBoard := gamepiece positionOnBoard.
 	square := board squares at: positionOfPlayerOnBoard.
 	square givesCard
-		ifTrue: [ aPlayer receivesCard: (OverloadCard withTypeValueAndID: 100) ]
+		ifTrue: [ aPlayer receivesCard: (cardCreator createAndReturnACard) ]
 ]
 
 { #category : #Initializing }
@@ -49,7 +50,8 @@ Judge >> initializeNamed: aName assuring: anOrderedCollectionOfPlayers on: aBoar
 	playingSequence := PlayingSequence withAllPlayers: anOrderedCollectionOfPlayers.
 	board := aBoard.
 	thereIsAWinner := false.
-	lastCardPlayed := false. 
+	lastCardPlayed := false.
+	cardCreator := CardCreator withTotalTypesOfCardsKnowingNumberOfPlayers: (players size). 
 ]
 
 { #category : #Accesing }

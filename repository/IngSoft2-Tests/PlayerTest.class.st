@@ -19,13 +19,14 @@ PlayerTest >> testAPlayerPositionChangesWhenPlays [
 	player := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece
-		aCard: aFirstCard
-		andOtherCard: aSecondCard.
+		aCard: (OverloadCard withValueAndID: 1)
+		andOtherCard: (OverloadCard withValueAndID: 2).
 	self assert: player gamepiece position equals: 0.
 	player playsATurnWith: setOfDices.
 	self assert: player gamepiece position equals: 20.
 	player playsATurnWith: setOfDices.
-	self assert: player gamepiece position equals: 40
+	self assert: player gamepiece position equals: 40.
+	
 ]
 
 { #category : #'player-tests' }
@@ -35,8 +36,8 @@ PlayerTest >> testCreateAPlayerWithAGamePieceAndTwoCards [
 	player := Player
 		withName: 'Sol'
 		aGamePiece: aGamePiece
-		aCard: (OverloadCard withTypeValueAndID: 1)
-		andOtherCard: (OverloadCard withTypeValueAndID: 2).
+		aCard: (OverloadCard withValueAndID: 1)
+		andOtherCard: (OverloadCard withValueAndID: 2).
 	self assert: player name equals: 'Sol'.
 	self assert: player gamepiece color equals: 'red'
 ]

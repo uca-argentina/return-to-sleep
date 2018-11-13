@@ -21,8 +21,8 @@ BoardTest >> testBoardApplyEffectToAGamePieceWhenPlayerPlays [
 	player := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece1
-		aCard: (OverloadCard withTypeValueAndID: 1)
-		andOtherCard: (OverloadCard withTypeValueAndID: 2).
+		aCard: (OverloadCard withValueAndID: 1)
+		andOtherCard: (OverloadCard withValueAndID: 2).
 	squares := Dictionary
 		newFrom:
 			{(0 -> square0).

@@ -10,13 +10,13 @@ CardTest >> testAccelerationCard [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: (Gamepiece withColor: 'pink')
-		aCard: (OverloadCard withTypeValueAndID: 1)
-		andOtherCard: (AccelerationCard withTypeValueAndID: 2).
+		aCard: (OverloadCard withValueAndID: 1)
+		andOtherCard: (AccelerationCard withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: (Gamepiece withColor: 'blue')
-		aCard: (OverloadCard withTypeValueAndID: 3)
-		andOtherCard: (AccelerationCard withTypeValueAndID: 4).
+		aCard: (OverloadCard withValueAndID: 3)
+		andOtherCard: (AccelerationCard withValueAndID: 4).
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -27,19 +27,26 @@ CardTest >> testAccelerationCard [
 	player1 playsATurnWith: dices.
 	self assert: player1 gamepiece position equals: 1.
 	player1 playCardByID: 2 applyTo: players andTellJudge: judge.
+	judge changeTurnOfPlayers.
+	judge changeTurnOfPlayers.
 	player1 playsATurnWith: dices.
+	judge changeTurnOfPlayers.
 	player2 playsATurnWith: dices.
 	self assert: player1 gamepiece position equals: 3.
 	self assert: player2 gamepiece position equals: 2.
 	player2 playCardByID: 4 applyTo: players andTellJudge: judge.
+	judge changeTurnOfPlayers.
 	player1 playsATurnWith: dices.
+	judge changeTurnOfPlayers.
 	player2 playsATurnWith: dices.
+	judge changeTurnOfPlayers.
 	self assert: player1 gamepiece position equals: 6.
 	self assert: player2 gamepiece position equals: 5.
 	self
 		should: [ player1 playCardByID: 2 applyTo: players andTellJudge: judge ]
 		raise: CardBelongFailed
 		withExceptionDo: [ :exception | self assert: exception messageText equals: 'This player does not have this card' ].
+	judge changeTurnOfPlayers.
 	self
 		should: [ player2 playCardByID: 4 applyTo: players andTellJudge: judge ]
 		raise: CardBelongFailed
@@ -52,13 +59,13 @@ CardTest >> testCancellationCard [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: (Gamepiece withColor: 'pink')
-		aCard: (OverloadCard withTypeValueAndID: 1)
-		andOtherCard: (AccelerationCard withTypeValueAndID: 2).
+		aCard: (OverloadCard withValueAndID: 1)
+		andOtherCard: (AccelerationCard withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: (Gamepiece withColor: 'blue')
-		aCard: (CancellationCard withTypeValueAndID: 3)
-		andOtherCard: (CancellationCard withTypeValueAndID: 4).
+		aCard: (CancellationCard withValueAndID: 3)
+		andOtherCard: (CancellationCard withValueAndID: 4).
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -98,32 +105,28 @@ CardTest >> testCancellationCard [
 { #category : #'card-tests' }
 CardTest >> testCreateACancellationCard [
 	| card |
-	card := CancellationCard withTypeValueAndID: 1.
-	self assert: card type equals: 'instant'.
+	card := CancellationCard withValueAndID: 1.
 	self assert: card id equals: 1
 ]
 
 { #category : #'card-tests' }
 CardTest >> testCreateARedoCard [
 	| card |
-	card := RedoCard withTypeValueAndID: 1.
-	self assert: card type equals: 'instant'.
+	card := RedoCard withValueAndID: 1.
 	self assert: card id equals: 1
 ]
 
 { #category : #'card-tests' }
 CardTest >> testCreateARepeatCard [
 	| card |
-	card := RepeatCard withTypeValueAndID: 1.
-	self assert: card type equals: 'instant'.
+	card := RepeatCard withValueAndID: 1.
 	self assert: card id equals: 1
 ]
 
 { #category : #'card-tests' }
 CardTest >> testCreateASpeedCard [
 	| card |
-	card := SpeedCard withTypeValueAndID: 1.
-	self assert: card type equals: 'permanent'.
+	card := SpeedCard withValueAndID: 1.
 	self assert: card value equals: 1.
 	self assert: card id equals: 1
 ]
@@ -131,17 +134,15 @@ CardTest >> testCreateASpeedCard [
 { #category : #'card-tests' }
 CardTest >> testCreateAnAccelerationCard [
 	| card |
-	card := AccelerationCard withTypeValueAndID: 1.
-	self assert: card type equals: 'permanent'.
+	card := AccelerationCard withValueAndID: 1.
 	self assert: card value equals: 1.
-	self assert: card id equals: 1.
+	self assert: card id equals: 1
 ]
 
 { #category : #'card-tests' }
 CardTest >> testCreateAnOverloadCard [
 	| card |
-	card := OverloadCard withTypeValueAndID: 1.
-	self assert: card type equals: 'permanent'.
+	card := OverloadCard withValueAndID: 1.
 	self assert: card value equals: -2.
 	self assert: card id equals: 1
 ]
@@ -152,13 +153,13 @@ CardTest >> testOverloadCard [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: (Gamepiece withColor: 'pink')
-		aCard: (OverloadCard withTypeValueAndID: 1)
-		andOtherCard: (OverloadCard withTypeValueAndID: 2).
+		aCard: (OverloadCard withValueAndID: 1)
+		andOtherCard: (OverloadCard withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: (Gamepiece withColor: 'blue')
-		aCard: (OverloadCard withTypeValueAndID: 3)
-		andOtherCard: (OverloadCard withTypeValueAndID: 4).
+		aCard: (OverloadCard withValueAndID: 3)
+		andOtherCard: (OverloadCard withValueAndID: 4).
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -167,14 +168,21 @@ CardTest >> testOverloadCard [
 	dices add: (LoadedDice withFaces: 1).
 	judge := Judge named: 'Pitana' assuring: players on: Board new.
 	player1 playsATurnWith: dices.
+	judge changeTurnOfPlayers.
 	self assert: player1 gamepiece position equals: 1.
 	player2 playCardByID: 3 applyTo: player1 andTellJudge: judge.
+	judge changeTurnOfPlayers.
 	player1 playsATurnWith: dices.
+	judge changeTurnOfPlayers.
+	judge changeTurnOfPlayers.
 	self assert: player1 gamepiece position equals: 0.
 	player1 playsATurnWith: dices.
+	judge changeTurnOfPlayers.
 	self assert: player1 gamepiece position equals: -1.
 	player2 playCardByID: 4 applyTo: player1 andTellJudge: judge.
+	judge changeTurnOfPlayers.
 	player1 playsATurnWith: dices.
+	judge changeTurnOfPlayers.
 	self assert: player1 gamepiece position equals: -4.
 	self
 		should: [ player2 playCardByID: 3 applyTo: player1 andTellJudge: judge ]
@@ -192,13 +200,13 @@ CardTest >> testRedoCard [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: (Gamepiece withColor: 'pink')
-		aCard: (OverloadCard withTypeValueAndID: 1)
-		andOtherCard: (CancellationCard withTypeValueAndID: 2).
+		aCard: (OverloadCard withValueAndID: 1)
+		andOtherCard: (CancellationCard withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: (Gamepiece withColor: 'blue')
-		aCard: (RedoCard withTypeValueAndID: 3)
-		andOtherCard: (RedoCard withTypeValueAndID: 4).
+		aCard: (RedoCard withValueAndID: 3)
+		andOtherCard: (RedoCard withValueAndID: 4).
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -259,13 +267,13 @@ CardTest >> testRepeatCard [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece1
-		aCard: (RepeatCard withTypeValueAndID: 1)
-		andOtherCard: (OverloadCard withTypeValueAndID: 2).
+		aCard: (RepeatCard withValueAndID: 1)
+		andOtherCard: (OverloadCard withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: gamepiece2
-		aCard: (OverloadCard withTypeValueAndID: 3)
-		andOtherCard: (RepeatCard withTypeValueAndID: 4).
+		aCard: (OverloadCard withValueAndID: 3)
+		andOtherCard: (RepeatCard withValueAndID: 4).
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -313,13 +321,13 @@ CardTest >> testRepeatCardWithAnAtomicBombEffect [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece1
-		aCard: (RepeatCard withTypeValueAndID: 1)
-		andOtherCard: (OverloadCard withTypeValueAndID: 2).
+		aCard: (RepeatCard withValueAndID: 1)
+		andOtherCard: (OverloadCard withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: gamepiece2
-		aCard: (OverloadCard withTypeValueAndID: 3)
-		andOtherCard: (RepeatCard withTypeValueAndID: 4).
+		aCard: (OverloadCard withValueAndID: 3)
+		andOtherCard: (RepeatCard withValueAndID: 4).
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -357,6 +365,8 @@ CardTest >> testRepeatCardWithAnAtomicBombEffect [
 	board updateGamepiecesPositionOnBoard.
 	board applyEffectToAGamepieceUsingKey: gamepiece1 color.
 	judge validateRoundsOfPlayers.
+	
+	judge changeTurnOfPlayers.
 	self assert: player1 gamepiece position equals: 0.
 	judge validateTurnOf: player2.
 	player2 playsATurnWith: dices2.
@@ -364,6 +374,7 @@ CardTest >> testRepeatCardWithAnAtomicBombEffect [
 	board updateGamepiecesPositionOnBoard.
 	board applyEffectToAGamepieceUsingKey: gamepiece2 color.
 	judge validateRoundsOfPlayers.
+	judge changeTurnOfPlayers.
 	self assert: player2 gamepiece position equals: 3.
 	judge validateTurnOf: player1.
 	player1 playsATurnWith: dices2.
@@ -371,6 +382,8 @@ CardTest >> testRepeatCardWithAnAtomicBombEffect [
 	board updateGamepiecesPositionOnBoard.
 	board applyEffectToAGamepieceUsingKey: gamepiece1 color.
 	judge validateRoundsOfPlayers.
+	
+	judge changeTurnOfPlayers.
 	self assert: player1 gamepiece position equals: 3.
 	judge validateTurnOf: player2.
 	player2 playsATurnWith: dices2.
@@ -389,13 +402,13 @@ CardTest >> testSpeedCard [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: (Gamepiece withColor: 'pink')
-		aCard: (SpeedCard withTypeValueAndID: 1)
-		andOtherCard: (SpeedCard withTypeValueAndID: 2).
+		aCard: (SpeedCard withValueAndID: 1)
+		andOtherCard: (SpeedCard withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: (Gamepiece withColor: 'blue')
-		aCard: (SpeedCard withTypeValueAndID: 3)
-		andOtherCard: (SpeedCard withTypeValueAndID: 4).
+		aCard: (SpeedCard withValueAndID: 3)
+		andOtherCard: (SpeedCard withValueAndID: 4).
 	dices := Set new.
 	dices add: (LoadedDice withFaces: 1).
 	players := OrderedCollection new.
@@ -404,19 +417,28 @@ CardTest >> testSpeedCard [
 		add: player2.
 	judge := Judge named: 'Pitana' assuring: players on: Board new.
 	player1 playsATurnWith: dices.
+	judge changeTurnOfPlayers.
 	self assert: player1 gamepiece position equals: 1.
 	player2 playCardByID: 3 applyTo: player1 andTellJudge: judge.
+	judge changeTurnOfPlayers.
 	player1 playsATurnWith: dices.
 	self assert: player1 gamepiece position equals: 3.
+	judge changeTurnOfPlayers.
+	judge changeTurnOfPlayers.
 	player1 playsATurnWith: dices.
+	judge changeTurnOfPlayers.
 	self assert: player1 gamepiece position equals: 5.
 	player2 playCardByID: 4 applyTo: player1 andTellJudge: judge.
+	judge changeTurnOfPlayers.
 	player1 playsATurnWith: dices.
+	judge changeTurnOfPlayers.
 	self assert: player1 gamepiece position equals: 8.
 	self
 		should: [ player2 playCardByID: 3 applyTo: player1 andTellJudge: judge. ]
 		raise: CardBelongFailed
 		withExceptionDo: [ :exception | self assert: exception messageText equals: 'This player does not have this card' ].
+		judge changeTurnOfPlayers.
+		judge changeTurnOfPlayers.
 	self
 		should: [ player2 playCardByID: 4 applyTo: player1 andTellJudge: judge.]
 		raise: CardBelongFailed

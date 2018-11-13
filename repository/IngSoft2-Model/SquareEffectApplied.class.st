@@ -1,3 +1,6 @@
+"
+This is a SquareEffectApplied. It saves the last square effect applied on game. 
+"
 Class {
 	#name : #SquareEffectApplied,
 	#superclass : #Object,

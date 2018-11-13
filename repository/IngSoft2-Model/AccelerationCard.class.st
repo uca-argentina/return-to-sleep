@@ -6,15 +6,14 @@ Class {
 	#superclass : #Card,
 	#instVars : [
 		'id',
-		'type',
 		'value'
 	],
 	#category : #'IngSoft2-Model'
 }
 
 { #category : #Creating }
-AccelerationCard class >> withTypeValueAndID: aCardID [ 
-	^ self new initializeWithTypeValueAndId: aCardID. 
+AccelerationCard class >> withValueAndID: aCardID [ 
+	^ self new initializeWithValueAndID: aCardID. 
 ]
 
 { #category : #Accesing }
@@ -28,15 +27,9 @@ AccelerationCard >> id [
 ]
 
 { #category : #Initializing }
-AccelerationCard >> initializeWithTypeValueAndId: aCardID [ 
-	id := aCardID. 
-	type := 'permanent'.
-	value := 1. 
-]
-
-{ #category : #Accesing }
-AccelerationCard >> type [
-	^ type
+AccelerationCard >> initializeWithValueAndID: aCardID [
+	id := aCardID.
+	value := 1
 ]
 
 { #category : #Accesing }

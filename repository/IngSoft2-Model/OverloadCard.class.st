@@ -5,16 +5,15 @@ Class {
 	#name : #OverloadCard,
 	#superclass : #Card,
 	#instVars : [
-		'type',
-		'value',
-		'id'
+		'id',
+		'value'
 	],
 	#category : #'IngSoft2-Model'
 }
 
 { #category : #Creating }
-OverloadCard class >> withTypeValueAndID: aCardID [
-	^ self new initializeWithTypeValueAndId: aCardID.
+OverloadCard class >> withValueAndID: aCardID [
+	^ self new initializeWithValueAndID: aCardID.
 ]
 
 { #category : #Accesing }
@@ -28,15 +27,9 @@ OverloadCard >> id [
 ]
 
 { #category : #Initializing }
-OverloadCard >> initializeWithTypeValueAndId: aCardID [
-	type := 'permanent'.
+OverloadCard >> initializeWithValueAndID: aCardID [
 	value := -2.
 	id := aCardID
-]
-
-{ #category : #Accesing }
-OverloadCard >> type [
-	^ type
 ]
 
 { #category : #Accesing }

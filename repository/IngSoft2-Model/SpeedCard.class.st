@@ -5,7 +5,6 @@ Class {
 	#name : #SpeedCard,
 	#superclass : #Card,
 	#instVars : [
-		'type',
 		'value',
 		'id'
 	],
@@ -13,8 +12,8 @@ Class {
 }
 
 { #category : #Creating }
-SpeedCard class >> withTypeValueAndID: aCardID [
-	^ self new initializeWithTypeValueAndId: aCardID
+SpeedCard class >> withValueAndID: aCardID [
+	^ self new initializeWithValueAndID: aCardID
 ]
 
 { #category : #Initializing }
@@ -28,15 +27,9 @@ SpeedCard >> id [
 ]
 
 { #category : #Initializing }
-SpeedCard >> initializeWithTypeValueAndId: aCardID [
-	type := 'permanent'.
+SpeedCard >> initializeWithValueAndID: aCardID [
 	value := 1.
 	id := aCardID
-]
-
-{ #category : #Accesing }
-SpeedCard >> type [
-	^ type
 ]
 
 { #category : #Accesing }

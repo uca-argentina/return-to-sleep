@@ -1,17 +1,19 @@
+"
+This card is a Cancellation card. It can cancel a permanent effect. Its type is instant.
+"
 Class {
 	#name : #RedoCard,
 	#superclass : #Card,
 	#instVars : [
 		'id',
-		'type',
 		'value'
 	],
 	#category : #'IngSoft2-Model'
 }
 
 { #category : #Creating }
-RedoCard class >> withTypeValueAndID: aCardID [ 
-	^ self new initializeWithTypeValueAndID: aCardID 
+RedoCard class >> withValueAndID: aCardID [ 
+	^ self new initializeWithValueAndID: aCardID 
 ]
 
 { #category : #Accesing }
@@ -25,13 +27,7 @@ RedoCard >> id [
 ]
 
 { #category : #'as yet unclassified ' }
-RedoCard >> initializeWithTypeValueAndID: aCardID [ 
+RedoCard >> initializeWithValueAndID: aCardID [
 	id := aCardID.
-	type := 'instant'.
-	value := 0. 
-]
-
-{ #category : #Accesing }
-RedoCard >> type [
-	^ type
+	value := 0.
 ]
