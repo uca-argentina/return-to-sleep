@@ -52,7 +52,8 @@ Player >> name [
 
 { #category : #Accesing }
 Player >> playCardByID: aCardId applyTo: aPlayer andTellJudge: aJudge [
-	hand playCardByID: aCardId applyTo: aPlayer andTellJudge: aJudge. 
+aJudge validateTurnOf: self.
+hand playCardByID: aCardId applyTo: aPlayer andTellJudge: aJudge. 
 ]
 
 { #category : #Accesing }

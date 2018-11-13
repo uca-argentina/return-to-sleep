@@ -21,6 +21,11 @@ Judge class >> named: aName assuring: players on: aBoard [
 ]
 
 { #category : #Accesing }
+Judge >> changeTurn [
+	playingSequence changeToNextPlayer. 
+]
+
+{ #category : #Accesing }
 Judge >> determinateFinalRankings [
 	| gamepieces |
 	gamepieces := (board gamepieces values collect: [ :each | each ]) as: Set.
@@ -96,8 +101,7 @@ Judge >> validateRoundsOfPlayers [
 
 { #category : #Accesing }
 Judge >> validateTurnOf: whoWantsToPlay [
-	playingSequence currentPlayer  = whoWantsToPlay
-		ifTrue: [ playingSequence changeToNextPlayer ]
+	playingSequence currentPlayer = whoWantsToPlay
 		ifFalse: [ JudgeValidationFailed signal: 'You cannot play when is not your turn' ]
 ]
 
