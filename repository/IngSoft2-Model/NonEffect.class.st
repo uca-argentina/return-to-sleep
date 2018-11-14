@@ -3,7 +3,7 @@ When a Game Piece of a Player falls into a Square that has a NonEffect the gamep
 "
 Class {
 	#name : #NonEffect,
-	#superclass : #Effect,
+	#superclass : #SquareEffect,
 	#category : #'IngSoft2-Model'
 }
 

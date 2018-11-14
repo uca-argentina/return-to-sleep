@@ -22,13 +22,13 @@ CardCreator >> createAndReturnACard [
 	self incrementIteratingIDNumber.
 	typeNumber := iteratingIDNumber % totalTypesOfCards.
 	typeNumber = 0
-		ifTrue: [ ^ OverloadCard withValueAndID: iteratingIDNumber ].
+		ifTrue: [ ^ Overload withValueAndID: iteratingIDNumber ].
 		 typeNumber = 1
-		ifTrue: [ ^ AccelerationCard withValueAndID: iteratingIDNumber ] . typeNumber = 2
-		ifTrue: [ ^ SpeedCard withValueAndID: iteratingIDNumber ].  typeNumber = 3
-		ifTrue: [ ^ CancellationCard withValueAndID: iteratingIDNumber ].  typeNumber = 4
-		ifTrue: [ ^ RepeatCard withValueAndID: iteratingIDNumber ] . typeNumber = 5
-		ifTrue: [ ^ RedoCard withValueAndID: iteratingIDNumber ]
+		ifTrue: [ ^ Acceleration withValueAndID: iteratingIDNumber ] . typeNumber = 2
+		ifTrue: [ ^ Speed withValueAndID: iteratingIDNumber ].  typeNumber = 3
+		ifTrue: [ ^ Cancellation withValueAndID: iteratingIDNumber ].  typeNumber = 4
+		ifTrue: [ ^ Repeat withValueAndID: iteratingIDNumber ] . typeNumber = 5
+		ifTrue: [ ^ Redo withValueAndID: iteratingIDNumber ]
 ]
 
 { #category : #Accesing }

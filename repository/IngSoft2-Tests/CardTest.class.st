@@ -10,13 +10,13 @@ CardTest >> testAccelerationCard [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: (Gamepiece withColor: 'pink')
-		aCard: (OverloadCard withValueAndID: 1)
-		andOtherCard: (AccelerationCard withValueAndID: 2).
+		aCard: (Overload withValueAndID: 1)
+		andOtherCard: (Acceleration withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: (Gamepiece withColor: 'blue')
-		aCard: (OverloadCard withValueAndID: 3)
-		andOtherCard: (AccelerationCard withValueAndID: 4).
+		aCard: (Overload withValueAndID: 3)
+		andOtherCard: (Acceleration withValueAndID: 4).
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -44,12 +44,12 @@ CardTest >> testAccelerationCard [
 	self assert: player2 gamepiece position equals: 5.
 	self
 		should: [ player1 playCardByID: 2 applyTo: players andTellJudge: judge ]
-		raise: CardBelongFailed
+		raise: CardBelongToPlayerFailed
 		withExceptionDo: [ :exception | self assert: exception messageText equals: 'This player does not have this card' ].
 	judge changeTurnOfPlayers.
 	self
 		should: [ player2 playCardByID: 4 applyTo: players andTellJudge: judge ]
-		raise: CardBelongFailed
+		raise: CardBelongToPlayerFailed
 		withExceptionDo: [ :exception | self assert: exception messageText equals: 'This player does not have this card' ]
 ]
 
@@ -59,13 +59,13 @@ CardTest >> testCancellationCard [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: (Gamepiece withColor: 'pink')
-		aCard: (OverloadCard withValueAndID: 1)
-		andOtherCard: (AccelerationCard withValueAndID: 2).
+		aCard: (Overload withValueAndID: 1)
+		andOtherCard: (Acceleration withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: (Gamepiece withColor: 'blue')
-		aCard: (CancellationCard withValueAndID: 3)
-		andOtherCard: (CancellationCard withValueAndID: 4).
+		aCard: (Cancellation withValueAndID: 3)
+		andOtherCard: (Cancellation withValueAndID: 4).
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -89,7 +89,7 @@ CardTest >> testCancellationCard [
 	self assert: player2 gamepiece position equals: 2.
 	self
 		should: [ player2 playCardByID: 3 applyTo: players removingCardEffectCausedByCardWithId: 1 andTellJudge: judge]
-		raise: CardBelongFailed
+		raise: CardBelongToPlayerFailed
 		withExceptionDo: [ :exception | self assert: exception messageText equals: 'This player does not have this card' ].
 	player2 playCardByID: 4 applyTo: players removingCardEffectCausedByCardWithId: 2 andTellJudge: judge.
 	player2 playsATurnWith: dices.
@@ -98,35 +98,35 @@ CardTest >> testCancellationCard [
 	self assert: player2 gamepiece position equals: 3.
 	self
 		should: [ player2 playCardByID: 4 applyTo: players removingCardEffectCausedByCardWithId: 2 andTellJudge: judge ]
-		raise: CardBelongFailed
+		raise: CardBelongToPlayerFailed
 		withExceptionDo: [ :exception | self assert: exception messageText equals: 'This player does not have this card' ]
 ]
 
 { #category : #'card-tests' }
 CardTest >> testCreateACancellationCard [
 	| card |
-	card := CancellationCard withValueAndID: 1.
+	card := Cancellation withValueAndID: 1.
 	self assert: card id equals: 1
 ]
 
 { #category : #'card-tests' }
 CardTest >> testCreateARedoCard [
 	| card |
-	card := RedoCard withValueAndID: 1.
+	card := Redo withValueAndID: 1.
 	self assert: card id equals: 1
 ]
 
 { #category : #'card-tests' }
 CardTest >> testCreateARepeatCard [
 	| card |
-	card := RepeatCard withValueAndID: 1.
+	card := Repeat withValueAndID: 1.
 	self assert: card id equals: 1
 ]
 
 { #category : #'card-tests' }
 CardTest >> testCreateASpeedCard [
 	| card |
-	card := SpeedCard withValueAndID: 1.
+	card := Speed withValueAndID: 1.
 	self assert: card value equals: 1.
 	self assert: card id equals: 1
 ]
@@ -134,7 +134,7 @@ CardTest >> testCreateASpeedCard [
 { #category : #'card-tests' }
 CardTest >> testCreateAnAccelerationCard [
 	| card |
-	card := AccelerationCard withValueAndID: 1.
+	card := Acceleration withValueAndID: 1.
 	self assert: card value equals: 1.
 	self assert: card id equals: 1
 ]
@@ -142,7 +142,7 @@ CardTest >> testCreateAnAccelerationCard [
 { #category : #'card-tests' }
 CardTest >> testCreateAnOverloadCard [
 	| card |
-	card := OverloadCard withValueAndID: 1.
+	card := Overload withValueAndID: 1.
 	self assert: card value equals: -2.
 	self assert: card id equals: 1
 ]
@@ -153,13 +153,13 @@ CardTest >> testOverloadCard [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: (Gamepiece withColor: 'pink')
-		aCard: (OverloadCard withValueAndID: 1)
-		andOtherCard: (OverloadCard withValueAndID: 2).
+		aCard: (Overload withValueAndID: 1)
+		andOtherCard: (Overload withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: (Gamepiece withColor: 'blue')
-		aCard: (OverloadCard withValueAndID: 3)
-		andOtherCard: (OverloadCard withValueAndID: 4).
+		aCard: (Overload withValueAndID: 3)
+		andOtherCard: (Overload withValueAndID: 4).
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -186,11 +186,11 @@ CardTest >> testOverloadCard [
 	self assert: player1 gamepiece position equals: -4.
 	self
 		should: [ player2 playCardByID: 3 applyTo: player1 andTellJudge: judge ]
-		raise: CardBelongFailed
+		raise: CardBelongToPlayerFailed
 		withExceptionDo: [ :exception | self assert: exception messageText equals: 'This player does not have this card' ].
 	self
 		should: [ player2 playCardByID: 4 applyTo: player1 andTellJudge: judge]
-		raise: CardBelongFailed
+		raise: CardBelongToPlayerFailed
 		withExceptionDo: [ :exception | self assert: exception messageText equals: 'This player does not have this card' ]
 ]
 
@@ -200,13 +200,13 @@ CardTest >> testRedoCard [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: (Gamepiece withColor: 'pink')
-		aCard: (OverloadCard withValueAndID: 1)
-		andOtherCard: (CancellationCard withValueAndID: 2).
+		aCard: (Overload withValueAndID: 1)
+		andOtherCard: (Cancellation withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: (Gamepiece withColor: 'blue')
-		aCard: (RedoCard withValueAndID: 3)
-		andOtherCard: (RedoCard withValueAndID: 4).
+		aCard: (Redo withValueAndID: 3)
+		andOtherCard: (Redo withValueAndID: 4).
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -246,7 +246,7 @@ self
 		applyTo: player2
 		redoingCardEffectMadeByCard: judge lastCardPlayed
 		andTellJudge: judge.]
-		raise: CardBelongFailed
+		raise: CardBelongToPlayerFailed
 		withExceptionDo: [ :exception | self assert: exception messageText equals: 'This player does not have this card' ].
 	self
 		should: [ player2
@@ -255,7 +255,7 @@ self
 		redoingCardEffectMadeByCard: judge lastCardPlayed
 		removingCardEffectCausedByCardWithId: 1
 		andTellJudge: judge.]
-		raise: CardBelongFailed
+		raise: CardBelongToPlayerFailed
 		withExceptionDo: [ :exception | self assert: exception messageText equals: 'This player does not have this card' ]
 ]
 
@@ -267,13 +267,13 @@ CardTest >> testRepeatCard [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece1
-		aCard: (RepeatCard withValueAndID: 1)
-		andOtherCard: (OverloadCard withValueAndID: 2).
+		aCard: (Repeat withValueAndID: 1)
+		andOtherCard: (Overload withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: gamepiece2
-		aCard: (OverloadCard withValueAndID: 3)
-		andOtherCard: (RepeatCard withValueAndID: 4).
+		aCard: (Overload withValueAndID: 3)
+		andOtherCard: (Repeat withValueAndID: 4).
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -321,13 +321,13 @@ CardTest >> testRepeatCardWithAnAtomicBombEffect [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece1
-		aCard: (RepeatCard withValueAndID: 1)
-		andOtherCard: (OverloadCard withValueAndID: 2).
+		aCard: (Repeat withValueAndID: 1)
+		andOtherCard: (Overload withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: gamepiece2
-		aCard: (OverloadCard withValueAndID: 3)
-		andOtherCard: (RepeatCard withValueAndID: 4).
+		aCard: (Overload withValueAndID: 3)
+		andOtherCard: (Repeat withValueAndID: 4).
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -402,13 +402,13 @@ CardTest >> testSpeedCard [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: (Gamepiece withColor: 'pink')
-		aCard: (SpeedCard withValueAndID: 1)
-		andOtherCard: (SpeedCard withValueAndID: 2).
+		aCard: (Speed withValueAndID: 1)
+		andOtherCard: (Speed withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: (Gamepiece withColor: 'blue')
-		aCard: (SpeedCard withValueAndID: 3)
-		andOtherCard: (SpeedCard withValueAndID: 4).
+		aCard: (Speed withValueAndID: 3)
+		andOtherCard: (Speed withValueAndID: 4).
 	dices := Set new.
 	dices add: (LoadedDice withFaces: 1).
 	players := OrderedCollection new.
@@ -435,12 +435,12 @@ CardTest >> testSpeedCard [
 	self assert: player1 gamepiece position equals: 8.
 	self
 		should: [ player2 playCardByID: 3 applyTo: player1 andTellJudge: judge. ]
-		raise: CardBelongFailed
+		raise: CardBelongToPlayerFailed
 		withExceptionDo: [ :exception | self assert: exception messageText equals: 'This player does not have this card' ].
 		judge changeTurnOfPlayers.
 		judge changeTurnOfPlayers.
 	self
 		should: [ player2 playCardByID: 4 applyTo: player1 andTellJudge: judge.]
-		raise: CardBelongFailed
+		raise: CardBelongToPlayerFailed
 		withExceptionDo: [ :exception | self assert: exception messageText equals: 'This player does not have this card' ]
 ]

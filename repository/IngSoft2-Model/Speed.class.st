@@ -2,7 +2,7 @@
 This card is an Overload card. Its type is Permanent and its value is +1.  It affects only a player. 
 "
 Class {
-	#name : #SpeedCard,
+	#name : #Speed,
 	#superclass : #Card,
 	#instVars : [
 		'value',
@@ -12,27 +12,27 @@ Class {
 }
 
 { #category : #Creating }
-SpeedCard class >> withValueAndID: aCardID [
+Speed class >> withValueAndID: aCardID [
 	^ self new initializeWithValueAndID: aCardID
 ]
 
 { #category : #Initializing }
-SpeedCard >> applyEffectTo: aPlayer [
+Speed >> applyEffectTo: aPlayer [
 	aPlayer gamepiece addAppliedEffectOfCardByCard: self
 ]
 
 { #category : #Accesing }
-SpeedCard >> id [
+Speed >> id [
 	^ id
 ]
 
 { #category : #Initializing }
-SpeedCard >> initializeWithValueAndID: aCardID [
+Speed >> initializeWithValueAndID: aCardID [
 	value := 1.
 	id := aCardID
 ]
 
 { #category : #Accesing }
-SpeedCard >> value [
+Speed >> value [
 	^ value
 ]

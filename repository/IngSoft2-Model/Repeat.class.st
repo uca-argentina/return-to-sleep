@@ -2,7 +2,7 @@
 This is a RepeatCard. It re applies the last square effect to the last affected player/players. 
 "
 Class {
-	#name : #RepeatCard,
+	#name : #Repeat,
 	#superclass : #Card,
 	#instVars : [
 		'id',
@@ -12,22 +12,22 @@ Class {
 }
 
 { #category : #Creating }
-RepeatCard class >> withValueAndID: aCardID [ 
+Repeat class >> withValueAndID: aCardID [ 
 	^ self new initializeWithValueAndID: aCardID.
 ]
 
 { #category : #Accesing }
-RepeatCard >> applyingEffect: lastSquareEffectApplied [
+Repeat >> applyingEffect: lastSquareEffectApplied [
 	lastSquareEffectApplied effect applyEffectTo: lastSquareEffectApplied affectedGamepiece ofGamepieceCollection: lastSquareEffectApplied gamepieces.
 ]
 
 { #category : #Accesing }
-RepeatCard >> id [
+Repeat >> id [
 	^ id
 ]
 
 { #category : #Initializing }
-RepeatCard >> initializeWithValueAndID: aCardID [
+Repeat >> initializeWithValueAndID: aCardID [
 	id := aCardID.
 	value := 0.
 ]

@@ -2,7 +2,7 @@
 This card is a Cancellation card. It can cancel a permanent effect. Its type is instant.
 "
 Class {
-	#name : #RedoCard,
+	#name : #Redo,
 	#superclass : #Card,
 	#instVars : [
 		'id',
@@ -12,22 +12,22 @@ Class {
 }
 
 { #category : #Creating }
-RedoCard class >> withValueAndID: aCardID [ 
+Redo class >> withValueAndID: aCardID [ 
 	^ self new initializeWithValueAndID: aCardID 
 ]
 
 { #category : #Accesing }
-RedoCard >> applyEffectTo: aPlayer redoingCardEffectMadeByCard: lastCard [
+Redo >> applyEffectTo: aPlayer redoingCardEffectMadeByCard: lastCard [
 	aPlayer gamepiece addAppliedEffectOfCardByCard: lastCard.
 ]
 
 { #category : #Accesing }
-RedoCard >> id [
+Redo >> id [
 	^ id
 ]
 
 { #category : #'as yet unclassified ' }
-RedoCard >> initializeWithValueAndID: aCardID [
+Redo >> initializeWithValueAndID: aCardID [
 	id := aCardID.
 	value := 0.
 ]

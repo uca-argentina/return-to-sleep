@@ -3,7 +3,7 @@ When a Game Piece of a Player falls into a Square that has the MoonWalk Effect t
 "
 Class {
 	#name : #MoonWalk,
-	#superclass : #Effect,
+	#superclass : #SquareEffect,
 	#instVars : [
 		'decrement'
 	],

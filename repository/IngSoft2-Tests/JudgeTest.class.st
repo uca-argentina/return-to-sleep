@@ -50,8 +50,8 @@ JudgeTest >> testJudgeGiveCardToAPlayer [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece1
-		aCard: (OverloadCard withValueAndID: 1)
-		andOtherCard: (OverloadCard withValueAndID: 2).
+		aCard: (Overload withValueAndID: 1)
+		andOtherCard: (Overload withValueAndID: 2).
 	players := OrderedCollection new.
 	players add: player1.
 	dices1 := Set new.
@@ -76,13 +76,13 @@ JudgeTest >> testJudgeValidateTurn [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece1
-		aCard: (OverloadCard withValueAndID: 1)
-		andOtherCard: (OverloadCard withValueAndID: 2).
+		aCard: (Overload withValueAndID: 1)
+		andOtherCard: (Overload withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: gamepiece2
-		aCard: (OverloadCard withValueAndID: 3)
-		andOtherCard:  (OverloadCard withValueAndID: 4).
+		aCard: (Overload withValueAndID: 3)
+		andOtherCard:  (Overload withValueAndID: 4).
 	gamepieces := Set new.
 	gamepieces
 		add: gamepiece1;
@@ -115,13 +115,13 @@ JudgeTest >> testJudgeValidateTurnWhenAPlayerPlaysAPermanentCard [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece1
-		aCard: (RepeatCard withValueAndID: 1)
-		andOtherCard: (OverloadCard withValueAndID: 2).
+		aCard: (Repeat withValueAndID: 1)
+		andOtherCard: (Overload withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: gamepiece2
-		aCard: (OverloadCard withValueAndID: 3)
-		andOtherCard: (RepeatCard withValueAndID: 4).
+		aCard: (Overload withValueAndID: 3)
+		andOtherCard: (Repeat withValueAndID: 4).
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -186,8 +186,8 @@ JudgeTest >> testJudgeValidateWhenPlayerCompletesARound [
 	player := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece1
-		aCard: (OverloadCard withValueAndID: 1)
-		andOtherCard: (OverloadCard withValueAndID: 2).
+		aCard: (Overload withValueAndID: 1)
+		andOtherCard: (Overload withValueAndID: 2).
 	squares := Dictionary
 		newFrom:
 			{(0 -> square0).
@@ -229,8 +229,8 @@ JudgeTest >> testJudgeValidateWhenPlayerHasToUndoARoundBecauseOfWormHoleEffect [
 	player := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece1
-		aCard: (OverloadCard withValueAndID: 1)
-		andOtherCard: (OverloadCard withValueAndID: 2).
+		aCard: (Overload withValueAndID: 1)
+		andOtherCard: (Overload withValueAndID: 2).
 	players := OrderedCollection new.
 	players add: player.
 	squares := Dictionary
@@ -281,13 +281,13 @@ JudgeTest >> testJugdeDeterminateWinner [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece1
-		aCard: (OverloadCard withValueAndID: 1)
-		andOtherCard: (OverloadCard withValueAndID: 2).
+		aCard: (Overload withValueAndID: 1)
+		andOtherCard: (Overload withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: gamepiece2
-		aCard: (OverloadCard withValueAndID: 3)
-		andOtherCard: (OverloadCard withValueAndID: 4).
+		aCard: (Overload withValueAndID: 3)
+		andOtherCard: (Overload withValueAndID: 4).
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -354,13 +354,13 @@ JudgeTest >> testJugdeTellsRankingOfAPlayer [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece1
-		aCard: (OverloadCard withValueAndID: 1)
-		andOtherCard: (OverloadCard withValueAndID: 2).
+		aCard: (Overload withValueAndID: 1)
+		andOtherCard: (Overload withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: gamepiece2
-		aCard: (OverloadCard withValueAndID: 3)
-		andOtherCard: (OverloadCard withValueAndID: 4).
+		aCard: (Overload withValueAndID: 3)
+		andOtherCard: (Overload withValueAndID: 4).
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -402,13 +402,13 @@ JudgeTest >> testTellLastCardPlayedToJudge [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: (Gamepiece withColor: 'pink')
-		aCard: (OverloadCard withValueAndID: 1)
-		andOtherCard: (OverloadCard withValueAndID: 2).
+		aCard: (Overload withValueAndID: 1)
+		andOtherCard: (Overload withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: (Gamepiece withColor: 'yellow')
-		aCard: (OverloadCard withValueAndID: 3)
-		andOtherCard: (OverloadCard withValueAndID: 4).
+		aCard: (Overload withValueAndID: 3)
+		andOtherCard: (Overload withValueAndID: 4).
 	players := OrderedCollection new.
 	players
 		add: player1;

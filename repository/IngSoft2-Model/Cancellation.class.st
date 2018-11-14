@@ -2,7 +2,7 @@
 This card is a Cancellation card. It can cancel a permanent effect. Its type is instant.
 "
 Class {
-	#name : #CancellationCard,
+	#name : #Cancellation,
 	#superclass : #Card,
 	#instVars : [
 		'value',
@@ -12,12 +12,12 @@ Class {
 }
 
 { #category : #Creating }
-CancellationCard class >> withValueAndID: aCardID [
+Cancellation class >> withValueAndID: aCardID [
 	^ self new initializeWithValueAndID: aCardID.
 ]
 
 { #category : #Accesing }
-CancellationCard >> applyEffectTo: allPlayers removingCardEffectCausedByCardWithId: cardID [
+Cancellation >> applyEffectTo: allPlayers removingCardEffectCausedByCardWithId: cardID [
 	| cardEffectToErase |
 	allPlayers
 		do: [ :each | 
@@ -30,12 +30,12 @@ CancellationCard >> applyEffectTo: allPlayers removingCardEffectCausedByCardWith
 ]
 
 { #category : #Accesing }
-CancellationCard >> id [
+Cancellation >> id [
 	^ id
 ]
 
 { #category : #Initializing }
-CancellationCard >> initializeWithValueAndID: aCardID [
+Cancellation >> initializeWithValueAndID: aCardID [
 	value := 0.
 	id := aCardID
 ]

@@ -2,7 +2,7 @@
 This card is an Overload card. Its type is Permanent and its value is +1.  It affects all players.
 "
 Class {
-	#name : #AccelerationCard,
+	#name : #Acceleration,
 	#superclass : #Card,
 	#instVars : [
 		'id',
@@ -12,27 +12,27 @@ Class {
 }
 
 { #category : #Creating }
-AccelerationCard class >> withValueAndID: aCardID [ 
+Acceleration class >> withValueAndID: aCardID [ 
 	^ self new initializeWithValueAndID: aCardID. 
 ]
 
 { #category : #Accesing }
-AccelerationCard >> applyEffectTo: allPlayers [ 
+Acceleration >> applyEffectTo: allPlayers [ 
 	allPlayers do: [ :each| each gamepiece addAppliedEffectOfCardByCard: self ].
 ]
 
 { #category : #Accesing }
-AccelerationCard >> id [
+Acceleration >> id [
 	^ id.
 ]
 
 { #category : #Initializing }
-AccelerationCard >> initializeWithValueAndID: aCardID [
+Acceleration >> initializeWithValueAndID: aCardID [
 	id := aCardID.
 	value := 1
 ]
 
 { #category : #Accesing }
-AccelerationCard >> value [
+Acceleration >> value [
 	^ value.
 ]

@@ -2,7 +2,7 @@
 This card is an Overload card. Its type is Permanent and its value is -2. 
 "
 Class {
-	#name : #OverloadCard,
+	#name : #Overload,
 	#superclass : #Card,
 	#instVars : [
 		'id',
@@ -12,27 +12,27 @@ Class {
 }
 
 { #category : #Creating }
-OverloadCard class >> withValueAndID: aCardID [
+Overload class >> withValueAndID: aCardID [
 	^ self new initializeWithValueAndID: aCardID.
 ]
 
 { #category : #Accesing }
-OverloadCard >> applyEffectTo: aPlayer [
+Overload >> applyEffectTo: aPlayer [
 	aPlayer gamepiece addAppliedEffectOfCardByCard: self. 
 ]
 
 { #category : #Accesing }
-OverloadCard >> id [
+Overload >> id [
 	^ id.
 ]
 
 { #category : #Initializing }
-OverloadCard >> initializeWithValueAndID: aCardID [
+Overload >> initializeWithValueAndID: aCardID [
 	value := -2.
 	id := aCardID
 ]
 
 { #category : #Accesing }
-OverloadCard >> value [
+Overload >> value [
 	^ value.
 ]
