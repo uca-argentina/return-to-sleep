@@ -51,13 +51,38 @@ Player >> name [
 ]
 
 { #category : #Accesing }
-Player >> playCardById: aCardId andApplyTo: aPlayer [
-	hand playCardById: aCardId  andApplyTo: aPlayer
+Player >> playCardByID: aCardId applyTo: aPlayer andTellJudge: aJudge [
+aJudge validateTurnOf: self.
+hand playCardByID: aCardId applyTo: aPlayer andTellJudge: aJudge. 
 ]
 
 { #category : #Accesing }
-Player >> playCardById: aCardID applyTo: allPlayers removingCardEffectCausedByCardWithId: CardID [
-	hand playCardById: aCardID applyTo: allPlayers removingCardEffectCausedByCardWithId: CardID
+Player >> playCardByID: aCardID applyTo: aPlayer redoingCardEffectMadeByCard: lastCard andTellJudge: aJudge [
+		hand
+		playCardByID: aCardID
+		applyTo: aPlayer
+		redoingCardEffectMadeByCard: lastCard
+		andTellJudge: aJudge
+]
+
+{ #category : #Accesing }
+Player >> playCardByID: aCardID applyTo: allPlayers redoingCardEffectMadeByCard: lastCard removingCardEffectCausedByCardWithId: causalCardID andTellJudge: aJudge [
+	hand
+		playCardByID: aCardID
+		applyTo: allPlayers
+		redoingCardEffectMadeByCard: lastCard
+		removingCardEffectCausedByCardWithId: causalCardID
+		andTellJudge: aJudge
+]
+
+{ #category : #Accesing }
+Player >> playCardByID: aCardID applyTo: allPlayers removingCardEffectCausedByCardWithId: causalCardID andTellJudge: aJudge [
+	hand playCardByID: aCardID applyTo: allPlayers removingCardEffectCausedByCardWithId: causalCardID andTellJudge: aJudge. 
+]
+
+{ #category : #Accesing }
+Player >> playCardByID: aCardID applyingEffect: aSquareEffectApplied andTellJudge: aJudge [
+	hand playCardByID: aCardID applyingEffect: aSquareEffectApplied andTellJudge: aJudge. 
 ]
 
 { #category : #Accesing }
@@ -66,4 +91,10 @@ Player >> playsATurnWith: aSetOfDices [
 	totalValueOfDices := aSetOfDices sumNumbers: [ :x | x roll ].
 	valuesOfCardEffects := playerGamePiece cardEffectsApplied inject: 0 into: [ :sum :each | sum + each causalCard value ].
 	playerGamePiece changePositionTo: playerGamePiece position + totalValueOfDices + valuesOfCardEffects
+	
+]
+
+{ #category : #Accesing }
+Player >> receivesCard: aCard. [
+hand receivesCard: aCard.
 ]

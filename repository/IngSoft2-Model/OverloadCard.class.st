@@ -1,18 +1,19 @@
+"
+This card is an Overload card. Its type is Permanent and its value is -2. 
+"
 Class {
 	#name : #OverloadCard,
 	#superclass : #Card,
 	#instVars : [
-		'type',
-		'name',
-		'value',
-		'id'
+		'id',
+		'value'
 	],
 	#category : #'IngSoft2-Model'
 }
 
 { #category : #Creating }
-OverloadCard class >> withNameTypeValueAndId: aCardID [
-	^ self new initializeWithNameTypeValueAndId: aCardID.
+OverloadCard class >> withValueAndID: aCardID [
+	^ self new initializeWithValueAndID: aCardID.
 ]
 
 { #category : #Accesing }
@@ -25,22 +26,10 @@ OverloadCard >> id [
 	^ id.
 ]
 
-{ #category : #initialization }
-OverloadCard >> initializeWithNameTypeValueAndId: aCardID [
-	type := 'permanent'.
-	name := 'Overload'.
+{ #category : #Initializing }
+OverloadCard >> initializeWithValueAndID: aCardID [
 	value := -2.
-	id := aCardID.
-]
-
-{ #category : #Accesing }
-OverloadCard >> name [
-	^ name.
-]
-
-{ #category : #Accesing }
-OverloadCard >> type [
-	^ type
+	id := aCardID
 ]
 
 { #category : #Accesing }

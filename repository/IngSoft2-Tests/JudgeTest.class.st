@@ -26,6 +26,49 @@ JudgeTest >> testCreateAJudge [
 ]
 
 { #category : #'judge-tests' }
+JudgeTest >> testJudgeGiveCardToAPlayer [
+	| player1 dices1 judge board players gamepiece1 gamepieces squares effect0 effect1 effect2 effect3 effect4 square0 square1 square2 square3 square4 |
+	gamepiece1 := Gamepiece withColor: 'pink'.
+	gamepieces := Dictionary newFrom: {(gamepiece1 color -> gamepiece1)}.
+	effect0 := NonEffect new.
+	effect1 := MoonWalk withAPowerValue: 2.
+	effect2 := NonEffect new.
+	effect3 := NonEffect new.
+	effect4 := SpeedUp withAPowerValue: 2.
+	square0 := Square withAnEffect: effect0 thatGivesCard: false.
+	square1 := Square withAnEffect: effect0 thatGivesCard: true.
+	square2 := Square withAnEffect: effect0 thatGivesCard: true.
+	square3 := Square withAnEffect: effect0 thatGivesCard: false.
+	square4 := Square withAnEffect: effect0 thatGivesCard: false.
+	squares := Dictionary
+		newFrom:
+			{(0 -> square0).
+			(1 -> square1).
+			(2 -> square2).
+			(3 -> square3).
+			(4 -> square4)}.
+	player1 := Player
+		withName: 'Sol'
+		aGamePiece: gamepiece1
+		aCard: (OverloadCard withValueAndID: 1)
+		andOtherCard: (OverloadCard withValueAndID: 2).
+	players := OrderedCollection new.
+	players add: player1.
+	dices1 := Set new.
+	dices1 add: (LoadedDice withFaces: 1).
+	board := Board withSquares: squares gamepieces: gamepieces andRounds: 2.
+	judge := Judge named: 'Pitana' assuring: players on: board.
+	player1 playsATurnWith: dices1.
+	board updateGamepiecesPositionOnBoard.
+	judge giveCardTo: player1.
+	player1
+		playCardByID: 3
+		applyTo: players
+		removingCardEffectCausedByCardWithId: 1
+		andTellJudge: judge
+]
+
+{ #category : #'judge-tests' }
 JudgeTest >> testJudgeValidateTurn [
 	| judge turn player1 player2 collectionOfPlayers board gamepiece1 gamepiece2 gamepieces squares |
 	gamepiece1 := Gamepiece withColor: 'red'.
@@ -33,13 +76,13 @@ JudgeTest >> testJudgeValidateTurn [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece1
-		aCard: aFirstCard
-		andOtherCard: aSecondCard.
+		aCard: (OverloadCard withValueAndID: 1)
+		andOtherCard: (OverloadCard withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: gamepiece2
-		aCard: aFirstCard
-		andOtherCard: aSecondCard.
+		aCard: (OverloadCard withValueAndID: 3)
+		andOtherCard:  (OverloadCard withValueAndID: 4).
 	gamepieces := Set new.
 	gamepieces
 		add: gamepiece1;
@@ -50,7 +93,7 @@ JudgeTest >> testJudgeValidateTurn [
 		add: player2.
 	turn := PlayingSequence withAllPlayers: collectionOfPlayers.
 	squares := Set new.
-	squares add: (Square withAnEffect: NonEffect new).
+	squares add: (Square withAnEffect: NonEffect new thatGivesCard: false).
 	board := Board
 		withSquares: squares
 		gamepieces: gamepieces
@@ -65,6 +108,68 @@ JudgeTest >> testJudgeValidateTurn [
 ]
 
 { #category : #'judge-tests' }
+JudgeTest >> testJudgeValidateTurnWhenAPlayerPlaysAPermanentCard [
+	| player1 player2 dices players judge gamepiece1 gamepiece2 gamepieces effect0 effect1 effect2 effect3 effect4 square0 square1 square2 square3 square4 squares board |
+	gamepiece1 := Gamepiece withColor: 'pink'.
+	gamepiece2 := Gamepiece withColor: 'blue'.
+	player1 := Player
+		withName: 'Sol'
+		aGamePiece: gamepiece1
+		aCard: (RepeatCard withValueAndID: 1)
+		andOtherCard: (OverloadCard withValueAndID: 2).
+	player2 := Player
+		withName: 'Dubi'
+		aGamePiece: gamepiece2
+		aCard: (OverloadCard withValueAndID: 3)
+		andOtherCard: (RepeatCard withValueAndID: 4).
+	players := OrderedCollection new.
+	players
+		add: player1;
+		add: player2.
+	dices := Set new.
+	dices add: (LoadedDice withFaces: 4).
+	gamepieces := Dictionary
+		newFrom:
+			{(gamepiece1 color -> gamepiece1).
+			(gamepiece2 color -> gamepiece2)}.
+	effect0 := NonEffect new.
+	effect1 := NonEffect new.
+	effect2 := NonEffect new.
+	effect3 := NonEffect new.
+	effect4 := NonEffect new.
+	square0 := Square withAnEffect: effect0 thatGivesCard: false.
+	square1 := Square withAnEffect: effect1 thatGivesCard: false.
+	square2 := Square withAnEffect: effect2 thatGivesCard: false.
+	square3 := Square withAnEffect: effect3 thatGivesCard: false.
+	square4 := Square withAnEffect: effect4 thatGivesCard: false.
+	squares := Dictionary
+		newFrom:
+			{(0 -> square0).
+			(1 -> square1).
+			(2 -> square2).
+			(3 -> square3).
+			(4 -> square4)}.
+	board := Board withSquares: squares gamepieces: gamepieces andRounds: 2.
+	judge := Judge named: 'Pitana' assuring: players on: board.
+	judge validateTurnOf: player1.
+	player1 playsATurnWith: dices.
+	player1 playCardByID: 2 applyTo: player2 andTellJudge: judge.
+	judge validateRoundsOfPlayers.
+	board updateGamepiecesPositionOnBoard.
+	board applyEffectToAGamepieceUsingKey: gamepiece1 color.
+	self assert: player1 gamepiece position equals: 4.
+	judge changeTurnOfPlayers.
+	player1 playCardByID: 1 applyingEffect: board lastSquareEffectApplied andTellJudge: judge.
+	judge validateTurnOf: player2.
+	player2 playsATurnWith: dices.
+	self assert: player2 gamepiece position equals: 2.
+	judge changeTurnOfPlayers.
+	
+	self should: [
+	player2 playCardByID: 3 applyTo: player1 andTellJudge: judge ] raise: JudgeValidationFailed.
+]
+
+{ #category : #'judge-tests' }
 JudgeTest >> testJudgeValidateWhenPlayerCompletesARound [
 	| board squares square1 square2 square3 square4 gamepiece1 gamepieces player dices effect1 effect2 effect3 effect4 effect0 square0 judge |
 	effect0 := NonEffect new.
@@ -72,17 +177,17 @@ JudgeTest >> testJudgeValidateWhenPlayerCompletesARound [
 	effect2 := SpeedUp withAPowerValue: 1.
 	effect3 := WormHole withAPowerValue: 2.
 	effect4 := MoonWalk withAPowerValue: 1.
-	square0 := Square withAnEffect: effect0.
-	square1 := Square withAnEffect: effect1.
-	square2 := Square withAnEffect: effect2.
-	square3 := Square withAnEffect: effect3.
-	square4 := Square withAnEffect: effect4.
+	square0 := Square withAnEffect: effect0 thatGivesCard: false.
+	square1 := Square withAnEffect: effect1 thatGivesCard: false.
+	square2 := Square withAnEffect: effect2 thatGivesCard: false.
+	square3 := Square withAnEffect: effect3 thatGivesCard: false.
+	square4 := Square withAnEffect: effect4 thatGivesCard: false.
 	gamepiece1 := Gamepiece withColor: 'blue'.
 	player := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece1
-		aCard: aFirstCard
-		andOtherCard: aSecondCard.
+		aCard: (OverloadCard withValueAndID: 1)
+		andOtherCard: (OverloadCard withValueAndID: 2).
 	squares := Dictionary
 		newFrom:
 			{(0 -> square0).
@@ -91,24 +196,21 @@ JudgeTest >> testJudgeValidateWhenPlayerCompletesARound [
 			(3 -> square3).
 			(4 -> square4)}.
 	gamepieces := Dictionary newFrom: {(gamepiece1 color -> gamepiece1)}.
-	board := Board
-		withSquares: squares
-		gamepieces: gamepieces
-		andRounds: 5.
+	board := Board withSquares: squares gamepieces: gamepieces andRounds: 5.
 	dices := Set new.
 	dices add: (LoadedDice withFaces: 3).
-	judge := Judge named: 'Pitana' assuring: player on: board.
+	judge := Judge named: 'Pitana' assuring: (player asOrderedCollection) on: board.
 	player playsATurnWith: dices.
 	self assert: gamepiece1 position equals: 3.
-	gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
+	board updateGamepiecesPositionOnBoard.
 	board applyEffectToAGamepieceUsingKey: gamepiece1 color.
 	self assert: gamepiece1 position equals: 1.
 	player playsATurnWith: dices.
-	gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
+	board updateGamepiecesPositionOnBoard.
 	board applyEffectToAGamepieceUsingKey: gamepiece1 color.
 	self assert: gamepiece1 position equals: 4.
 	player playsATurnWith: dices.
-	gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
+	board updateGamepiecesPositionOnBoard.
 	self assert: gamepiece1 position equals: 7.
 	judge validateRoundsOfPlayers.
 	self assert: gamepiece1 rounds equals: 1
@@ -120,15 +222,15 @@ JudgeTest >> testJudgeValidateWhenPlayerHasToUndoARoundBecauseOfWormHoleEffect [
 	effect0 := NonEffect new.
 	effect1 := WormHole withAPowerValue: 3.
 	effect2 := NonEffect new.
-	square0 := Square withAnEffect: effect0.
-	square1 := Square withAnEffect: effect1.
-	square2 := Square withAnEffect: effect2.
+	square0 := Square withAnEffect: effect0 thatGivesCard: false.
+	square1 := Square withAnEffect: effect1 thatGivesCard: false.
+	square2 := Square withAnEffect: effect2 thatGivesCard: false.
 	gamepiece1 := Gamepiece withColor: 'blue'.
 	player := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece1
-		aCard: aFirstCard
-		andOtherCard: aSecondCard.
+		aCard: (OverloadCard withValueAndID: 1)
+		andOtherCard: (OverloadCard withValueAndID: 2).
 	players := OrderedCollection new.
 	players add: player.
 	squares := Dictionary
@@ -137,10 +239,7 @@ JudgeTest >> testJudgeValidateWhenPlayerHasToUndoARoundBecauseOfWormHoleEffect [
 			(1 -> square1).
 			(2 -> square2)}.
 	gamepieces := Dictionary newFrom: {(gamepiece1 color -> gamepiece1)}.
-	board := Board
-		withSquares: squares
-		gamepieces: gamepieces
-		andRounds: 5.
+	board := Board withSquares: squares gamepieces: gamepieces andRounds: 5.
 	dices := Set new.
 	dices add: (LoadedDice withFaces: 1).
 	judge := Judge named: 'Pitana' assuring: players on: board.
@@ -167,11 +266,11 @@ JudgeTest >> testJugdeDeterminateWinner [
 	effect2 := NonEffect new.
 	effect3 := NonEffect new.
 	effect4 := SpeedUp withAPowerValue: 2.
-	square0 := Square withAnEffect: effect0.
-	square1 := Square withAnEffect: effect1.
-	square2 := Square withAnEffect: effect2.
-	square3 := Square withAnEffect: effect3.
-	square4 := Square withAnEffect: effect4.
+	square0 := Square withAnEffect: effect0 thatGivesCard: false.
+	square1 := Square withAnEffect: effect1 thatGivesCard: false.
+	square2 := Square withAnEffect: effect2 thatGivesCard: false.
+	square3 := Square withAnEffect: effect3 thatGivesCard: false.
+	square4 := Square withAnEffect: effect4 thatGivesCard: false.
 	squares := Dictionary
 		newFrom:
 			{(0 -> square0).
@@ -182,13 +281,13 @@ JudgeTest >> testJugdeDeterminateWinner [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece1
-		aCard: aFirstCard
-		andOtherCard: aSecondCard.
+		aCard: (OverloadCard withValueAndID: 1)
+		andOtherCard: (OverloadCard withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: gamepiece2
-		aCard: aFirstCard
-		andOtherCard: aSecondCard.
+		aCard: (OverloadCard withValueAndID: 3)
+		andOtherCard: (OverloadCard withValueAndID: 4).
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -197,98 +296,31 @@ JudgeTest >> testJugdeDeterminateWinner [
 	dices1 add: (LoadedDice withFaces: 1).
 	dices2 := Set new.
 	dices2 add: (LoadedDice withFaces: 2).
-	board := Board
-		withSquares: squares
-		gamepieces: gamepieces
-		andRounds: 2.
+	board := Board withSquares: squares gamepieces: gamepieces andRounds: 2.
 	judge := Judge named: 'Pitana' assuring: players on: board.
 	[ judge thereIsAWinner ]
 		whileFalse: [ judge validateTurnOf: player1.
 			player1 playsATurnWith: dices1.
 			judge validateRoundsOfPlayers.
-			gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
-			gamepiece2 positionOnBoardBasedOnNSquares: board squares size.
+			board updateGamepiecesPositionOnBoard.
+			judge giveCardTo: player1.
 			board applyEffectToAGamepieceUsingKey: gamepiece1 color.
+			judge changeTurnOfPlayers.
 			judge validateTurnOf: player2.
 			player2 playsATurnWith: dices2.
 			judge validateRoundsOfPlayers.
-			gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
-			gamepiece2 positionOnBoardBasedOnNSquares: board squares size.
+			board updateGamepiecesPositionOnBoard.
+			judge giveCardTo: player2.
 			board applyEffectToAGamepieceUsingKey: gamepiece2 color.
 			judge validateRoundsOfPlayers.
-			winner := judge playerHasWon ].
+			winner := judge playerHasWon.
+			judge changeTurnOfPlayers ].
 	self assert: judge thereIsAWinner equals: true.
-	self assert: winner name equals: 'Dubi'
-]
-
-{ #category : #'judge-tests' }
-JudgeTest >> testJugdeDeterminateWinnerWhenThereIsAnAtomicBombSquare [
-	| player1 player2 dices1 judge board players winner gamepiece1 gamepiece2 gamepieces squares effect0 effect1 effect2 effect3 effect4 square0 square1 square2 square3 square4 dices2 |
-	gamepiece1 := Gamepiece withColor: 'pink'.
-	gamepiece2 := Gamepiece withColor: 'blue'.
-	gamepieces := Dictionary
-		newFrom:
-			{(gamepiece1 color -> gamepiece1).
-			(gamepiece2 color -> gamepiece2)}.
-	effect0 := NonEffect new.
-	effect1 := NonEffect new.
-	effect2 := NonEffect new.
-	effect3 := NonEffect new.
-	effect4 := AtomicBomb new.
-	square0 := Square withAnEffect: effect0.
-	square1 := Square withAnEffect: effect1.
-	square2 := Square withAnEffect: effect2.
-	square3 := Square withAnEffect: effect3.
-	square4 := Square withAnEffect: effect4.
-	squares := Dictionary
-		newFrom:
-			{(0 -> square0).
-			(1 -> square1).
-			(2 -> square2).
-			(3 -> square3).
-			(4 -> square4)}.
-	player1 := Player
-		withName: 'Sol'
-		aGamePiece: gamepiece1
-		aCard: aFirstCard
-		andOtherCard: aSecondCard.
-	player2 := Player
-		withName: 'Dubi'
-		aGamePiece: gamepiece2
-		aCard: aFirstCard
-		andOtherCard: aSecondCard.
-	players := OrderedCollection new.
-	players
-		add: player1;
-		add: player2.
-	dices1 := Set new.
-	dices1 add: (LoadedDice withFaces: 2).
-	dices2 := Set new.
-	dices2 add: (LoadedDice withFaces: 6).
-	board := Board
-		withSquares: squares
-		gamepieces: gamepieces
-		andRounds: 2.
-	judge := Judge named: 'Pitana' assuring: players on: board.
-	[ judge thereIsAWinner ]
-		whileFalse: [ judge validateTurnOf: player1.
-			player1 playsATurnWith: dices1.
-			judge validateRoundsOfPlayers.
-			gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
-			gamepiece2 positionOnBoardBasedOnNSquares: board squares size.
-			board applyEffectToAGamepieceUsingKey: gamepiece1 color.
-			judge validateTurnOf: player2.
-			player2 playsATurnWith: dices2.
-			judge validateRoundsOfPlayers.
-			gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
-			gamepiece2 positionOnBoardBasedOnNSquares: board squares size.
-			board applyEffectToAGamepieceUsingKey: gamepiece2 color.
-			judge validateRoundsOfPlayers.
-			winner := judge playerHasWon ].
-	self assert: judge thereIsAWinner equals: true.
-	self assert: player1 gamepiece position equals: 0.
-	self assert: player2 gamepiece position equals: 11.
-	self assert: winner name equals: 'Dubi'
+	self assert: winner name equals: 'Dubi'.
+	self assert: player1 gamepiece finalRanking  equals: 2.
+	
+	self assert: player2 gamepiece finalRanking  equals: 1.
+	
 ]
 
 { #category : #'judge-tests' }
@@ -306,12 +338,12 @@ JudgeTest >> testJugdeTellsRankingOfAPlayer [
 	effect3 := WormHole withAPowerValue: 2.
 	effect4 := AtomicBomb new.
 	effect5 := NonEffect new.
-	square0 := Square withAnEffect: effect0.
-	square1 := Square withAnEffect: effect1.
-	square2 := Square withAnEffect: effect2.
-	square3 := Square withAnEffect: effect3.
-	square4 := Square withAnEffect: effect4.
-	square5 := Square withAnEffect: effect5.
+	square0 := Square withAnEffect: effect0 thatGivesCard: false.
+	square1 := Square withAnEffect: effect1 thatGivesCard: false.
+	square2 := Square withAnEffect: effect2 thatGivesCard: false.
+	square3 := Square withAnEffect: effect3 thatGivesCard: false.
+	square4 := Square withAnEffect: effect4 thatGivesCard: false.
+	square5 := Square withAnEffect: effect5 thatGivesCard: false.
 	squares := Dictionary
 		newFrom:
 			{(0 -> square0).
@@ -322,13 +354,13 @@ JudgeTest >> testJugdeTellsRankingOfAPlayer [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece1
-		aCard: aFirstCard
-		andOtherCard: aSecondCard.
+		aCard: (OverloadCard withValueAndID: 1)
+		andOtherCard: (OverloadCard withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: gamepiece2
-		aCard: aFirstCard
-		andOtherCard: aSecondCard.
+		aCard: (OverloadCard withValueAndID: 3)
+		andOtherCard: (OverloadCard withValueAndID: 4).
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -337,27 +369,51 @@ JudgeTest >> testJugdeTellsRankingOfAPlayer [
 	dices1 add: (LoadedDice withFaces: 4).
 	dices2 := Set new.
 	dices2 add: (LoadedDice withFaces: 3).
-	board := Board
-		withSquares: squares
-		gamepieces: gamepieces
-		andRounds: 2.
+	board := Board withSquares: squares gamepieces: gamepieces andRounds: 2.
 	judge := Judge named: 'Pitana' assuring: players on: board.
 	judge validateTurnOf: player1.
 	player1 playsATurnWith: dices1.
 	judge validateRoundsOfPlayers.
 	judge playerHasWon.
+	judge changeTurnOfPlayers.
 	judge validateTurnOf: player2.
 	player2 playsATurnWith: dices2.
 	judge validateRoundsOfPlayers.
 	judge playerHasWon.
+	
+	judge changeTurnOfPlayers.
 	judge validateTurnOf: player1.
 	player1 playsATurnWith: dices1.
 	judge validateRoundsOfPlayers.
 	judge playerHasWon.
+	
+	judge changeTurnOfPlayers.
 	judge validateTurnOf: player2.
 	player2 playsATurnWith: dices2.
 	judge validateRoundsOfPlayers.
 	judge playerHasWon.
 	self assert: (judge ranking: player2 gamepiece) equals: 2.
 	self assert: (judge ranking: player1 gamepiece) equals: 1
+]
+
+{ #category : #'judge-tests' }
+JudgeTest >> testTellLastCardPlayedToJudge [
+	| judge player1 player2 players |
+	player1 := Player
+		withName: 'Sol'
+		aGamePiece: (Gamepiece withColor: 'pink')
+		aCard: (OverloadCard withValueAndID: 1)
+		andOtherCard: (OverloadCard withValueAndID: 2).
+	player2 := Player
+		withName: 'Dubi'
+		aGamePiece: (Gamepiece withColor: 'yellow')
+		aCard: (OverloadCard withValueAndID: 3)
+		andOtherCard: (OverloadCard withValueAndID: 4).
+	players := OrderedCollection new.
+	players
+		add: player1;
+		add: player2.
+	judge := Judge named: 'Pitana' assuring: players on: Board new.
+	player1 playCardByID: 1 applyTo: player2 andTellJudge: judge.
+	self assert: judge lastCardPlayed id equals: 1
 ]

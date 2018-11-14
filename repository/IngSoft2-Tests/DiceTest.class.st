@@ -41,7 +41,7 @@ DiceTest >> testCreateWrongDiceWithWrongNumberOfFaces [
 DiceTest >> testRollLoadedDice [
 	| dice |
 	dice := LoadedDice withFaces: 100.
-	self assert: dice roll equals: 100
+	self assert: dice roll equals: 100.
 ]
 
 { #category : #'dice-tests' }

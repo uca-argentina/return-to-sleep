@@ -25,11 +25,11 @@ GamepieceTest >> testGamepiecesFinalRankingWhenThereIsAWinner [
 	effect2 := NonEffect new.
 	effect3 := NonEffect new.
 	effect4 := SpeedUp withAPowerValue: 2.
-	square0 := Square withAnEffect: effect0.
-	square1 := Square withAnEffect: effect1.
-	square2 := Square withAnEffect: effect2.
-	square3 := Square withAnEffect: effect3.
-	square4 := Square withAnEffect: effect4.
+	square0 := Square withAnEffect: effect0 thatGivesCard: false.
+	square1 := Square withAnEffect: effect1 thatGivesCard: false.
+	square2 := Square withAnEffect: effect2 thatGivesCard: false.
+	square3 := Square withAnEffect: effect3 thatGivesCard: false.
+	square4 := Square withAnEffect: effect4 thatGivesCard: false.
 	squares := Dictionary
 		newFrom:
 			{(0 -> square0).
@@ -40,17 +40,18 @@ GamepieceTest >> testGamepiecesFinalRankingWhenThereIsAWinner [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece1
-		aCard: aFirstCard
-		andOtherCard: aSecondCard.
-	player2 := Player
+		aCard: (OverloadCard withValueAndID: 1)
+		andOtherCard: (OverloadCard withValueAndID: 2).
+		player2 := Player
 		withName: 'Dubi'
 		aGamePiece: gamepiece2
-		aCard: aFirstCard
-		andOtherCard: aSecondCard.
+		aCard: (OverloadCard withValueAndID: 3)
+		andOtherCard: (OverloadCard withValueAndID: 4).
 	players := OrderedCollection new.
 	players
 		add: player1;
 		add: player2.
+		
 	dices1 := Set new.
 	dices1 add: (LoadedDice withFaces: 1).
 	dices2 := Set new.
@@ -66,13 +67,17 @@ GamepieceTest >> testGamepiecesFinalRankingWhenThereIsAWinner [
 			judge validateRoundsOfPlayers.
 			gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
 			board applyEffectToAGamepieceUsingKey: gamepiece1 color.
+			
+	judge changeTurnOfPlayers.
 			judge validateTurnOf: player2.
 			player2 playsATurnWith: dices2.
 			judge validateRoundsOfPlayers.
 			gamepiece2 positionOnBoardBasedOnNSquares: board squares size.
 			board applyEffectToAGamepieceUsingKey: gamepiece2 color.
 			judge validateRoundsOfPlayers.
-			winner := judge playerHasWon ].
+			winner := judge playerHasWon.
+			
+	judge changeTurnOfPlayers. ].
 	self assert: judge thereIsAWinner.
 	judge determinateFinalRankings.
 	self assert: gamepiece1 position equals: 7.

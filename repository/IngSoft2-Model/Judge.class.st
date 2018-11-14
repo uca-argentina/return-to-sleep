@@ -9,7 +9,9 @@ Class {
 		'board',
 		'playingSequence',
 		'players',
-		'thereIsAWinner'
+		'thereIsAWinner',
+		'lastCardPlayed',
+		'cardCreator'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -20,10 +22,25 @@ Judge class >> named: aName assuring: players on: aBoard [
 ]
 
 { #category : #Accesing }
+Judge >> changeTurnOfPlayers [
+	playingSequence changeToNextPlayer. 
+]
+
+{ #category : #Accesing }
 Judge >> determinateFinalRankings [
 	| gamepieces |
 	gamepieces := (board gamepieces values collect: [ :each | each ]) as: Set.
 	gamepieces do: [ :each | each finalRanking: (self ranking: each) ]
+]
+
+{ #category : #Accesing }
+Judge >> giveCardTo: aPlayer [
+	| gamepiece positionOfPlayerOnBoard square |
+	gamepiece := aPlayer gamepiece.
+	positionOfPlayerOnBoard := gamepiece positionOnBoard.
+	square := board squares at: positionOfPlayerOnBoard.
+	square givesCard
+		ifTrue: [ aPlayer receivesCard: (cardCreator createAndReturnACard) ]
 ]
 
 { #category : #Initializing }
@@ -32,7 +49,14 @@ Judge >> initializeNamed: aName assuring: anOrderedCollectionOfPlayers on: aBoar
 	players := anOrderedCollectionOfPlayers.
 	playingSequence := PlayingSequence withAllPlayers: anOrderedCollectionOfPlayers.
 	board := aBoard.
-	thereIsAWinner := false. 
+	thereIsAWinner := false.
+	lastCardPlayed := false.
+	cardCreator := CardCreator withTotalTypesOfCardsKnowingNumberOfPlayers: (players size). 
+]
+
+{ #category : #Accesing }
+Judge >> lastCardPlayed [
+	^ lastCardPlayed
 ]
 
 { #category : #Accesing }
@@ -61,6 +85,11 @@ Judge >> ranking: aPlayerGamepiece [
 ]
 
 { #category : #Accesing }
+Judge >> tellLastCardPlayed: aCard [ 
+	lastCardPlayed := aCard. 
+]
+
+{ #category : #Accesing }
 Judge >> thereIsAWinner [
 	^ thereIsAWinner
 ]
@@ -74,8 +103,7 @@ Judge >> validateRoundsOfPlayers [
 
 { #category : #Accesing }
 Judge >> validateTurnOf: whoWantsToPlay [
-	playingSequence currentPlayer  = whoWantsToPlay
-		ifTrue: [ playingSequence changeToNextPlayer ]
+	playingSequence currentPlayer = whoWantsToPlay
 		ifFalse: [ JudgeValidationFailed signal: 'You cannot play when is not your turn' ]
 ]
 
