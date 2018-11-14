@@ -27,7 +27,7 @@ Hand >> playCardByID: aCardID applyTo: aPlayer andTellJudge: aJudge [
 	| card |
 	card := cards
 		detect: [ :each | each id = aCardID ]
-		ifNone: [ CardBelongFailed signal: 'This player does not have this card' ].
+		ifNone: [ CardBelongToPlayerFailed signal: 'This player does not have this card' ].
 	card applyEffectTo: aPlayer.
 	cards remove: card.
 	aJudge tellLastCardPlayed: card. 
@@ -38,7 +38,7 @@ Hand >> playCardByID: aCardID applyTo: aPlayer redoingCardEffectMadeByCard: last
 	| myCard |
 	myCard := cards
 		detect: [ :each | each id = aCardID ]
-		ifNone: [ CardBelongFailed signal: 'This player does not have this card' ].
+		ifNone: [ CardBelongToPlayerFailed signal: 'This player does not have this card' ].
 	myCard applyEffectTo: aPlayer redoingCardEffectMadeByCard: lastCard.
 	cards remove: myCard.
 ]
@@ -48,7 +48,7 @@ Hand >> playCardByID: aCardID applyTo: allPlayers redoingCardEffectMadeByCard: l
 	| myCard |
 	myCard := cards
 		detect: [ :each | each id = aCardID ]
-		ifNone: [ CardBelongFailed signal: 'This player does not have this card' ].
+		ifNone: [ CardBelongToPlayerFailed signal: 'This player does not have this card' ].
 	cards remove: myCard.
 	lastCard applyEffectTo: allPlayers removingCardEffectCausedByCardWithId: causalCardID.
 ]
@@ -58,7 +58,7 @@ Hand >> playCardByID: aCardID applyTo: allPlayers removingCardEffectCausedByCard
 	| myCard |
 	myCard := cards
 		detect: [ :each | each id = aCardID ]
-		ifNone: [ CardBelongFailed signal: 'This player does not have this card' ].
+		ifNone: [ CardBelongToPlayerFailed signal: 'This player does not have this card' ].
 	myCard applyEffectTo: allPlayers removingCardEffectCausedByCardWithId: causalCardID.
 	cards remove: myCard.
 	aJudge tellLastCardPlayed: myCard. 
@@ -67,7 +67,7 @@ Hand >> playCardByID: aCardID applyTo: allPlayers removingCardEffectCausedByCard
 { #category : #Accesing }
 Hand >> playCardByID: aCardID applyingEffect: aSquareEffectApplied andTellJudge: aJudge [
 	| card |
-	card := cards detect: [ :each | each id = aCardID ] ifNone: [ CardBelongFailed signal: 'This player does not have this card' ].
+	card := cards detect: [ :each | each id = aCardID ] ifNone: [ CardBelongToPlayerFailed signal: 'This player does not have this card' ].
 	card applyingEffect: aSquareEffectApplied. 
 	cards remove: card.
 ]

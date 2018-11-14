@@ -1,11 +1,11 @@
 Class {
-	#name : #EffectTest,
+	#name : #SquareEffectTest,
 	#superclass : #TestCase,
 	#category : #'IngSoft2-Tests'
 }
 
-{ #category : #'effect-tests' }
-EffectTest >> testApplyAtomicBombToAGamePiece [
+{ #category : #'squareEffect-tests' }
+SquareEffectTest >> testApplyAtomicBombToAGamePiece [
 	| player1 player2 dices1 judge board players gamepiece1 gamepiece2 gamepieces squares effect0 effect1 effect2 square0 square1 square2 dices2 |
 	gamepiece1 := Gamepiece withColor: 'pink'.
 	gamepiece2 := Gamepiece withColor: 'blue'.
@@ -27,13 +27,13 @@ EffectTest >> testApplyAtomicBombToAGamePiece [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece1
-		aCard: (OverloadCard withValueAndID: 1)
-		andOtherCard: (OverloadCard withValueAndID: 2).
+		aCard: (Overload withValueAndID: 1)
+		andOtherCard: (Overload withValueAndID: 2).
 	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: gamepiece2
-		aCard: (OverloadCard withValueAndID: 3)
-		andOtherCard: (OverloadCard withValueAndID: 4).
+		aCard: (Overload withValueAndID: 3)
+		andOtherCard: (Overload withValueAndID: 4).
 	players := OrderedCollection new.
 	players
 		add: player1;
@@ -63,8 +63,8 @@ EffectTest >> testApplyAtomicBombToAGamePiece [
 	self assert: gamepiece2 positionOnBoard equals: 0
 ]
 
-{ #category : #'effect-tests' }
-EffectTest >> testApplyMoonWalkToAGamePiece [
+{ #category : #'squareEffect-tests' }
+SquareEffectTest >> testApplyMoonWalkToAGamePiece [
 	| effect1 effect2 gamepiece1 gamepiece2 gamepiece3 pieces |
 	effect1 := SpeedUp withAPowerValue: 4.
 	gamepiece1 := Gamepiece withColor: 'pink'.
@@ -91,8 +91,8 @@ EffectTest >> testApplyMoonWalkToAGamePiece [
 	self assert: gamepiece3 position equals: 9
 ]
 
-{ #category : #'effect-tests' }
-EffectTest >> testApplyNonEffectToGamePiece [
+{ #category : #'squareEffect-tests' }
+SquareEffectTest >> testApplyNonEffectToGamePiece [
 	| effect1 gamepiece effect2 |
 	effect1 := SpeedUp withAPowerValue: 4.
 	gamepiece := Gamepiece withColor: 'pink'.
@@ -103,8 +103,8 @@ EffectTest >> testApplyNonEffectToGamePiece [
 	self assert: gamepiece position equals: 4.
 ]
 
-{ #category : #'effect-tests' }
-EffectTest >> testApplySpeedUpToAGamePiece [
+{ #category : #'squareEffect-tests' }
+SquareEffectTest >> testApplySpeedUpToAGamePiece [
 	| effect gamepiece |
 	effect := SpeedUp withAPowerValue: 4.
 	gamepiece := Gamepiece withColor: 'pink'.
@@ -112,8 +112,8 @@ EffectTest >> testApplySpeedUpToAGamePiece [
 	self assert: gamepiece position equals: 4
 ]
 
-{ #category : #'effect-tests' }
-EffectTest >> testApplyWormHoleToAGamePiece [
+{ #category : #'squareEffect-tests' }
+SquareEffectTest >> testApplyWormHoleToAGamePiece [
 	| effect1 effect2 gamepiece |
 	effect1 := SpeedUp withAPowerValue: 4.
 	gamepiece := Gamepiece withColor: 'pink'.

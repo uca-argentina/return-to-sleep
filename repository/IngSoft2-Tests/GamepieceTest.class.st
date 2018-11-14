@@ -40,13 +40,13 @@ GamepieceTest >> testGamepiecesFinalRankingWhenThereIsAWinner [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece1
-		aCard: (OverloadCard withValueAndID: 1)
-		andOtherCard: (OverloadCard withValueAndID: 2).
+		aCard: (Overload withValueAndID: 1)
+		andOtherCard: (Overload withValueAndID: 2).
 		player2 := Player
 		withName: 'Dubi'
 		aGamePiece: gamepiece2
-		aCard: (OverloadCard withValueAndID: 3)
-		andOtherCard: (OverloadCard withValueAndID: 4).
+		aCard: (Overload withValueAndID: 3)
+		andOtherCard: (Overload withValueAndID: 4).
 	players := OrderedCollection new.
 	players
 		add: player1;

@@ -21,11 +21,6 @@ Player class >> withName: APlayerName aGamePiece: aGamePiece aCard: aFirstCard a
 		andOtherCard: aSecondCard
 ]
 
-{ #category : #Creating }
-Player class >> withName: APlayerName andAGamePiece: aGamePiece [
-	^ self new initializeWithName: APlayerName andAGamepiece: aGamePiece.
-]
-
 { #category : #Accesing }
 Player >> gamepiece [
 	^playerGamePiece.
@@ -37,12 +32,6 @@ Player >> initializeWithName: aPlayerName aGamepiece: aGamePiece aCard: aFirstCa
 	playerGamePiece := aGamePiece.
 	hand := Hand withACard: aFirstCard andOtherCard: aSecondCard.
 	
-]
-
-{ #category : #Initializing }
-Player >> initializeWithName: aPlayerName andAGamepiece: aGamePiece. [ 
-	name := aPlayerName.
-	playerGamePiece := aGamePiece. 
 ]
 
 { #category : #Accesing }

@@ -3,7 +3,7 @@ When a Game Piece of a Player falls into a Square that has the WormHole Effect t
 "
 Class {
 	#name : #WormHole,
-	#superclass : #Effect,
+	#superclass : #SquareEffect,
 	#instVars : [
 		'decrement'
 	],

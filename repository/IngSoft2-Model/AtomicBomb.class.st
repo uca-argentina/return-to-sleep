@@ -3,7 +3,7 @@ When a Game Piece of a Player falls into a Square that has the AtomicBomb Effect
 "
 Class {
 	#name : #AtomicBomb,
-	#superclass : #Effect,
+	#superclass : #SquareEffect,
 	#category : #'IngSoft2-Model'
 }
 

@@ -4,7 +4,7 @@ When a Game Piece of a Player falls into a Square that has the SpeedUp Effect th
 "
 Class {
 	#name : #SpeedUp,
-	#superclass : #Effect,
+	#superclass : #SquareEffect,
 	#instVars : [
 		'increment'
 	],
