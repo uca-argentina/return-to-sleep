@@ -6,8 +6,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'totalNumberOfSquares',
-		'squares',
-		'quantityOfSquaresByEffect'
+		'quantityOfSquaresByEffect',
+		'numberOfSquare'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -25,6 +25,16 @@ SquareCreator class >> withNSquares: aNumberOfSquares [
 ]
 
 { #category : #Accesing }
+SquareCreator >> assign: aSquareWithAnEffect to: squares [
+	| quantityOfSquares |
+	quantityOfSquares := quantityOfSquaresByEffect at: aSquareWithAnEffect effect name.
+	[ quantityOfSquares > 0 ]
+		whileTrue: [ squares at: numberOfSquare put: aSquareWithAnEffect.
+			numberOfSquare := numberOfSquare + 1.
+			quantityOfSquares := quantityOfSquares - 1 ]
+]
+
+{ #category : #Accesing }
 SquareCreator >> calculateProportionsOfSquares [
 	| atomicBombSquares moonWalkSquares speedUpSquares wormHoleSquares nonEffectSquares |
 	atomicBombSquares := 0.
@@ -39,60 +49,33 @@ SquareCreator >> calculateProportionsOfSquares [
 	nonEffectSquares := totalNumberOfSquares - wormHoleSquares - atomicBombSquares - speedUpSquares.
 	quantityOfSquaresByEffect := Dictionary
 		newFrom:
-			{('WormHole' -> wormHoleSquares).
-			('AtomicBomb' -> atomicBombSquares).
-			('MoonWalk' -> moonWalkSquares).
-			('SpeedUp' -> speedUpSquares).
-			('NonEffect' -> nonEffectSquares)}
+			{('a WormHole' -> wormHoleSquares).
+			('an AtomicBomb' -> atomicBombSquares).
+			('a MoonWalk' -> moonWalkSquares).
+			('a SpeedUp' -> speedUpSquares).
+			('a NonEffect' -> nonEffectSquares)}
 ]
 
 { #category : #Accesing }
 SquareCreator >> createSquares [
-	| firstHalfNonEffectQuantity atomicBombQuantity moonWalkQuantity speedUpQuantity wormHoleQuantity numberOfSquare secondHalfNonEffectQuantity |
+ 	|squares| 
 	self calculateProportionsOfSquares.
 	squares := Dictionary new.
-	firstHalfNonEffectQuantity := ((quantityOfSquaresByEffect at: 'NonEffect') / 2) floor.
-	secondHalfNonEffectQuantity := (quantityOfSquaresByEffect at: 'NonEffect') - firstHalfNonEffectQuantity.
-	atomicBombQuantity := quantityOfSquaresByEffect at: 'AtomicBomb'.
-	moonWalkQuantity := quantityOfSquaresByEffect at: 'MoonWalk'.
-	speedUpQuantity := quantityOfSquaresByEffect at: 'SpeedUp'.
-	wormHoleQuantity := quantityOfSquaresByEffect at: 'WormHole'.
 	numberOfSquare := 0.
-	[ firstHalfNonEffectQuantity > 0 ]
-		whileTrue: [ squares at: numberOfSquare put: (Square withAnEffect: NonEffect new thatGivesCard: false).
-			numberOfSquare := numberOfSquare + 1.
-			firstHalfNonEffectQuantity := firstHalfNonEffectQuantity - 1 ].
-	[ atomicBombQuantity > 0 ]
-		whileTrue: [ squares at: numberOfSquare put: (Square withAnEffect: AtomicBomb new thatGivesCard: false).
-			numberOfSquare := numberOfSquare + 1.
-			atomicBombQuantity := atomicBombQuantity - 1 ].
-	[ moonWalkQuantity > 0 ]
-		whileTrue: [ squares at: numberOfSquare put: (Square withAnEffect: (MoonWalk withAPowerValue: 1) thatGivesCard: false).
-			numberOfSquare := numberOfSquare + 1.
-			moonWalkQuantity := moonWalkQuantity - 1 ].
-	[ speedUpQuantity > 0 ]
-		whileTrue: [ squares at: numberOfSquare put: (Square withAnEffect: (SpeedUp withAPowerValue: 4) thatGivesCard: false).
-			numberOfSquare := numberOfSquare + 1.
-			speedUpQuantity := speedUpQuantity - 1 ].
-	[ wormHoleQuantity > 0 ]
-		whileTrue: [ squares at: numberOfSquare put: (Square withAnEffect: (WormHole withAPowerValue: 4)thatGivesCard: false).
-			numberOfSquare := numberOfSquare + 1.
-			wormHoleQuantity := wormHoleQuantity - 1 ].
-	[ secondHalfNonEffectQuantity > 0 ]
-		whileTrue: [ squares at: numberOfSquare put: (Square withAnEffect: NonEffect new thatGivesCard: false).
-			numberOfSquare := numberOfSquare + 1.
-			secondHalfNonEffectQuantity := secondHalfNonEffectQuantity - 1 ].
+	
+	self assign: (Square withAnEffect: NonEffect  new thatGivesCard: false) to: squares.
+	self assign: (Square withAnEffect: (MoonWalk withAPowerValue: 1) thatGivesCard: false) to: squares.
+	
+	self assign: (Square withAnEffect: (SpeedUp withAPowerValue: 4) thatGivesCard: false) to: squares.
+	self assign: (Square withAnEffect: (WormHole withAPowerValue: 4) thatGivesCard: false) to: squares.
+	self assign: (Square withAnEffect: AtomicBomb new thatGivesCard: false) to: squares.
+	
 	^ squares
 ]
 
 { #category : #Initializing }
 SquareCreator >> initializeWithNSquares: aNumberOfSquares [
 	totalNumberOfSquares := aNumberOfSquares
-]
-
-{ #category : #Accesing }
-SquareCreator >> squares [
-	^ squares
 ]
 
 { #category : #Accesing }

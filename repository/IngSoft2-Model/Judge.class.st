@@ -9,9 +9,9 @@ Class {
 		'board',
 		'playingSequence',
 		'players',
-		'thereIsAWinner',
 		'lastCardPlayed',
-		'cardCreator'
+		'cardCreator',
+		'playerHasWon'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -29,18 +29,22 @@ Judge >> changeTurnOfPlayers [
 { #category : #Accesing }
 Judge >> determinateFinalRankings [
 	| gamepieces |
-	gamepieces := (board gamepieces values collect: [ :each | each ]) as: Set.
+	gamepieces := board gamepieces. 
 	gamepieces do: [ :each | each finalRanking: (self ranking: each) ]
 ]
 
 { #category : #Accesing }
 Judge >> giveCardTo: aPlayer [
-	| gamepiece positionOfPlayerOnBoard square |
+	| gamepiece positionOfPlayerOnBoard square giftedCard |
 	gamepiece := aPlayer gamepiece.
 	positionOfPlayerOnBoard := gamepiece positionOnBoard.
 	square := board squares at: positionOfPlayerOnBoard.
 	square givesCard
-		ifTrue: [ aPlayer receivesCard: (cardCreator createAndReturnACard) ]
+		ifTrue: [ 
+			giftedCard:= cardCreator createAndReturnACard.
+			aPlayer receivesCard: giftedCard.		
+			^ giftedCard. 
+			]
 ]
 
 { #category : #Initializing }
@@ -49,9 +53,9 @@ Judge >> initializeNamed: aName assuring: anOrderedCollectionOfPlayers on: aBoar
 	players := anOrderedCollectionOfPlayers.
 	playingSequence := PlayingSequence withAllPlayers: anOrderedCollectionOfPlayers.
 	board := aBoard.
-	thereIsAWinner := false.
+	playerHasWon := false.
 	lastCardPlayed := false.
-	cardCreator := CardCreator withTotalTypesOfCardsKnowingNumberOfPlayers: (players size). 
+	cardCreator := CardCreator withTotalTypesOfCardsKnowingNumberOfPlayers: players size
 ]
 
 { #category : #Accesing }
@@ -66,20 +70,18 @@ Judge >> name [
 
 { #category : #Accesing }
 Judge >> playerHasWon [
-|winner| 
-	winner:= self winnerIfNone: [ ^ false ].
-	^ winner. 
+	^ playerHasWon. 
 ]
 
 { #category : #Accesing }
 Judge >> ranking: aPlayerGamepiece [
 	| gamepieces otherGamepieces ranking |
 	ranking := 1.
-	gamepieces := (board gamepieces values collect: [ :each | each ]) as: Set.
-	otherGamepieces := gamepieces select: [ :each | each color ~= aPlayerGamepiece  color ].
+	gamepieces := board gamepieces.
+	otherGamepieces := gamepieces select: [ :each | each  ~= aPlayerGamepiece  ].
 	otherGamepieces
 		do: [ :each | 
-			each position > aPlayerGamepiece  position
+			each position > aPlayerGamepiece position
 				ifTrue: [ ranking := ranking + 1 ] ].
 	^ ranking
 ]
@@ -90,14 +92,9 @@ Judge >> tellLastCardPlayed: aCard [
 ]
 
 { #category : #Accesing }
-Judge >> thereIsAWinner [
-	^ thereIsAWinner
-]
-
-{ #category : #Accesing }
 Judge >> validateRoundsOfPlayers [
 	| gamepieces |
-	gamepieces := (board gamepieces values collect: [ :each | each ]) as: Set.
+	gamepieces := board gamepieces. 
 	gamepieces do: [ :each | each changeRoundTo: (each position / board endOfBoard) floor ]
 ]
 
@@ -108,10 +105,10 @@ Judge >> validateTurnOf: whoWantsToPlay [
 ]
 
 { #category : #Accesing }
-Judge >> winnerIfNone: aBlock [
+Judge >> winner [
 	| winner |
-	winner := players detect: [ :each | each gamepiece rounds >= board rounds ] ifNone: aBlock.
+	winner := players detect: [ :each | each gamepiece rounds >= board rounds ] ifNone: [ ^ false ].
 	self determinateFinalRankings.
-	thereIsAWinner := true.
+	playerHasWon := true. 
 	^ winner
 ]

@@ -1,25 +1,41 @@
 Class {
 	#name : #GamepieceTest,
 	#superclass : #TestCase,
+	#instVars : [
+		'aGamePiece',
+		'gamepiece1',
+		'gamepiece2',
+		'gamepieces',
+		'effect0',
+		'effect1',
+		'effect2',
+		'effect3',
+		'effect4',
+		'square0',
+		'square1',
+		'square2',
+		'square3',
+		'square4',
+		'squares',
+		'player1',
+		'player2',
+		'players',
+		'dices1',
+		'dices2',
+		'board',
+		'judge'
+	],
 	#category : #'IngSoft2-Tests'
 }
 
 { #category : #'Gamepiece - tests' }
-GamepieceTest >> testCreateABlueGamePiece [
-		| aGamePiece |
-	aGamePiece := Gamepiece withColor: 'blue'.
-	self assert: aGamePiece color equals: 'blue'.
-]
-
-{ #category : #'Gamepiece - tests' }
-GamepieceTest >> testGamepiecesFinalRankingWhenThereIsAWinner [
-	| player1 player2 dices1 judge board players winner gamepiece1 gamepiece2 gamepieces squares effect0 effect1 effect2 effect3 effect4 square0 square1 square2 square3 square4 dices2 |
-	gamepiece1 := Gamepiece withColor: 'pink'.
-	gamepiece2 := Gamepiece withColor: 'blue'.
-	gamepieces := Dictionary
-		newFrom:
-			{(gamepiece1 color -> gamepiece1).
-			(gamepiece2 color -> gamepiece2)}.
+GamepieceTest >> setUp [
+	gamepiece1 := Gamepiece withInitialPosition.
+	gamepiece2 := Gamepiece withInitialPosition.
+	gamepieces := Set new.
+	gamepieces
+		add: gamepiece1;
+		add: gamepiece2.
 	effect0 := NonEffect new.
 	effect1 := MoonWalk withAPowerValue: 2.
 	effect2 := NonEffect new.
@@ -40,45 +56,45 @@ GamepieceTest >> testGamepiecesFinalRankingWhenThereIsAWinner [
 	player1 := Player
 		withName: 'Sol'
 		aGamePiece: gamepiece1
-		aCard: (Overload withValueAndID: 1)
-		andOtherCard: (Overload withValueAndID: 2).
-		player2 := Player
+		aCard: Overload withValue
+		andOtherCard: Overload withValue.
+	player2 := Player
 		withName: 'Dubi'
 		aGamePiece: gamepiece2
-		aCard: (Overload withValueAndID: 3)
-		andOtherCard: (Overload withValueAndID: 4).
+		aCard: Overload withValue
+		andOtherCard: Overload withValue.
 	players := OrderedCollection new.
 	players
 		add: player1;
 		add: player2.
-		
 	dices1 := Set new.
 	dices1 add: (LoadedDice withFaces: 1).
 	dices2 := Set new.
 	dices2 add: (LoadedDice withFaces: 2).
-	board := Board
-		withSquares: squares
-		gamepieces: gamepieces
-		andRounds: 2.
+	board := Board withSquares: squares gamepieces: gamepieces andRounds: 2.
 	judge := Judge named: 'Pitana' assuring: players on: board.
-	[ judge thereIsAWinner ]
+]
+
+{ #category : #'Gamepiece - tests' }
+GamepieceTest >> testGamepiecesFinalRankingWhenThereIsAWinner [
+	| winner |
+	
+	[ judge playerHasWon ]
 		whileFalse: [ judge validateTurnOf: player1.
 			player1 playsATurnWith: dices1.
 			judge validateRoundsOfPlayers.
 			gamepiece1 positionOnBoardBasedOnNSquares: board squares size.
-			board applyEffectToAGamepieceUsingKey: gamepiece1 color.
-			
-	judge changeTurnOfPlayers.
+			board applyEffectToAGamepiece: gamepiece1.
+			judge changeTurnOfPlayers.
 			judge validateTurnOf: player2.
 			player2 playsATurnWith: dices2.
 			judge validateRoundsOfPlayers.
 			gamepiece2 positionOnBoardBasedOnNSquares: board squares size.
-			board applyEffectToAGamepieceUsingKey: gamepiece2 color.
+			board applyEffectToAGamepiece: gamepiece2.
 			judge validateRoundsOfPlayers.
-			winner := judge playerHasWon.
-			
-	judge changeTurnOfPlayers. ].
-	self assert: judge thereIsAWinner.
+			winner := judge winner.
+			judge changeTurnOfPlayers ].
+	self assert: judge playerHasWon.
 	judge determinateFinalRankings.
 	self assert: gamepiece1 position equals: 7.
 	self assert: gamepiece2 position equals: 10.

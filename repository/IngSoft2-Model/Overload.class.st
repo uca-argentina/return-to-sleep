@@ -12,8 +12,8 @@ Class {
 }
 
 { #category : #Creating }
-Overload class >> withValueAndID: aCardID [
-	^ self new initializeWithValueAndID: aCardID.
+Overload class >> withValue [
+	^ self new initializeWithValue
 ]
 
 { #category : #Accesing }
@@ -21,15 +21,9 @@ Overload >> applyEffectTo: aPlayer [
 	aPlayer gamepiece addAppliedEffectOfCardByCard: self. 
 ]
 
-{ #category : #Accesing }
-Overload >> id [
-	^ id.
-]
-
 { #category : #Initializing }
-Overload >> initializeWithValueAndID: aCardID [
+Overload >> initializeWithValue [
 	value := -2.
-	id := aCardID
 ]
 
 { #category : #Accesing }

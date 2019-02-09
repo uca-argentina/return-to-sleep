@@ -12,30 +12,24 @@ Class {
 }
 
 { #category : #Creating }
-Cancellation class >> withValueAndID: aCardID [
-	^ self new initializeWithValueAndID: aCardID.
+Cancellation class >> withValue [
+	^ self new initializeWithValue
 ]
 
 { #category : #Accesing }
-Cancellation >> applyEffectTo: allPlayers removingCardEffectCausedByCardWithId: cardID [
+Cancellation >> applyEffectTo: allPlayers removingCardEffectCausedByCard: aCard [
 	| cardEffectToErase |
 	allPlayers
 		do: [ :each | 
 			each gamepiece cardEffectsApplied
-				detect: [ :effect | effect causalCard id = cardID ]
+				detect: [ :effect | effect causalCard = aCard ]
 				ifFound: [ :effect | 
 					cardEffectToErase := effect.
 					each gamepiece cardEffectsApplied remove: cardEffectToErase ]
 				ifNone: [  ] ]
 ]
 
-{ #category : #Accesing }
-Cancellation >> id [
-	^ id
-]
-
 { #category : #Initializing }
-Cancellation >> initializeWithValueAndID: aCardID [
+Cancellation >> initializeWithValue [
 	value := 0.
-	id := aCardID
 ]

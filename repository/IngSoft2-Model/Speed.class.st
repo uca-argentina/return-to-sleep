@@ -12,8 +12,8 @@ Class {
 }
 
 { #category : #Creating }
-Speed class >> withValueAndID: aCardID [
-	^ self new initializeWithValueAndID: aCardID
+Speed class >> withValue [
+	^ self new initializeWithValue
 ]
 
 { #category : #Initializing }
@@ -21,15 +21,9 @@ Speed >> applyEffectTo: aPlayer [
 	aPlayer gamepiece addAppliedEffectOfCardByCard: self
 ]
 
-{ #category : #Accesing }
-Speed >> id [
-	^ id
-]
-
 { #category : #Initializing }
-Speed >> initializeWithValueAndID: aCardID [
+Speed >> initializeWithValue [
 	value := 1.
-	id := aCardID
 ]
 
 { #category : #Accesing }

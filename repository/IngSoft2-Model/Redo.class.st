@@ -12,8 +12,8 @@ Class {
 }
 
 { #category : #Creating }
-Redo class >> withValueAndID: aCardID [ 
-	^ self new initializeWithValueAndID: aCardID 
+Redo class >> withValue [
+	^ self new initializeWithValue
 ]
 
 { #category : #Accesing }
@@ -21,13 +21,7 @@ Redo >> applyEffectTo: aPlayer redoingCardEffectMadeByCard: lastCard [
 	aPlayer gamepiece addAppliedEffectOfCardByCard: lastCard.
 ]
 
-{ #category : #Accesing }
-Redo >> id [
-	^ id
-]
-
 { #category : #'as yet unclassified ' }
-Redo >> initializeWithValueAndID: aCardID [
-	id := aCardID.
-	value := 0.
+Redo >> initializeWithValue [
+	value := 0
 ]
