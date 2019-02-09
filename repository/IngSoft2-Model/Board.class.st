@@ -41,14 +41,15 @@ Board class >> withSquares: aSquareCollection gamepieces: aGamePieceCollection a
 ]
 
 { #category : #Accesing }
-Board >> applyEffectToAGamepieceUsingKey: aGamePieceKey [
-	| gamepiece positionOfPlayerOnBoard square |
-	gamepiece := gamepieces at: aGamePieceKey.
-	positionOfPlayerOnBoard := gamepiece positionOnBoard.
+Board >> applyEffectToAGamepiece: aGamePiece [
+	| positionOfPlayerOnBoard square |
+	positionOfPlayerOnBoard := aGamePiece positionOnBoard.
 	square := squares at: positionOfPlayerOnBoard.
-	square effect applyEffectTo: gamepiece ofGamepieceCollection: gamepieces.
-	square effect class ~= NonEffect
-		ifTrue: [ lastSquareEffectApplied := SquareEffectApplied withEffect: square effect affecting: gamepiece ofGamepieceCollection: gamepieces ]
+	square effect applyEffectTo: aGamePiece ofGamepieceCollection: gamepieces.
+	lastSquareEffectApplied := SquareEffectApplied
+				withEffect: square effect
+				affecting: aGamePiece
+				ofGamepieceCollection: gamepieces. 
 ]
 
 { #category : #Accesing }
@@ -67,7 +68,7 @@ Board >> initializeWithSquares: aSquaresCollection gamepieces: aGamepieceCollect
 	gamepieces := aGamepieceCollection.
 	rounds := numberOfRounds.
 	endOfBoard := squares size.
-	lastSquareEffectApplied := SquareEffectApplied withEffect: (NonEffect new) affecting: (Gamepiece withColor: 'withoutColor') ofGamepieceCollection: gamepieces. 
+	lastSquareEffectApplied := SquareEffectApplied withEffect: (NonEffect new) affecting: (Gamepiece new) ofGamepieceCollection: gamepieces. 
 ]
 
 { #category : #Accesing }

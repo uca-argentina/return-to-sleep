@@ -12,8 +12,8 @@ Class {
 }
 
 { #category : #Creating }
-Acceleration class >> withValueAndID: aCardID [ 
-	^ self new initializeWithValueAndID: aCardID. 
+Acceleration class >> withValue [
+	^ self new initializeWithValue
 ]
 
 { #category : #Accesing }
@@ -21,14 +21,8 @@ Acceleration >> applyEffectTo: allPlayers [
 	allPlayers do: [ :each| each gamepiece addAppliedEffectOfCardByCard: self ].
 ]
 
-{ #category : #Accesing }
-Acceleration >> id [
-	^ id.
-]
-
 { #category : #Initializing }
-Acceleration >> initializeWithValueAndID: aCardID [
-	id := aCardID.
+Acceleration >> initializeWithValue [
 	value := 1
 ]
 

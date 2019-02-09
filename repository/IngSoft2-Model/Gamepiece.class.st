@@ -17,8 +17,8 @@ Class {
 }
 
 { #category : #Creating }
-Gamepiece class >> withColor: aColor [
-	^ self new initializeWithAColor: aColor. 
+Gamepiece class >> withInitialPosition [
+	^ self new initializeWithInitialPosition
 ]
 
 { #category : #Accesing }
@@ -42,11 +42,6 @@ Gamepiece >> changeRoundTo: newRound [
 ]
 
 { #category : #Accesing }
-Gamepiece >> color [
-	^ color
-]
-
-{ #category : #Accesing }
 Gamepiece >> finalRanking [
 ^finalRanking.
 ]
@@ -57,12 +52,11 @@ Gamepiece >> finalRanking: aRanking [
 ]
 
 { #category : #Initializing }
-Gamepiece >> initializeWithAColor: aColor [
-	color := aColor.
+Gamepiece >> initializeWithInitialPosition [
 	position := 0.
 	rounds := 0.
 	positionOnBoard := 0.
-	cardEffectsApplied := Set new. 
+	cardEffectsApplied := Set new
 ]
 
 { #category : #Accesing }

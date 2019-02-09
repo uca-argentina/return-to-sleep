@@ -11,8 +11,7 @@ Class {
 SquareCreatorTest >> testCreateACollectionOf5Squares [
 	| squareCreator |
 	squareCreator := SquareCreator withNSquares: 5.
-	squareCreator createSquares.
-	self assert: squareCreator squares size equals: 5
+	self assert: squareCreator createSquares size equals: 5
 ]
 
 { #category : #tests }

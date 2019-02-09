@@ -18,17 +18,17 @@ CardCreator class >> withTotalTypesOfCardsKnowingNumberOfPlayers: numberOfPlayer
 
 { #category : #Accesing }
 CardCreator >> createAndReturnACard [
-	| typeNumber |
+	| typeNumber typeOfCards |
 	self incrementIteratingIDNumber.
 	typeNumber := iteratingIDNumber % totalTypesOfCards.
-	typeNumber = 0
-		ifTrue: [ ^ Overload withValueAndID: iteratingIDNumber ].
-		 typeNumber = 1
-		ifTrue: [ ^ Acceleration withValueAndID: iteratingIDNumber ] . typeNumber = 2
-		ifTrue: [ ^ Speed withValueAndID: iteratingIDNumber ].  typeNumber = 3
-		ifTrue: [ ^ Cancellation withValueAndID: iteratingIDNumber ].  typeNumber = 4
-		ifTrue: [ ^ Repeat withValueAndID: iteratingIDNumber ] . typeNumber = 5
-		ifTrue: [ ^ Redo withValueAndID: iteratingIDNumber ]
+	typeOfCards := Array
+		with: Overload withValue
+		with: Acceleration withValue
+		with: Speed withValue
+		with: Cancellation withValue
+		with: Repeat withValue
+		with: Redo withValue.
+	^ (typeOfCards at: typeNumber). 
 ]
 
 { #category : #Accesing }
@@ -39,7 +39,7 @@ CardCreator >> incrementIteratingIDNumber [
 { #category : #Initializing }
 CardCreator >> initializeWithTotalTypesOfCardsKnowingNumberOfPlayers: numberOfPlayers [
 	totalTypesOfCards := 6.
-	iteratingIDNumber := (numberOfPlayers * 2 ).
+	iteratingIDNumber := numberOfPlayers * 2 + 1.
 ]
 
 { #category : #Accesing }

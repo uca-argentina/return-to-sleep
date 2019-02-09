@@ -12,8 +12,8 @@ Class {
 }
 
 { #category : #Creating }
-Repeat class >> withValueAndID: aCardID [ 
-	^ self new initializeWithValueAndID: aCardID.
+Repeat class >> withValue [
+	^ self new initializeWithValue
 ]
 
 { #category : #Accesing }
@@ -21,13 +21,7 @@ Repeat >> applyingEffect: lastSquareEffectApplied [
 	lastSquareEffectApplied effect applyEffectTo: lastSquareEffectApplied affectedGamepiece ofGamepieceCollection: lastSquareEffectApplied gamepieces.
 ]
 
-{ #category : #Accesing }
-Repeat >> id [
-	^ id
-]
-
 { #category : #Initializing }
-Repeat >> initializeWithValueAndID: aCardID [
-	id := aCardID.
-	value := 0.
+Repeat >> initializeWithValue [
+	value := 0
 ]

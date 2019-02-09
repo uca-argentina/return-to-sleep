@@ -40,38 +40,45 @@ Player >> name [
 ]
 
 { #category : #Accesing }
-Player >> playCardByID: aCardId applyTo: aPlayer andTellJudge: aJudge [
-aJudge validateTurnOf: self.
-hand playCardByID: aCardId applyTo: aPlayer andTellJudge: aJudge. 
+Player >> playCard: aCard applyTo: aPlayer andTellJudge: aJudge [
+	aJudge validateTurnOf: self.
+	hand playCard: aCard applyTo: aPlayer andTellJudge: aJudge
 ]
 
 { #category : #Accesing }
-Player >> playCardByID: aCardID applyTo: aPlayer redoingCardEffectMadeByCard: lastCard andTellJudge: aJudge [
-		hand
-		playCardByID: aCardID
+Player >> playCard: aCard applyTo: aPlayer redoingCardEffectMadeByCard: lastCard andTellJudge: aJudge [
+	hand
+		playCard: aCard
 		applyTo: aPlayer
 		redoingCardEffectMadeByCard: lastCard
 		andTellJudge: aJudge
 ]
 
 { #category : #Accesing }
-Player >> playCardByID: aCardID applyTo: allPlayers redoingCardEffectMadeByCard: lastCard removingCardEffectCausedByCardWithId: causalCardID andTellJudge: aJudge [
+Player >> playCard: aCard applyTo: allPlayers redoingCardEffectMadeByCard: lastCard removingCardEffectCausedByCard: causalCard andTellJudge: aJudge [
 	hand
-		playCardByID: aCardID
+		playCard: aCard
 		applyTo: allPlayers
 		redoingCardEffectMadeByCard: lastCard
-		removingCardEffectCausedByCardWithId: causalCardID
+		removingCardEffectCausedByCard: causalCard
 		andTellJudge: aJudge
 ]
 
 { #category : #Accesing }
-Player >> playCardByID: aCardID applyTo: allPlayers removingCardEffectCausedByCardWithId: causalCardID andTellJudge: aJudge [
-	hand playCardByID: aCardID applyTo: allPlayers removingCardEffectCausedByCardWithId: causalCardID andTellJudge: aJudge. 
+Player >> playCard: aCard applyTo: allPlayers removingCardEffectCausedByCard: causalCard andTellJudge: aJudge [
+	hand
+		playCard: aCard
+		applyTo: allPlayers
+		removingCardEffectCausedByCard: causalCard
+		andTellJudge: aJudge
 ]
 
 { #category : #Accesing }
-Player >> playCardByID: aCardID applyingEffect: aSquareEffectApplied andTellJudge: aJudge [
-	hand playCardByID: aCardID applyingEffect: aSquareEffectApplied andTellJudge: aJudge. 
+Player >> playCard: aCard applyingEffect: aSquareEffectApplied andTellJudge: aJudge [
+	hand
+		playCard: aCard
+		applyingEffect: aSquareEffectApplied
+		andTellJudge: aJudge
 ]
 
 { #category : #Accesing }

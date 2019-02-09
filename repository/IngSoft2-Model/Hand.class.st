@@ -23,53 +23,64 @@ Hand >> initializeWithACard: aFirstCard andOtherCard: aSecondCard [
 ]
 
 { #category : #Accesing }
-Hand >> playCardByID: aCardID applyTo: aPlayer andTellJudge: aJudge [
+Hand >> playCard: aCard applyTo: aPlayer andTellJudge: aJudge [
 	| card |
 	card := cards
-		detect: [ :each | each id = aCardID ]
-		ifNone: [ CardBelongToPlayerFailed signal: 'This player does not have this card' ].
+		detect: [ :each | each  = aCard ]
+		ifNone: [ CardBelongToPlayerFailed
+				signal: 'This player does not have this card' ].
 	card applyEffectTo: aPlayer.
 	cards remove: card.
-	aJudge tellLastCardPlayed: card. 
+	aJudge tellLastCardPlayed: card
 ]
 
 { #category : #'as yet unclassified ' }
-Hand >> playCardByID: aCardID applyTo: aPlayer redoingCardEffectMadeByCard: lastCard andTellJudge: aJudge [
+Hand >> playCard: aCard applyTo: aPlayer redoingCardEffectMadeByCard: lastCard andTellJudge: aJudge [
 	| myCard |
 	myCard := cards
-		detect: [ :each | each id = aCardID ]
-		ifNone: [ CardBelongToPlayerFailed signal: 'This player does not have this card' ].
+		detect: [ :each | each  = aCard ]
+		ifNone: [ CardBelongToPlayerFailed
+				signal: 'This player does not have this card' ].
 	myCard applyEffectTo: aPlayer redoingCardEffectMadeByCard: lastCard.
-	cards remove: myCard.
+	cards remove: myCard
 ]
 
 { #category : #Accesing }
-Hand >> playCardByID: aCardID applyTo: allPlayers redoingCardEffectMadeByCard: lastCard removingCardEffectCausedByCardWithId: causalCardID andTellJudge: aJudge [
+Hand >> playCard: aCard applyTo: allPlayers redoingCardEffectMadeByCard: lastCard removingCardEffectCausedByCard: causalCard andTellJudge: aJudge [
 	| myCard |
 	myCard := cards
-		detect: [ :each | each id = aCardID ]
-		ifNone: [ CardBelongToPlayerFailed signal: 'This player does not have this card' ].
+		detect: [ :each | each = aCard ]
+		ifNone: [ CardBelongToPlayerFailed
+				signal: 'This player does not have this card' ].
 	cards remove: myCard.
-	lastCard applyEffectTo: allPlayers removingCardEffectCausedByCardWithId: causalCardID.
+	lastCard
+		applyEffectTo: allPlayers
+		removingCardEffectCausedByCard: causalCard
 ]
 
 { #category : #Accesing }
-Hand >> playCardByID: aCardID applyTo: allPlayers removingCardEffectCausedByCardWithId: causalCardID andTellJudge: aJudge [
+Hand >> playCard: aCard applyTo: allPlayers removingCardEffectCausedByCard: causalCard andTellJudge: aJudge [
 	| myCard |
 	myCard := cards
-		detect: [ :each | each id = aCardID ]
-		ifNone: [ CardBelongToPlayerFailed signal: 'This player does not have this card' ].
-	myCard applyEffectTo: allPlayers removingCardEffectCausedByCardWithId: causalCardID.
+		detect: [ :each | each = aCard ]
+		ifNone: [ CardBelongToPlayerFailed
+				signal: 'This player does not have this card' ].
+	myCard
+		applyEffectTo: allPlayers
+		removingCardEffectCausedByCard: causalCard.
 	cards remove: myCard.
-	aJudge tellLastCardPlayed: myCard. 
+	aJudge tellLastCardPlayed: myCard
 ]
 
 { #category : #Accesing }
-Hand >> playCardByID: aCardID applyingEffect: aSquareEffectApplied andTellJudge: aJudge [
+Hand >> playCard: aCard applyingEffect: aSquareEffectApplied andTellJudge: aJudge [
 	| card |
-	card := cards detect: [ :each | each id = aCardID ] ifNone: [ CardBelongToPlayerFailed signal: 'This player does not have this card' ].
-	card applyingEffect: aSquareEffectApplied. 
-	cards remove: card.
+	card := cards
+		detect: [ :each | each = aCard ]
+		ifNone: [ CardBelongToPlayerFailed
+				signal: 'This player does not have this card' ].
+	card applyingEffect: aSquareEffectApplied.
+	cards remove: card
 ]
 
 { #category : #Initializing }

@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #Creating }
-Card class >> withValueAndID: aCardID [ 
+Card class >> withValue [ 
 	^ self subclassResponsibility.
 ]
